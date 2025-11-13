@@ -46,3 +46,12 @@ Convertit un signal PWM 12V 108Hz en sortie binaire 0V/12V avec hystérésis, op
 - Composants selon [BOM](hardware/bom/BOM_V1_5.csv)
 
 ### 2. Configuration Arduino IDE
+Board: ATtiny25/45/85 (ATTinyCore) Clock: 8 MHz Internal BOD: Disabled Programmer: USBasp
+
+
+### 3. Programmation
+```bash
+# 1. Installer ATTinyCore dans Arduino IDE
+# 2. Ouvrir firmware/PWM_V1_5_1/PWM_V1_5_1.ino
+# 3. Tools → Burn Bootloader (1× seulement)
+# 4. Sketch → Upload Using Programmer
