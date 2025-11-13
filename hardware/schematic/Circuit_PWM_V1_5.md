@@ -19,38 +19,37 @@ _______________________________________________________________________________
 ## BLOC R – RÉGULATEUR 5V
 
 **MIC5219-5.0YM5-TR (SOT-23-5) ou LD1117V50 (TO-220):**
-Pin IN: +12V_PROT → C 10µF + C 100nF → GND (≤10mm) 
-Pin OUT: +5V_MCU → C 10µF + C 100nF → GND (≤10mm) 
-Pin EN: +12V_PROT Pin GND: GND
+- Pin IN: +12V_PROT → C 10µF + C 100nF → GND (≤10mm) 
+- Pin OUT: +5V_MCU → C 10µF + C 100nF → GND (≤10mm) 
+- Pin EN: +12V_PROT Pin GND: GND
 
 **Spécifications:** 
-Vin 6-16V, Vout 5,0V ±2%, Iq 70µA, Iout 500mA
+- Vin 6-16V, Vout 5,0V ±2%, Iq 70µA, Iout 500mA
 
 _______________________________________________________________________________
 
 ## BLOC µC – ATTINY85
 
 **ATtiny85-20SU (SOIC-8):**
-Pin 8 (Vcc): +5V_MCU 
-Pin 7 (PB2/ADC1): Lecture PWM filtré 
-Pin 5 (PB0): Commande BS170 
-Pin 4 (GND): GND 
-Pin 1 (PB5/RESET): Pull-up 10kΩ interne
+- Pin 8 (Vcc): +5V_MCU 
+- Pin 7 (PB2/ADC1): Lecture PWM filtré 
+- Pin 5 (PB0): Commande BS170 
+- Pin 4 (GND): GND 
+- Pin 1 (PB5/RESET): Pull-up 10kΩ interne
 
 Découplage: 
-C 10µF + C 100nF entre pins 8-4 (≤10mm)
+- C 10µF + C 100nF entre pins 8-4 (≤10mm)
 
 _______________________________________________________________________________
 
 ## BLOC F – FILTRAGE PWM
 
 **⚠️ V1.5: SANS ferrite série entrée**
-FILT2 → R 10kΩ → ADC_DIV → R 10kΩ → GND ADC_DIV → Pin 7 ATtiny85
+- FILT2 → R 10kΩ → ADC_DIV → R 10kΩ → GND ADC_DIV → Pin 7 ATtiny85
 
 Clamps ESD:
-
-BAT85 anode→ADC_DIV, cathode→+5V_MCU
-BAT85 cathode→ADC_DIV, anode→GND
+- BAT85 anode→ADC_DIV, cathode→+5V_MCU
+- BAT85 cathode→ADC_DIV, anode→GND
 
 **Conversion:** 
 ADC_10bit = (V_PWM / 2) × (1023 / 5,0V)
@@ -60,33 +59,35 @@ _______________________________________________________________________________
 ## BLOC OUTPUT – DRIVER + P-MOSFET
 
 **BS170 (TO-92) driver N-MOS:**
-Pin 2 (Gate): ATtiny pin 5 via R 100Ω 
-Pin 2 (Gate): R 10kΩ → GND (pull-down) 
-Pin 1 (Source): GND 
-Pin 3 (Drain): GATE_DRIVE
+- Pin 2 (Gate): ATtiny pin 5 via R 100Ω 
+- Pin 2 (Gate): R 10kΩ → GND (pull-down) 
+- Pin 1 (Source): GND 
+- Pin 3 (Drain): GATE_DRIVE
 
 **FQP27P06 (TO-220) commutation P-MOS:**
-Pin 2 (Source): +12V_PROT 
-Pin 1 (Gate): GATE_DRIVE 
-Pin 1 (Gate): R 10kΩ → +12V_PROT (pull-up) 
-Pin 3 (Drain): OUT_MOSFET
+- Pin 2 (Source): +12V_PROT 
+- Pin 1 (Gate): GATE_DRIVE 
+- Pin 1 (Gate): R 10kΩ → +12V_PROT (pull-up) 
+- Pin 3 (Drain): OUT_MOSFET
 
 Protection gate: Zener 1N4733A 5,1V 1W:
 
-CATHODE → Pin 2 (Source +12V)
-ANODE → Pin 1 (Gate)
-Diode roue libre: SB2100 anode→Drain, cathode→Source
+- CATHODE → Pin 2 (Source +12V)
+- ANODE → Pin 1 (Gate)
+
+Diode roue libre: 
+SB2100 anode→Drain, cathode→Source
 
 _______________________________________________________________________________
 
 ## BLOC J – SORTIE (NOUVEAU V1.5)
 
 **Architecture automotive complète:**
-OUT_MOSFET → PTC 0,5A 0805 → Ferrite 0805 → nœud OUT+
+- OUT_MOSFET → PTC 0,5A 0805 → Ferrite 0805 → nœud OUT+
 
-OUT+ → C 100nF X7R → GND (filtrage HF) 
-OUT+ → TVS P6KE18CA ↔ GND (protection locale) 
-OUT+ → Bornier (vers jauge Innovate)
+- OUT+ → C 100nF X7R → GND (filtrage HF) 
+- OUT+ → TVS P6KE18CA ↔ GND (protection locale) 
+- OUT+ → Bornier (vers jauge Innovate)
 
 **Composants spécifiés:**
 - **PTC 0805:** Bourns MF-MSMF050-2 (0,5A hold, 1A trip)
