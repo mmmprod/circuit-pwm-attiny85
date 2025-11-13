@@ -1,0 +1,40 @@
+Reference,Quantity,Value,Description,Package,Manufacturer,Part Number,Datasheet,Unit Price,Extended Price,Notes
+U1,1,ATtiny85-20SU,Microcontroleur 8-bit,SOIC-8,Microchip,ATTINY85-20SU,https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2586-AVR-8-bit-Microcontroller-ATtiny25-ATtiny45-ATtiny85_Datasheet.pdf,1.50,1.50,MCU principal
+U2,1,MIC5219-5.0YM5-TR,Regulateur LDO 5V 500mA,SOT-23-5,Microchip,MIC5219-5.0YM5-TR,https://ww1.microchip.com/downloads/en/DeviceDoc/MIC5219-500mA-Peak-Output-LDO-Regulator-DS20006021A.pdf,0.80,0.80,Alternative: LD1117V50
+Q1,1,BS170,MOSFET N 60V 500mA,TO-92,Onsemi,BS170,https://www.onsemi.com/pdf/datasheet/bs170-d.pdf,0.25,0.25,Driver N-MOS
+Q2,1,FQP27P06,MOSFET P -60V -27A,TO-220,Onsemi,FQP27P06,https://www.onsemi.com/pdf/datasheet/fqp27p06-d.pdf,1.20,1.20,Commutation P-MOS
+D1,1,SB2100,Diode Schottky 2A 100V,DO-201AD,Diodes Inc,SB2100,https://www.diodes.com/assets/Datasheets/ds23001.pdf,0.30,0.30,Protection reverse alim
+D2,1,SB2100,Diode Schottky 2A 100V,DO-201AD,Diodes Inc,SB2100,https://www.diodes.com/assets/Datasheets/ds23001.pdf,0.30,0.30,Roue libre P-MOS
+D4,1,BAT85,Diode Schottky 30V 200mA,DO-35,STMicro,BAT85,https://www.st.com/resource/en/datasheet/bat85.pdf,0.15,0.15,Clamp ADC haut
+D5,1,BAT85,Diode Schottky 30V 200mA,DO-35,STMicro,BAT85,https://www.st.com/resource/en/datasheet/bat85.pdf,0.15,0.15,Clamp ADC bas
+D6,1,1N4733A,Zener 5.1V 1W,DO-41,Various,1N4733A,,0.10,0.10,Protection gate P-MOS
+TVS1,1,1.5KE18CA,TVS 18V 1500W,DO-201,Littelfuse,1.5KE18CA,https://www.littelfuse.com/~/media/electronics/datasheets/tvs_diodes/littelfuse_tvs_diode_15ke_datasheet.pdf.pdf,0.30,0.30,Protection alim
+TVS2,1,1.5KE18CA,TVS 18V 1500W,DO-201,Littelfuse,1.5KE18CA,https://www.littelfuse.com/~/media/electronics/datasheets/tvs_diodes/littelfuse_tvs_diode_15ke_datasheet.pdf.pdf,0.30,0.30,Protection entree PWM
+TVS3,1,P6KE18CA,TVS 18V 600W,DO-15,Littelfuse,P6KE18CA,https://www.littelfuse.com/~/media/electronics/datasheets/tvs_diodes/littelfuse_tvs_diode_p6ke_datasheet.pdf.pdf,0.20,0.20,Protection sortie
+R1,1,33kΩ,Resistance 33k 1% 1/4W,0805,Yageo,RC0805FR-0733KL,,0.02,0.02,Filtrage RC1
+R2,1,20kΩ,Resistance 20k 1% 1/4W,0805,Yageo,RC0805FR-0720KL,,0.02,0.02,Filtrage RC2
+R3,1,10kΩ,Resistance 10k 1% 1/4W,0805,Yageo,RC0805FR-0710KL,,0.02,0.02,Diviseur ADC haut
+R4,1,10kΩ,Resistance 10k 1% 1/4W,0805,Yageo,RC0805FR-0710KL,,0.02,0.02,Diviseur ADC bas
+R5,1,10kΩ,Resistance 10k 1% 1/4W,0805,Yageo,RC0805FR-0710KL,,0.02,0.02,Pull-up gate P-MOS
+R6,1,10kΩ,Resistance 10k 1% 1/4W,0805,Yageo,RC0805FR-0710KL,,0.02,0.02,Pull-down gate BS170
+R7,1,100Ω,Resistance 100R 1/4W,0805,Yageo,RC0805JR-07100RL,,0.02,0.02,Gate driver BS170
+C1,1,4.7µF,Condensateur film 4.7uF 50V,Radial,WIMA,MKS2B044701A00KSSD,,0.30,0.30,Filtrage RC1
+C2,1,4.7µF,Condensateur film 4.7uF 50V,Radial,WIMA,MKS2B044701A00KSSD,,0.30,0.30,Filtrage RC2
+C3,1,100µF,Condensateur electrolytique 100uF 50V,Radial,Panasonic,ECA-1HM101,,0.20,0.20,Bulk alim
+C4,1,100nF,Condensateur ceramique 100nF X7R,0805,Murata,GRM21BR71H104KA01L,,0.05,0.05,Decouplage entree PWM
+C5,1,100nF,Condensateur ceramique 100nF X7R,0805,Murata,GRM21BR71H104KA01L,,0.05,0.05,Decouplage alim
+C6,1,100nF,Condensateur ceramique 100nF X7R,0805,Murata,GRM21BR71H104KA01L,,0.05,0.05,Decouplage reg entree
+C7,1,100nF,Condensateur ceramique 100nF X7R,0805,Murata,GRM21BR71H104KA01L,,0.05,0.05,Decouplage reg sortie
+C8,1,100nF,Condensateur ceramique 100nF X7R,0805,Murata,GRM21BR71H104KA01L,,0.05,0.05,Decouplage MCU
+C9,1,100nF,Condensateur ceramique 100nF X7R,0805,Murata,GRM21BR71H104KA01L,,0.05,0.05,Decouplage sortie
+C10,1,10µF,Condensateur ceramique 10uF 16V X5R,0805,Murata,GRM21BR61C106KE15L,,0.15,0.15,Reg entree
+C11,1,10µF,Condensateur ceramique 10uF 16V X5R,0805,Murata,GRM21BR61C106KE15L,,0.15,0.15,Reg sortie
+C12,1,10µF,Condensateur ceramique 10uF 16V X5R,0805,Murata,GRM21BR61C106KE15L,,0.15,0.15,MCU Vcc
+C13,1,10µF,Condensateur ceramique 10uF 16V X5R,0805,Murata,GRM21BR61C106KE15L,,0.15,0.15,MCU GND
+PTC1,1,MF-MSMF050-2,PTC resettable 0.5A,0805,Bourns,MF-MSMF050-2,https://www.bourns.com/docs/Product-Datasheets/mfmsmf.pdf,0.50,0.50,Protection sortie
+L1,1,BLM21PG221SN1,Ferrite 220R@100MHz 2A,0805,Murata,BLM21PG221SN1,https://www.murata.com/en-us/products/productdetail?partno=BLM21PG221SN1,0.15,0.15,Filtrage EMI sortie
+F1,1,0.5A,Fusible rapide 0.5A,5x20mm,Littelfuse,0217.500MXP,,0.10,0.10,Protection alim
+J1,1,2pos,Bornier a vis 2 positions 5mm,THT,Phoenix,1757242,,0.30,0.30,Entree +12V/GND
+J2,1,2pos,Bornier a vis 2 positions 5mm,THT,Phoenix,1757242,,0.30,0.30,Entree PWM/GND
+J3,1,2pos,Bornier a vis 2 positions 5mm,THT,Phoenix,1757242,,0.30,0.30,Sortie +/GND
+,,,,,,,,Total:,9.65,Hors PCB
