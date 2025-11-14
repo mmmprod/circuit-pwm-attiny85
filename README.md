@@ -55,10 +55,43 @@ Clock: 8 MHz Internal
 BOD: Disabled 
 Programmer: USBasp
 
-
 ### 3. Programmation
 ```bash
 # 1. Installer ATTinyCore dans Arduino IDE
 # 2. Ouvrir firmware/PWM_V1_5_1/PWM_V1_5_1.ino
 # 3. Tools → Burn Bootloader (1× seulement)
 # 4. Sketch → Upload Using Programmer
+
+## 📊 Versions
+
+### V1.6.3 (2025-11-14) - **ACTUEL** ⭐
+- ✅ Hystérésis symétrique ±520mV (vs asymétrique V1.6.2)
+- ✅ Fenêtre activation : 3,10V - 6,61V PWM (vs 3,10V - 6,88V)
+- ✅ Robustesse bruit x2,6 (vs x1,3 asymétrique)
+- ✅ Documentation cohérente partout
+
+### V1.7.11 (2025-11-14) - **HARDWARE**
+- ✅ R3 protection ADC : 470Ω (I_inj 0,91mA < 1mA)
+- ✅ BOD 2,7V : Compromis optimal automotive
+- ✅ Filtrage RC : τ=49,2ms, -30,4dB @ 108Hz
+
+### V1.6.2 (2025-11-14)
+- ✅ Nommage seuils corrigé (_ON/_LIMITE explicite)
+- ✅ Filtrage O(n) optimisé (-80 bytes flash)
+- ✅ Watchdog 1s (latence -50%)
+- ⚠️ Hystérésis asymétrique (260mV haute, 520mV basse)
+
+### V1.5.1 (2025-11-13)
+- ✅ Latence optimisée: 65ms (-18% vs V1.5.0)
+- ✅ Traçabilité firmware complète
+
+### V1.5.0 (2025-11-10)
+- ✅ Logique P-MOSFET corrigée
+- ✅ Hystérésis seuil haut corrigée
+
+### V1.4.0 (2025-11-05)
+- ⚠️ **Ne pas utiliser** (bugs critiques)
+
+**Version firmware**: 1.6.3 (recommandé) / 1.6.2 (alternatif)  
+**Version hardware**: V1.7.11  
+**Dernière mise à jour**: 2025-11-14
