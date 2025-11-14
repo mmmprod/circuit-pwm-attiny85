@@ -1,6 +1,7 @@
 # Circuit PWM µC - ATtiny85
 
-[![Version](https://img.shields.io/badge/version-1.5.1-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
+[![Version](https://img.shields.io/badge/version-1.6.3-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
+[![Hardware](https://img.shields.io/badge/hardware-V1.7.11-green.svg)](hardware/)
 [![Hardware](https://img.shields.io/badge/hardware-V1.5-green.svg)](hardware/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
@@ -22,8 +23,11 @@ Convertit un signal PWM 12V 108Hz en sortie binaire 0V/12V avec hystérésis, op
 - **Output**: Driver BS170 + P-MOSFET FQP27P06 haut-côté
 - **Protection**: TVS, PTC auto-réarmant, ferrite EMI, clamps ESD
 
-### Firmware V1.5.1
-- ✅ **Latence**: 65ms (pire cas)
+### Firmware V1.6.3
+- ✅ **Latence activation**: <1015ms (OFF→ON, veille 1s)
+- ✅ **Latence désactivation**: <45ms (ON→OFF, actif 8×5ms)
+- ✅ **Hystérésis symétrique**: ±520mV (anti-rebond robuste)
+- ✅ **Filtrage ADC optimisé**: Moyenne O(n) rejet min/max
 - ✅ **Consommation repos**: <0.5mA (sleep mode)
 - ✅ **Hystérésis**: ±200mV (anti-rebond)
 - ✅ **Fenêtre activation**: 2.84V - 6.88V PWM
