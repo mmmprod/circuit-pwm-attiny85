@@ -1,0 +1,30 @@
+Reference,Quantity,Value,Description,Package,Manufacturer,Part Number,Datasheet,Unit Price,Notes
+U1,1,NCV2931AD-5.0R2G,LDO 5.0V automotive,SOIC-8,On Semiconductor,NCV2931AD-5.0R2G,https://www.onsemi.com/pdf/datasheet/ncv2931-d.pdf,1.20,LDO automotive (replacement LD1117)
+U2,1,ATTINY85-20PU,Microcontroleur 8-bit,DIP-8,Microchip,ATTINY85-20PU,https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2586-AVR-8-bit-Microcontroller-ATtiny25-ATtiny45-ATtiny85_Datasheet.pdf,1.50,µC DIP pour prototypage
+Q1,1,FQP27P06,P-MOS -60V,TO-220,ON Semiconductor,FQP27P06,https://www.onsemi.com/pdf/datasheet/fqp27p06-d.pdf,1.20,P-MOS sortie
+Q2,1,BS170,N-MOS 60V,TO-92,ON Semiconductor,BS170,https://www.onsemi.com/pdf/datasheet/bs170-d.pdf,0.25,Driver N-MOS
+D1,1,1N5822,Schottky 40V,DO-201,Various,1N5822,https://www.vishay.com/docs/91017/1n5822.pdf,0.30,Protection inversion
+D2,1,1.5KE18CA,TVS 18V 1500W,DO-201AE,Littelfuse,1.5KE18CA,https://www.littelfuse.com/~/media/electronics/datasheets/tvs_diodes/littelfuse_tvs_diode_15ke_datasheet.pdf.pdf,0.30,Load-dump protection
+D3,1,1N4733A,Zener 5.1V 1W,DO-41,Various,1N4733A,,0.10,Gate clamp
+F1,1,0.5A,Fusible rapide,5x20mm,Various,FUSE-0.5A, ,0.10,Fusible d'entrée
+R_LDO_IN,1,10Ω,Limiteur transitoires,0.5W,Various,10R, ,0.05
+R1,1,33kΩ,Diviseur ADC haut,1% 0.25W,Various,33K, ,0.02
+R2,1,20kΩ,Diviseur ADC bas,1% 0.25W,Various,20K, ,0.02
+R3,1,470Ω,Serie PWM entré,5% 0.25W,Various,470R, ,0.02
+R4,1,10kΩ,Filtrage RC,5% 0.25W,Various,10K, ,0.02
+R8,1,10kΩ,Pull-up gate P-MOS,5% 0.25W,Various,10K, ,0.02
+R9,1,100Ω,Series gate,5% 0.25W,Various,100R, ,0.02
+R10,1,100kΩ,Pull-down BS170,5% 0.25W,Various,100K, ,0.02
+R11,1,100Ω,Gate drive,5% 0.25W,Various,100R, ,0.02
+R13,1,10Ω,Limitation sortie,2W axial,Various,10R-2W, ,0.50
+C2,1,4.7µF,Filme 50V,Film radial,Various,4u7F-50V, ,0.30
+C4,1,100µF,Electro 50V,Electrolytic,Various,100uF-50V, ,0.20
+C5,1,100nF,100nF X7R 50V,0805,Various,100nF, ,0.05
+C6,1,10µF,10uF 16/25V,Electrolytic,Various,10uF, ,0.10
+C7,1,100nF,100nF X7R 50V,0805,Various,100nF, ,0.05
+C8,1,100nF,100nF X7R 50V,0805,Various,100nF, ,0.05
+C9,1,100nF,100nF X7R 50V,0805,Various,100nF, ,0.05
+C10,1,470nF,470nF film 50V,Film radial,Various,470nF-50V, ,0.15
+J1,1,2p,Bornier 5mm 15A,Through-hole,Various,BORNIER-2P, ,0.30
+J2,1,2p,Bornier 5mm 5A,Through-hole,Various,BORNIER-2P-SIG, ,0.20
+J3,1,2p,Bornier 5mm 5A (Pin2 NC),Through-hole,Various,BORNIER-2P-OUT, ,0.20
