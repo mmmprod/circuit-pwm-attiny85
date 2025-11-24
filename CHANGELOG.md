@@ -5,6 +5,19 @@ Toutes les modifications importantes du projet Circuit PWM µC - ATtiny85.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
+## [1.9.0] - 2025-11-24
+
+### Hardware V1.9 - (NCV2931 LDO + final hardware tweaks)
+- ✅ Régulateur NCV2931AD-5.0R2G adopté pour robustesse automotive (remplace LD1117 optionnel)
+- ✅ R_LDO_IN = 10 Ω pour limiter pointes de courant (transitoires)
+- ✅ Clarification des nœuds +12V_LDO_IN / +12V_PROT / FUSE_OUT
+- ✅ Documentation complète: schéma, BOM (BOM_V1_9.csv) et protocole de test
+- Notes: Compatible firmware V1.6.3. Voir hardware/schematic/Circuit_PWM_uC_V1_9.md et hardware/bom/BOM_V1_9.csv
+
+## [1.6.3] - 2025-11-14
+(voir détails firmware) - Hystérésis symétrique ±520mV, fenêtre ON stable 3,10V–6,61V. Compatible hardware V1.7.11 / V1.9.
+
+---
 
 ## [1.6.3] - 2025-11-14
 
