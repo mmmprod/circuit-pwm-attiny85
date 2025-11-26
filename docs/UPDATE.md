@@ -20,7 +20,9 @@ Avant toute mise à jour, identifiez les versions installées :
 
 **Versions actuelles recommandées :**
 - **Firmware** : V1.6.3 (2025-11-14) ⭐
-- **Hardware** : V1.9.0 (2025-11-24) ⭐
+- **Hardware** : V1.9.0 (2025-11-24) ⭐ (voir [CHANGELOG](../CHANGELOG.md) pour détails)
+
+> **Note** : V1.7.11 reste une version stable et compatible. V1.9.0 apporte des améliorations pour environnement automotive (régulateur NCV2931).
 
 ---
 
@@ -41,7 +43,7 @@ Si le circuit est déjà assemblé et fonctionnel :
 #### Étape 2 : Programmer la nouvelle version
 
 1. Placer l'ATtiny85 dans l'adaptateur SOIC8→DIP8
-2. Connecter l'USBasp selon le [guide de programmation](PROGRAMMING.md#-connexions-hardware)
+2. Connecter l'USBasp selon le [guide de programmation](PROGRAMMING.md#connexions-hardware)
 3. Ouvrir Arduino IDE avec la configuration correcte
 4. Ouvrir le nouveau fichier firmware (ex: `firmware/PWM_V1_6_3/PWM_V1_6_3.ino`)
 5. **NE PAS** refaire "Burn Bootloader" (les fuses sont déjà configurées)
@@ -106,7 +108,7 @@ Certaines améliorations hardware peuvent être faites sans refaire le PCB :
 2. Souder le nouveau régulateur NCV2931AD-5.0R2G
 3. Ajouter résistance 10Ω en entrée du régulateur (entre +12V_PROT et +12V_LDO_IN)
 4. Vérifier alimentation +5V_MCU : 4.90-5.10V
-5. Tester selon [protocole de test](PROGRAMMING.md#-vérification-post-upload)
+5. Tester selon [protocole de test](PROGRAMMING.md#vérification-post-upload)
 
 **Optionnel** : Si budget limité, LD1117V50 reste fonctionnel pour usage non critique.
 
@@ -225,7 +227,7 @@ Après toute mise à jour firmware ou hardware :
 
 ### Tests recommandés
 
-Pour validation complète, voir [docs/PROGRAMMING.md - Vérification post-upload](PROGRAMMING.md#-vérification-post-upload).
+Pour validation complète, voir [docs/PROGRAMMING.md - Vérification post-upload](PROGRAMMING.md#vérification-post-upload).
 
 **Test rapide (5 minutes) :**
 1. Alimenter 12V sans signal PWM → Sortie = 12V (P-MOSFET ON par défaut)
