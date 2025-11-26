@@ -41,7 +41,7 @@ Si le circuit est déjà assemblé et fonctionnel :
 #### Étape 2 : Programmer la nouvelle version
 
 1. Placer l'ATtiny85 dans l'adaptateur SOIC8→DIP8
-2. Connecter l'USBasp selon le [guide de programmation](PROGRAMMING.md#-connexions-hardware)
+2. Connecter l'USBasp selon le [guide de programmation](PROGRAMMING.md#connexions-hardware)
 3. Ouvrir Arduino IDE avec la configuration correcte
 4. Ouvrir le nouveau fichier firmware (ex: `firmware/PWM_V1_6_3/PWM_V1_6_3.ino`)
 5. **NE PAS** refaire "Burn Bootloader" (les fuses sont déjà configurées)
@@ -225,7 +225,7 @@ Après toute mise à jour firmware ou hardware :
 
 ### Tests recommandés
 
-Pour validation complète, voir [docs/PROGRAMMING.md - Vérification post-upload](PROGRAMMING.md#-vérification-post-upload).
+Pour validation complète, voir [docs/PROGRAMMING.md - Vérification post-upload](PROGRAMMING.md#vérification-post-upload).
 
 **Test rapide (5 minutes) :**
 1. Alimenter 12V sans signal PWM → Sortie = 12V (P-MOSFET ON par défaut)
