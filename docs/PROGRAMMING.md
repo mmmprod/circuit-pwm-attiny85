@@ -229,8 +229,7 @@ Pour mettre à jour le firmware vers une nouvelle version :
 
 ---
 
-##
-🔒 Protection lecture (optionnel)
+## 🔒 Protection lecture (optionnel)
 Pour protéger le code contre la lecture :
 
 ⚠️ IRRÉVERSIBLE : L'ATtiny ne pourra plus être reprogrammé !
