@@ -216,12 +216,20 @@ Solutions :
 ✅ Supprimer code debug inutile
 ✅ Optimiser #define au lieu de variables
 📝 Reprogrammation
-Pour mettre à jour le firmware :
 
-Retirer ATtiny du circuit (obligatoire)
-Replacer dans adaptateur + USBasp
-NE PAS refaire "Burn Bootloader" (fuses déjà OK)
-Upload nouveau sketch directement
+Pour mettre à jour le firmware vers une nouvelle version :
+
+⚠️ **Voir le guide complet : [UPDATE.md](UPDATE.md)** pour instructions détaillées.
+
+**Procédure rapide :**
+1. Retirer ATtiny du circuit (obligatoire)
+2. Replacer dans adaptateur + USBasp
+3. **NE PAS** refaire "Burn Bootloader" (fuses déjà OK)
+4. Upload nouveau sketch directement
+
+---
+
+##
 🔒 Protection lecture (optionnel)
 Pour protéger le code contre la lecture :
 

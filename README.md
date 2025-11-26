@@ -51,9 +51,16 @@ Programmer: USBasp
 ### 3. Programmation
 ```bash
 # 1. Installer ATTinyCore dans Arduino IDE
-# 2. Ouvrir firmware/PWM_V1_5_1/PWM_V1_5_1.ino
+# 2. Ouvrir firmware/PWM_V1_6_3/PWM_V1_6_3.ino
 # 3. Tools → Burn Bootloader (1× seulement)
 # 4. Sketch → Upload Using Programmer
+```
+
+📖 **Guides détaillés** :
+- [PROGRAMMING.md](docs/PROGRAMMING.md) - Guide de programmation complet
+- [UPDATE.md](docs/UPDATE.md) - Guide de mise à jour firmware/hardware
+
+---
 
 ## 📊 Versions
 
