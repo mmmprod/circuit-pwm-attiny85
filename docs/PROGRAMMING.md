@@ -164,7 +164,7 @@ Thank you.
 
 ### Test 2 : Test fonctionnel
 
-Voir [docs/TESTING.md](TESTING.md) pour protocole complet.
+Voir [Protocole_de_test_12.txt](Protocole_de_test_12.txt) pour protocole complet.
 
 **Test rapide :**
 1. Souder ATtiny sur PCB (ou breadboard test)
