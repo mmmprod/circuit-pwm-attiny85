@@ -1,5 +1,5 @@
 [![Version](https://img.shields.io/badge/version-1.6.3-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
-[![Hardware](https://img.shields.io/badge/hardware-V1.7.11-green.svg)](hardware/)
+[![Hardware](https://img.shields.io/badge/hardware-V1.10-green.svg)](hardware/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
 **Conditionneur PWM automobile pour jauge Innovate Motorsports**
@@ -63,6 +63,11 @@ Programmer: USBasp
 - ✅ Robustesse bruit x2,6 (vs x1,3 asymétrique)
 - ✅ Documentation cohérente partout
 
+### V1.10 (2025-12-05) - **HARDWARE ACTUEL** ⭐
+- 🔴 CORRIGÉ: Orientation Zener D3 (anode→GATE_P, cathode→+12V_PROT)
+- ✅ Audit PREMORTEM V3.5 complet
+- ✅ Validation KB_ANALOG_MASTER V2.6
+
 ### V1.7.11 (2025-11-14) - **HARDWARE**
 - ✅ R3 protection ADC : 470Ω (I_inj 0,91mA < 1mA)
 - ✅ BOD 2,7V : Compromis optimal automotive
@@ -86,5 +91,5 @@ Programmer: USBasp
 - ⚠️ **Ne pas utiliser** (bugs critiques)
 
 **Version firmware**: 1.6.3 (recommandé) / 1.6.2 (alternatif)  
-**Version hardware**: V1.7.11  
-**Dernière mise à jour**: 2025-11-14
+**Version hardware**: V1.10  
+**Dernière mise à jour**: 2025-12-05

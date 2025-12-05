@@ -5,6 +5,16 @@ Toutes les modifications importantes du projet Circuit PWM µC - ATtiny85.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
+## [1.10.0] - 2025-12-05
+
+### Hardware V1.10 - (Correction orientation D3 Zener)
+- 🔴 **CORRIGÉ:** Orientation Zener D3 (anode→GATE_P, cathode→+12V_PROT)
+- ✅ Audit PREMORTEM V3.5 complet
+- ✅ Validation KB_ANALOG_MASTER V2.6
+- ✅ Ajout documentation hardware Circuit_PWM_uC_V1_10.md
+- Notes: Compatible firmware V1.6.3. Voir hardware/schematic/Circuit_PWM_uC_V1_10.md
+
+---
 ## [1.9.0] - 2025-11-24
 
 ### Hardware V1.9 - (NCV2931 LDO + final hardware tweaks)
