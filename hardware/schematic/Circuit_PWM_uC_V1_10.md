@@ -202,7 +202,7 @@ Hystérésis: ±520mV symétrique
 Méthode: ATtiny retiré, programmé sur adaptateur ISP externe, puis réinstallé en DIP-8.
 Pas de connecteur J4 ISP sur circuit final.
 
-Code compatible: V1.7.4
+Code compatible: V1.6.3
 
 ## 6. Tests Obligatoires
 
