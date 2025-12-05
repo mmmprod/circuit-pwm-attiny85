@@ -5,14 +5,35 @@ Toutes les modifications importantes du projet Circuit PWM µC - ATtiny85.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
-## [1.10.0] - 2025-12-05
+## [1.7.4] - 2025-12-05
 
-### Hardware V1.10 - (Correction orientation D3 Zener)
-- 🔴 **CORRIGÉ:** Orientation Zener D3 (anode→GATE_P, cathode→+12V_PROT)
-- ✅ Audit PREMORTEM V3.5 complet
-- ✅ Validation KB_ANALOG_MASTER V2.6
-- ✅ Ajout documentation hardware Circuit_PWM_uC_V1_10.md
-- Notes: Compatible firmware V1.6.3. Voir hardware/schematic/Circuit_PWM_uC_V1_10.md
+### 🔒 FIRMWARE - Hardening final
+
+#### Ajouté
+- **volatile outputState** : Barrière mémoire explicite (programmation défensive)
+- **cli() avant SREG restore** : Atomicité complète dans enterSleepAtomic()
+- **#include <Arduino.h>** : Compatibilité PlatformIO/CLI explicite
+- **#warning F_CPU** : Avertissement compilation si F_CPU != 8MHz
+
+#### Amélioré
+- **Documentation BOD 2,7V** : Explication détaillée choix fuses (BOD 2,7V vs 4,3V)
+- **DIDR0 |=** : Préserve autres bits ADC (vs = qui écrase)
+- **pinMode(PWM_IN, INPUT)** : Configuration explicite entrée ADC
+- **Protection numSamples == 0** : Évite division par zéro dans readFilteredADC()
+- **Macro MUX_BANDGAP** : Lisibilité sélection ADC bandgap
+- **Prescaler F_CPU < 400kHz** : Couverture edge case ADC clock
+
+#### Notes
+- Flash : ~950 bytes (identique V1.7.3)
+- Compatible hardware : **V1.10** (recommandé), V1.9, V1.7.11
+- BOD 2,7V justifié : Cold-crank 6V → VCC=4,8V >> 2,7V (marge 2,1V) ✅
+- Changements défensifs : Robustesse accrue, pas d'impact fonctionnel
+- Version production finale : Hardening complet V1.7.x
+
+#### Migration depuis V1.6.3/V1.7.3
+- Drop-in replacement : Comportement identique
+- Tests recommandés : Validation standard (VCC monitoring, BOD, sleep)
+- Retour arrière : V1.7.3 ou V1.6.3 si problème compilation F_CPU
 
 ---
 ## [1.9.0] - 2025-11-24

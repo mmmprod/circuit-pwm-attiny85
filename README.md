@@ -1,4 +1,5 @@
 [![Version](https://img.shields.io/badge/version-1.6.3-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
+[![Version](https://img.shields.io/badge/version-1.7.4-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
 [![Hardware](https://img.shields.io/badge/hardware-V1.10-green.svg)](hardware/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
@@ -20,7 +21,12 @@ Convertit un signal PWM 12V 108Hz en sortie binaire 0V/12V avec hystérésis, op
 - **Output**: Driver BS170 + P-MOSFET FQP27P06 haut-côté
 - **Protection**: TVS, PTC auto-réarmant, ferrite EMI, clamps ESD
 
-### Firmware V1.6.3
+### Firmware V1.7.4
+- ✅ volatile outputState (barrière mémoire)
+- ✅ cli() atomique avant SREG restore
+- ✅ Compatibilité PlatformIO (#include Arduino.h)
+- ✅ Avertissement F_CPU != 8MHz
+- ✅ Cold-crank auto-recovery (VCC monitoring)
 - ✅ Latence activation: <1015ms (OFF→ON, veille 1s)
 - ✅ Latence désactivation: <45ms (ON→OFF, actif 8×5ms)
 - ✅ Hystérésis symétrique: ±520mV (anti-rebond robuste)
@@ -51,13 +57,27 @@ Programmer: USBasp
 ### 3. Programmation
 ```bash
 # 1. Installer ATTinyCore dans Arduino IDE
-# 2. Ouvrir firmware/PWM_V1_5_1/PWM_V1_5_1.ino
+# 2. Ouvrir firmware/PWM_Window_ATtiny85_V1_7_4/PWM_Window_ATtiny85_V1_7_4.ino
 # 3. Tools → Burn Bootloader (1× seulement)
 # 4. Sketch → Upload Using Programmer
 
 ## 📊 Versions
 
-### V1.6.3 (2025-11-14) - **ACTUEL** ⭐
+### V1.7.4 (2025-12-05) - **FIRMWARE ACTUEL** ⭐
+- ✅ Hardening final: volatile, cli() atomique
+- ✅ Compatibilité PlatformIO/CLI
+- ✅ Documentation BOD 2.7V complète
+- ✅ Compatible Hardware V1.10
+- 📁 [firmware/PWM_Window_ATtiny85_V1_7_4/](firmware/PWM_Window_ATtiny85_V1_7_4/)
+
+### V1.10 (2025-12-05) - **HARDWARE ACTUEL** ⭐
+- 🔴 **CORRIGÉ**: Orientation Zener D3 (anode→GATE_P)
+- ✅ Audit PREMORTEM V3.5 complet
+- ✅ Régulateur NCV2931 (vs MIC5219)
+- ✅ Validation KB_ANALOG_MASTER V2.6
+- 📁 Schématique: [hardware/schematic/Circuit_PWM_uC_V1_9.md](hardware/schematic/Circuit_PWM_uC_V1_9.md) (voir aussi V1.7.11)
+
+### V1.6.3 (2025-11-14)
 - ✅ Hystérésis symétrique ±520mV (vs asymétrique V1.6.2)
 - ✅ Fenêtre activation : 3,10V - 6,61V PWM (vs 3,10V - 6,88V)
 - ✅ Robustesse bruit x2,6 (vs x1,3 asymétrique)
@@ -90,6 +110,6 @@ Programmer: USBasp
 ### V1.4.0 (2025-11-05)
 - ⚠️ **Ne pas utiliser** (bugs critiques)
 
-**Version firmware**: 1.6.3 (recommandé) / 1.6.2 (alternatif)  
+**Version firmware**: 1.7.4 (recommandé)  
 **Version hardware**: V1.10  
 **Dernière mise à jour**: 2025-12-05
