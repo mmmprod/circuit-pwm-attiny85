@@ -5,6 +5,37 @@ Toutes les modifications importantes du projet Circuit PWM µC - ATtiny85.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
+## [1.7.5] - 2025-12-05
+
+### 🔋 FIRMWARE - Optimisation consommation
+
+#### Ajouté
+- **ADC désactivé pendant sleep** : Économie ~260µA (datasheet ATtiny85 p.151)
+- Sauvegarde/restauration ADCSRA dans enterSleepAtomic()
+
+#### Amélioré
+- Consommation sleep: ~500µA → ~240µA (-52%)
+- Consommation totale repos: ~0,7mA → ~0,65mA
+
+#### Notes
+- Compatible hardware: **V1.11** (recommandé), V1.10
+- Drop-in replacement de V1.7.4
+
+---
+
+## [1.11] - 2025-12-05
+
+### 📄 HARDWARE - Documentation V1.11
+
+#### Modifié
+- Code compatible: V1.7.5 (vs V1.6.3 dans V1.10)
+- Consommation documentée: ~0,65mA (vs ~0,7mA)
+
+#### Notes
+- Hardware physique identique à V1.10
+- Mise à jour documentation uniquement
+
+---
 ## [1.7.4] - 2025-12-05
 
 ### 🔒 FIRMWARE - Hardening final
@@ -44,9 +75,6 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
 - ✅ Clarification des nœuds +12V_LDO_IN / +12V_PROT / FUSE_OUT
 - ✅ Documentation complète: schéma, BOM (BOM_V1_9.csv) et protocole de test
 - Notes: Compatible firmware V1.6.3. Voir hardware/schematic/Circuit_PWM_uC_V1_9.md et hardware/bom/BOM_V1_9.csv
-
-## [1.6.3] - 2025-11-14
-(voir détails firmware) - Hystérésis symétrique ±520mV, fenêtre ON stable 3,10V–6,61V. Compatible hardware V1.7.11 / V1.9.
 
 ---
 

@@ -78,7 +78,7 @@ PB5 │1 8│ Vcc PB3 │2 7│ PB2 (SCK/ADC1) PB4 │3 6│ PB1 (MISO) GND │4
 Tools → Board : ATtiny25/45/85 (No bootloader) 
 Tools → Chip : ATtiny85 
 Tools → Clock : 8 MHz (internal) 
-Tools → B.O.D. : Disabled 
+Tools → B.O.D. : 2.7V 
 Tools → Save EEPROM : EEPROM retained 
 Tools → Timer 1 Clock : CPU 
 Tools → LTO : Enabled 
@@ -116,7 +116,7 @@ avrdude: 1 bytes of lfuse verified
 |------|--------|----------|
 | **lfuse** | 0xE2 | Clock 8MHz interne, startup 65ms |
 | **hfuse** | 0xDF | EEPROM retained, Serial programming enabled |
-| **efuse** | 0xFF | Self-programming disabled |
+| **efuse** | 0xFD | BOD 2.7V enabled |
 
 ---
 
@@ -125,7 +125,7 @@ avrdude: 1 bytes of lfuse verified
 ### Étape 1 : Ouvrir le sketch
 
 1. **File** → **Open**
-2. Naviguer vers : `firmware/PWM_V1_5_1/PWM_V1_5_1.ino`
+2. Naviguer vers : `firmware/PWM_Window_ATtiny85_V1_7_5/PWM_Window_ATtiny85_V1_7_5.ino`
 
 ### Étape 2 : Vérifier compilation
 
