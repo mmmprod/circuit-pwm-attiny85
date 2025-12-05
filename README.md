@@ -60,6 +60,13 @@ Programmer: USBasp
 # 2. Ouvrir firmware/PWM_Window_ATtiny85_V1_7_4/PWM_Window_ATtiny85_V1_7_4.ino
 # 3. Tools → Burn Bootloader (1× seulement)
 # 4. Sketch → Upload Using Programmer
+```
+
+📖 **Guides détaillés** :
+- [PROGRAMMING.md](docs/PROGRAMMING.md) - Guide de programmation complet
+- [UPDATE.md](docs/UPDATE.md) - Guide de mise à jour firmware/hardware
+
+---
 
 ## 📊 Versions
 
