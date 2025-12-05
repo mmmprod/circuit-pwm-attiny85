@@ -49,11 +49,11 @@
 #include <util/delay.h>
 
 #if defined(F_CPU) && F_CPU != 8000000UL
-  #warning "F_CPU != 8MHz: Verifier prescaler ADC et timings. Code optimise pour 8MHz."
+  #warning "F_CPU != 8MHz: Vérifier prescaler ADC et timings. Code optimisé pour 8MHz."
 #endif
 
 #ifndef F_CPU
-  #warning "F_CPU non defini: Utilisation prescaler ADC conservateur (128)."
+  #warning "F_CPU non défini: Utilisation prescaler ADC conservateur (128)."
 #endif
 
 #define FW_VERSION   "1.7.4"
