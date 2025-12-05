@@ -1,3 +1,4 @@
+[![Version](https://img.shields.io/badge/version-1.6.3-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
 [![Version](https://img.shields.io/badge/version-1.7.4-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
 [![Hardware](https://img.shields.io/badge/hardware-V1.10-green.svg)](hardware/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
@@ -81,6 +82,11 @@ Programmer: USBasp
 - ✅ Fenêtre activation : 3,10V - 6,61V PWM (vs 3,10V - 6,88V)
 - ✅ Robustesse bruit x2,6 (vs x1,3 asymétrique)
 - ✅ Documentation cohérente partout
+
+### V1.10 (2025-12-05) - **HARDWARE ACTUEL** ⭐
+- 🔴 CORRIGÉ: Orientation Zener D3 (anode→GATE_P, cathode→+12V_PROT)
+- ✅ Audit PREMORTEM V3.5 complet
+- ✅ Validation KB_ANALOG_MASTER V2.6
 
 ### V1.7.11 (2025-11-14) - **HARDWARE**
 - ✅ R3 protection ADC : 470Ω (I_inj 0,91mA < 1mA)
