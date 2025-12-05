@@ -76,7 +76,7 @@ Programmer: USBasp
 - ✅ Validation KB_ANALOG_MASTER V2.6
 - 📁 Schématique: [hardware/schematic/Circuit_PWM_uC_V1_9.md](hardware/schematic/Circuit_PWM_uC_V1_9.md) (voir aussi V1.7.11)
 
-### V1.6.3 (2025-11-14) - **ACTUEL** ⭐
+### V1.6.3 (2025-11-14)
 - ✅ Hystérésis symétrique ±520mV (vs asymétrique V1.6.2)
 - ✅ Fenêtre activation : 3,10V - 6,61V PWM (vs 3,10V - 6,88V)
 - ✅ Robustesse bruit x2,6 (vs x1,3 asymétrique)
