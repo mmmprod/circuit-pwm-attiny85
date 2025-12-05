@@ -1,5 +1,5 @@
-[![Version](https://img.shields.io/badge/version-1.7.4-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
-[![Hardware](https://img.shields.io/badge/hardware-V1.10-green.svg)](hardware/)
+[![Version](https://img.shields.io/badge/version-1.7.5-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
+[![Hardware](https://img.shields.io/badge/hardware-V1.11-green.svg)](hardware/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
 **Conditionneur PWM automobile pour jauge Innovate Motorsports**
@@ -20,7 +20,8 @@ Convertit un signal PWM 12V 108Hz en sortie binaire 0V/12V avec hystérésis, op
 - **Output**: Driver BS170 + P-MOSFET FQP27P06 haut-côté
 - **Protection**: TVS, PTC auto-réarmant, ferrite EMI, clamps ESD
 
-### Firmware V1.7.4
+### Firmware V1.7.5
+- ✅ ADC désactivé pendant sleep (économie 260µA)
 - ✅ volatile outputState (barrière mémoire)
 - ✅ cli() atomique avant SREG restore
 - ✅ Compatibilité PlatformIO (#include Arduino.h)
@@ -56,7 +57,7 @@ Programmer: USBasp
 ### 3. Programmation
 ```bash
 # 1. Installer ATTinyCore dans Arduino IDE
-# 2. Ouvrir firmware/PWM_Window_ATtiny85_V1_7_4/PWM_Window_ATtiny85_V1_7_4.ino
+# 2. Ouvrir firmware/PWM_Window_ATtiny85_V1_7_5/PWM_Window_ATtiny85_V1_7_5.ino
 # 3. Tools → Burn Bootloader (1× seulement)
 # 4. Sketch → Upload Using Programmer
 ```
@@ -69,19 +70,19 @@ Programmer: USBasp
 
 ## 📊 Versions
 
-### V1.7.4 (2025-12-05) - **FIRMWARE ACTUEL** ⭐
+### V1.7.5 (2025-12-05) - **FIRMWARE ACTUEL** ⭐
+- ✅ ADC désactivé pendant sleep (économie 260µA)
+- ✅ Consommation repos: ~0,65mA (vs ~0,7mA V1.7.4)
 - ✅ Hardening final: volatile, cli() atomique
 - ✅ Compatibilité PlatformIO/CLI
-- ✅ Documentation BOD 2.7V complète
-- ✅ Compatible Hardware V1.10
-- 📁 [firmware/PWM_Window_ATtiny85_V1_7_4/](firmware/PWM_Window_ATtiny85_V1_7_4/)
+- ✅ Compatible Hardware V1.11
+- 📁 [firmware/PWM_Window_ATtiny85_V1_7_5/](firmware/PWM_Window_ATtiny85_V1_7_5/)
 
-### V1.10 (2025-12-05) - **HARDWARE ACTUEL** ⭐
-- 🔴 **CORRIGÉ**: Orientation Zener D3 (anode→GATE_P)
-- ✅ Audit PREMORTEM V3.5 complet
-- ✅ Régulateur NCV2931 (vs MIC5219)
-- ✅ Validation KB_ANALOG_MASTER V2.6
-- 📁 Schématique: [hardware/schematic/Circuit_PWM_uC_V1_9.md](hardware/schematic/Circuit_PWM_uC_V1_9.md) (voir aussi V1.7.11)
+### V1.11 (2025-12-05) - **HARDWARE ACTUEL** ⭐
+- ✅ Code compatible: V1.7.5 (ADC désactivé pendant sleep)
+- ✅ Consommation documentée: ~0,65mA (vs ~0,7mA)
+- ✅ Hardware physique identique à V1.10
+- 📁 Schématique: [hardware/schematic/Circuit_PWM_uC_V1_11.md](hardware/schematic/Circuit_PWM_uC_V1_11.md)
 
 ### V1.6.3 (2025-11-14)
 - ✅ Hystérésis symétrique ±520mV (vs asymétrique V1.6.2)
@@ -116,6 +117,6 @@ Programmer: USBasp
 ### V1.4.0 (2025-11-05)
 - ⚠️ **Ne pas utiliser** (bugs critiques)
 
-**Version firmware**: 1.7.4 (recommandé)  
-**Version hardware**: V1.10  
+**Version firmware**: 1.7.5 (recommandé)  
+**Version hardware**: V1.11  
 **Dernière mise à jour**: 2025-12-05

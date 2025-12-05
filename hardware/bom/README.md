@@ -50,13 +50,13 @@ Prix indicatifs pour quantité 1-10 pièces (novembre 2025).
 |-----------|-----------|--------|
 | ATtiny85-20SU | ATTINY85-20SU | Contrefaçons fréquentes |
 | FQP27P06 | FQP27P06 | Performances RdsON critiques |
-| MIC5219 | MIC5219-5.0YM5-TR | Iq 70µA essentiel pour sleep |
+| NCV2931 | NCV2931AD-5.0R2G | Régulateur 5V robuste automotive |
 
 ### Alternatives acceptables
 
 | Composant | Original | Alternative |
 |-----------|----------|-------------|
-| Régulateur | MIC5219-5.0 (SOT-23-5) | LD1117V50 (TO-220) |
+| Régulateur | NCV2931-5.0 (TSOP-5) | LD1117V50 (TO-220) |
 | TVS alim | 1.5KE18CA | 1.5KE20CA (marge) |
 | PTC | MF-MSMF050-2 | 0ZCJ0050AF2E |
 | Ferrite | BLM21PG221SN1 | BLM21PG331SN1 |
@@ -92,7 +92,7 @@ Prix indicatifs pour quantité 1-10 pièces (novembre 2025).
 
 | Composant | ❌ Ne pas utiliser | ✅ Utiliser |
 |-----------|-------------------|-------------|
-| Régulateur | 7805 (Iq 5mA) | MIC5219 (Iq 70µA) |
+| Régulateur | 7805 (Iq 5mA) | NCV2931 (Iq optimisé) |
 | Condo 4.7µF | Céramique X7R | Film polyester/MKT |
 | TVS | 1N47xxA (zener) | 1.5KExxCA (TVS) |
 | Diode alim | 1N4007 (lente) | SB2100 (Schottky) |
@@ -101,7 +101,7 @@ Prix indicatifs pour quantité 1-10 pièces (novembre 2025).
 
 1. **ATtiny85** : Vérifier marquage ATTINY85-20SU (pas 85V)
 2. **FQP27P06** : Tester RdsOn avec multimètre (doit être <100mΩ)
-3. **MIC5219** : Vérifier package SOT-23-5 (pas SOT-23-3)
+3. **NCV2931** : Vérifier package TSOP-5 correct
 4. **Condensateurs** : Vérifier tension nominale gravée
 
 ---
