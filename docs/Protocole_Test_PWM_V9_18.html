@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Protocole Test PWM V9.18 - Circuit V1.15 - Code V1.7.8</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 { margin-bottom: 8px; }
+        h1 { font-size: 1.8rem; color: #f9fafb; }
+        h2 { font-size: 1.4rem; margin-top: 32px; color: #93c5fd; border-bottom: 2px solid #1e40af; padding-bottom: 6px; }
+        h3 { font-size: 1.1rem; margin-top: 16px; color: #fbbf24; }
+        h4 { font-size: 1rem; margin-top: 12px; color: #67e8f9; }
+        
+        .header-info {
+            background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        .version-badge {
+            display: inline-block;
+            background: #22c55e;
+            color: #052e16;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .warning-badge {
+            display: inline-block;
+            background: #f97316;
+            color: #431407;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-left: 8px;
+        }
+        .new-badge {
+            display: inline-block;
+            background: #a855f7;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-left: 8px;
+        }
+        .audit-badge {
+            display: inline-block;
+            background: #06b6d4;
+            color: #042f2e;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-left: 8px;
+        }
+        .critical-badge {
+            display: inline-block;
+            background: #ef4444;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-left: 8px;
+        }
+        
+        .panel {
+            background: #111827;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            border: 1px solid #1f2937;
+        }
+        .critical { border-left: 4px solid #ef4444; background: #1f1315; }
+        .warning { border-left: 4px solid #f59e0b; }
+        .info { border-left: 4px solid #3b82f6; }
+        .success { border-left: 4px solid #22c55e; }
+        .measure { border-left: 4px solid #a855f7; background: #1a1625; }
+        .equipment { border-left: 4px solid #06b6d4; background: #0c1929; }
+        .wiring { border-left: 4px solid #f43f5e; background: #1f1318; }
+        .new { border-left: 4px solid #a855f7; background: #1e1530; }
+        .audit { border-left: 4px solid #06b6d4; background: #0c1929; }
+        
+        .panel-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .icon { font-size: 1.2rem; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #374151;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th { background: #1f2937; color: #93c5fd; }
+        tr:nth-child(even) { background: #0f172a; }
+        
+        .jds-box {
+            background: linear-gradient(135deg, #0c4a6e 0%, #164e63 100%);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+        .jds-box h4 { color: #67e8f9; margin: 0 0 8px 0; }
+        .jds-box table th { background: #155e75; }
+        
+        .scope-box {
+            background: linear-gradient(135deg, #701a75 0%, #86198f 100%);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+        .scope-box h4 { color: #f5d0fe; margin: 0 0 8px 0; }
+        .scope-box table th { background: #86198f; }
+        
+        .ohm-box {
+            background: linear-gradient(135deg, #854d0e 0%, #a16207 100%);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+        .ohm-box h4 { color: #fef3c7; margin: 0 0 8px 0; }
+        .ohm-box table th { background: #a16207; }
+        
+        .alim-box {
+            background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+        .alim-box h4 { color: #bbf7d0; margin: 0 0 8px 0; }
+        .alim-box table th { background: #15803d; }
+        
+        .pot-box {
+            background: linear-gradient(135deg, #78350f 0%, #92400e 100%);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+        .pot-box h4 { color: #fef3c7; margin: 0 0 8px 0; }
+        
+        .wire-box {
+            background: linear-gradient(135deg, #831843 0%, #9d174d 100%);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+        .wire-box h4 { color: #fce7f3; margin: 0 0 8px 0; }
+        .wire-box table th { background: #9d174d; }
+        
+        .calc-box {
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+        .calc-box h4 { color: #bae6fd; margin: 0 0 8px 0; }
+        
+        .go { color: #4ade80; font-weight: 600; }
+        .nogo { color: #f87171; font-weight: 600; }
+        .record { color: #c084fc; font-weight: 600; }
+        .destroy { color: #ef4444; font-weight: 700; }
+        .warn { color: #fbbf24; font-weight: 600; }
+        
+        code {
+            background: #1f2937;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.85rem;
+        }
+        
+        .checklist { margin: 12px 0; }
+        .checklist label {
+            display: block;
+            margin: 6px 0;
+            padding: 8px 12px;
+            background: #0f172a;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #374151;
+        }
+        .checklist label:hover { background: #1e293b; }
+        .checklist input[type="checkbox"] { margin-right: 10px; }
+        
+        .formula {
+            background: #1e1b4b;
+            border: 1px solid #4338ca;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            font-family: "JetBrains Mono", monospace;
+        }
+        
+        .stop-box {
+            background: #7f1d1d;
+            border: 2px solid #ef4444;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            text-align: center;
+        }
+        .stop-box strong { color: #fca5a5; font-size: 1.1rem; }
+        
+        .expected {
+            background: #1f2937;
+            border: 2px dashed #4b5563;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
+            text-align: center;
+        }
+        .expected .value { font-size: 1.3rem; font-weight: 700; color: #4ade80; }
+        .expected .label { color: #9ca3af; font-size: 0.85rem; }
+        
+        .best-method {
+            background: #14532d;
+            border: 2px solid #22c55e;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin: 8px 0;
+            display: inline-block;
+        }
+        .best-method strong { color: #4ade80; }
+        
+        ol { padding-left: 20px; }
+        ol li { margin: 8px 0; }
+        ul { padding-left: 20px; }
+        
+        .toc {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            columns: 2;
+        }
+        .toc a {
+            color: #93c5fd;
+            text-decoration: none;
+            display: block;
+            padding: 3px 0;
+            font-size: 0.9rem;
+        }
+        .toc a:hover { color: #bfdbfe; text-decoration: underline; }
+        .toc .new-section { color: #c084fc; }
+        .toc .audit-section { color: #22d3ee; }
+        .toc .critical-section { color: #f87171; }
+        
+        .note {
+            background: #1e3a5f;
+            border-left: 3px solid #60a5fa;
+            padding: 8px 12px;
+            margin: 8px 0;
+            font-size: 0.9rem;
+        }
+        
+        .changelog {
+            background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        .changelog h4 { color: #c084fc; margin: 0 0 8px 0; }
+        .changelog ul { margin: 0; padding-left: 20px; }
+        .changelog li { margin: 4px 0; }
+        
+        .changelog-critical {
+            background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+            border: 2px solid #ef4444;
+        }
+        .changelog-critical h4 { color: #fca5a5; }
+        
+        @media (max-width: 768px) {
+            .toc { columns: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- HEADER -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<div class="header-info">
+    <h1>🔧 Protocole de Test Complet V9.18</h1>
+    <h1 style="font-size: 1.2rem; opacity: 0.9;">Circuit PWM Fenêtre V1.15 + Code V1.7.8</h1>
+    <p style="margin: 12px 0 0 0;">
+        <span class="version-badge">V9.18</span>
+        <span class="critical-badge">Circuit V1.15</span>
+        <span class="warning-badge">Protection Sortie 3 couches</span>
+        <span class="new-badge">Tests D4/D5/C11</span>
+        <span class="audit-badge">✓ Audité PREMORTEM V3.5</span>
+    </p>
+    <p style="margin-top: 8px; opacity: 0.8; font-size: 0.9rem;">
+        Décembre 2025 — Instructions technicien, valeurs attendues explicites, UNE alimentation
+    </p>
+</div>
+
+<!-- CHANGELOG V9.18 CRITIQUE -->
+<div class="changelog changelog-critical">
+    <h4>🔴 CHANGELOG V9.18 vs V9.17 — MISE À JOUR CIRCUIT V1.15 (CRITIQUE)</h4>
+    <ul>
+        <li><strong>🔴 Header CORRIGÉ:</strong> Circuit V1.14 → <strong>V1.15</strong></li>
+        <li><strong>🔴 Phase 0 AJOUTÉE:</strong> Vérification polarité D4 (1N5822), D5 (P6KE18CA), C11 (100nF)</li>
+        <li><strong>🔴 Phase 1.3 AJOUTÉE:</strong> Tests diode D4 Schottky (~0,3V forward) + D5 TVS bidirectionnel</li>
+        <li><strong>🔴 Tensions sortie CORRIGÉES:</strong> OUT_12V = <strong>~10,5-11V</strong> (pas 12V) — chute D4+R13</li>
+        <li><strong>🔴 Phase 10.1 AJOUTÉE:</strong> Test anti-backfeed spécifique D4 (bloquer avant P-MOS)</li>
+        <li><strong>🔴 Phase 11.1 AJOUTÉE:</strong> Test TVS D5 sortie (clamp ~22V)</li>
+        <li><strong>🟡 Calculs Phase 8/13:</strong> Mis à jour avec V_OUT réel ~10,6V</li>
+    </ul>
+</div>
+
+<!-- CHANGELOG V9.17 -->
+<div class="changelog" style="opacity: 0.8;">
+    <h4>📋 CHANGELOG V9.17 vs V9.16 — AUDIT TOPOLOGIE DIVISEUR</h4>
+    <ul>
+        <li><strong>Phase 5 CORRIGÉE:</strong> Schéma ASCII topologie — R1 connecté à PWM_FILT (pas +5V_MCU)</li>
+        <li><strong>Phase 5 CORRIGÉE:</strong> I_repos = ~0,4mA (pas 0,55mA) — diviseur inactif quand PWM_IN=0V</li>
+        <li><strong>Phase 1.4 ENRICHIE:</strong> Avertissement BS170 pinout variable selon fabricant</li>
+        <li><strong>Phase 9 PRÉCISÉE:</strong> Temps fusion fusible Fast-blow = &lt;0,1s typ</li>
+    </ul>
+</div>
+
+<!-- TABLE DES MATIÈRES -->
+<div class="toc">
+    <strong style="display: block; margin-bottom: 8px; column-span: all;">📋 Table des matières</strong>
+    <a href="#equipment">Équipement requis</a>
+    <a href="#wiring">⚡ CÂBLAGE INITIAL (CRITIQUE)</a>
+    <a href="#phase0" class="critical-section">Phase 0 — Vérifications visuelles 🔴 MAJ V1.15</a>
+    <a href="#phase1" class="critical-section">Phase 1 — Tests ohmmètre 🔴 MAJ V1.15</a>
+    <a href="#phase2">Phase 2 — Alimentation progressive</a>
+    <a href="#phase2_5">Phase 2.5 — Power-On Reset</a>
+    <a href="#phase3">Phase 3 — Cold-crank 6V</a>
+    <a href="#phase4">Phase 4 — Tensions régulées</a>
+    <a href="#phase5">Phase 5 — Courant repos</a>
+    <a href="#phase5_1">Phase 5.1 — Fail-safe diviseur</a>
+    <a href="#phase5_2">Phase 5.2 — VCC monitoring</a>
+    <a href="#phase5_3">Phase 5.3 — Timeout ADC</a>
+    <a href="#phase6">Phase 6 — Injection ADC</a>
+    <a href="#phase7" class="critical-section">Phase 7 — Seuils fonctionnels 🔴 V_OUT corrigé</a>
+    <a href="#phase8" class="critical-section">Phase 8 — Charge 47Ω 🔴 V_OUT corrigé</a>
+    <a href="#phase9">Phase 9 — Court-circuit franc</a>
+    <a href="#phase10" class="critical-section">Phase 10 — Protection backfeed 🔴 Test D4 ajouté</a>
+    <a href="#phase11" class="critical-section">Phase 11 — Test TVS 🔴 D5 sortie ajouté</a>
+    <a href="#phase12">Phase 12 — Tests oscillo avancés</a>
+    <a href="#phase13">Phase 13 — Endurance thermique</a>
+    <a href="#synthesis">Synthèse & GO terrain</a>
+    <a href="#vehicle">Installation véhicule</a>
+    <a href="#debug">Dépannage</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- ÉQUIPEMENT -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="equipment">Équipement requis</h2>
+
+<div class="panel equipment">
+    <div class="panel-title"><span class="icon">🧰</span> Matériel de test</div>
+</div>
+
+<h3>Équipement OBLIGATOIRE</h3>
+<div class="checklist">
+    <label><input type="checkbox"> Alimentation labo 0-30V / 0-3A avec <strong>limite courant réglable</strong></label>
+    <label><input type="checkbox"> Multimètre précision ±0,5% (lecture 5,00V critique)</label>
+    <label><input type="checkbox"> <strong>Potentiomètre 10kΩ linéaire</strong> (simulation variateur)</label>
+    <label><input type="checkbox"> <strong>Résistance 120Ω / 2W</strong> (charge simulant jauge Innovate)</label>
+    <label><input type="checkbox"> Résistance 47Ω / 5W (test surcharge)</label>
+    <label><input type="checkbox"> Résistance 1kΩ (décharge condensateurs)</label>
+    <label><input type="checkbox"> Fusibles 0,5A Fast-blow ×5 (rechange)</label>
+    <label><input type="checkbox"> Fils avec pinces croco</label>
+</div>
+
+<h3>Équipement RECOMMANDÉ</h3>
+<div class="checklist">
+    <label><input type="checkbox"> Générateur JDS6600 (pour tests PWM dynamiques)</label>
+    <label><input type="checkbox"> Oscilloscope ≥50MHz 2 voies (Hanmatek DOS1102, FNIRSI 1014D)</label>
+    <label><input type="checkbox"> Thermomètre IR ±2°C</label>
+    <label><input type="checkbox"> Deuxième alimentation (test backfeed alternatif)</label>
+</div>
+
+<h3>Sécurité</h3>
+<div class="panel warning">
+    <div class="checklist">
+        <label><input type="checkbox"> <strong>Bracelet antistatique + tapis ESD</strong> (ATtiny85 sensible aux décharges !)</label>
+        <label><input type="checkbox"> Lunettes de protection (test court-circuit, risque projection)</label>
+        <label><input type="checkbox"> Zone dégagée, pas de matériaux inflammables à proximité</label>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- CÂBLAGE INITIAL -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="wiring">⚡ CÂBLAGE INITIAL (SECTION CRITIQUE)</h2>
+
+<div class="panel critical">
+    <div class="panel-title"><span class="icon">🔌</span> LIRE ENTIÈREMENT AVANT DE BRANCHER QUOI QUE CE SOIT</div>
+    <p>Un câblage incorrect = destruction du circuit ou danger.</p>
+</div>
+
+<h3>Schéma de câblage banc de test</h3>
+
+<div class="wire-box">
+    <h4>🔌 Connexions OBLIGATOIRES pour tous les tests</h4>
+    <table>
+        <tr><th>Source</th><th>→</th><th>Destination circuit</th><th>Fil suggéré</th></tr>
+        <tr>
+            <td>Alimentation <strong>+</strong></td>
+            <td>→</td>
+            <td><strong>J1 broche +</strong> (entrée +BATT)</td>
+            <td>Rouge</td>
+        </tr>
+        <tr>
+            <td>Alimentation <strong>−</strong></td>
+            <td>→</td>
+            <td><strong>J1 broche −</strong> (GND)</td>
+            <td>Noir</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background:#7f1d1d; text-align:center;"><strong>⚠️ ENTRÉE PWM_IN — JAMAIS EN L'AIR !</strong></td>
+        </tr>
+        <tr>
+            <td>Potentiomètre curseur</td>
+            <td>→</td>
+            <td><strong>PWM_IN</strong> (entrée signal)</td>
+            <td>Jaune</td>
+        </tr>
+        <tr>
+            <td>Potentiomètre pin 1</td>
+            <td>→</td>
+            <td><strong>+12V_PROT</strong> (après D1)</td>
+            <td>Rouge</td>
+        </tr>
+        <tr>
+            <td>Potentiomètre pin 3</td>
+            <td>→</td>
+            <td><strong>GND</strong></td>
+            <td>Noir</td>
+        </tr>
+        <tr>
+            <td colspan="4" style="background:#166534; text-align:center;"><strong>SORTIE — Charge obligatoire (V1.15: après D4)</strong></td>
+        </tr>
+        <tr>
+            <td><strong>OUT_PROT</strong> (J3)</td>
+            <td>→</td>
+            <td>Résistance <strong>120Ω / 2W</strong></td>
+            <td>Blanc</td>
+        </tr>
+        <tr>
+            <td>Autre borne 120Ω</td>
+            <td>→</td>
+            <td><strong>GND</strong></td>
+            <td>Noir</td>
+        </tr>
+    </table>
+</div>
+
+<!-- 🔴 V9.18: Note topologie sortie V1.15 -->
+<div class="panel new">
+    <div class="panel-title"><span class="icon">🆕</span> V9.18 — Topologie sortie V1.15 (3 couches protection)</div>
+    <div class="formula">
+        <strong>Chaîne de sortie V1.15 :</strong><br>
+        Q1 Drain → R13 (10Ω) → <strong>OUT_DRAIN</strong> → D4 (1N5822) → <strong>OUT_PROT</strong> → D5 (TVS) + C11 → J3<br><br>
+        <strong>Points de mesure :</strong><br>
+        • OUT_DRAIN = avant D4 (tension source = 12V - Vds - V_R13)<br>
+        • OUT_PROT = après D4 (tension jauge = OUT_DRAIN - Vf_D4)
+    </div>
+</div>
+
+<div class="stop-box">
+    <strong>🛑 RÈGLE ABSOLUE : PWM_IN ne doit JAMAIS flotter en l'air !</strong><br>
+    Une entrée haute impédance en l'air capte du bruit → comportement erratique.<br>
+    <strong>Toujours connecté au potentiomètre OU au générateur JDS6600.</strong>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 0 - VÉRIFICATIONS VISUELLES -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase0">Phase 0 — Vérifications visuelles (circuit NON alimenté) 🔴</h2>
+
+<div class="panel critical">
+    <div class="panel-title"><span class="icon">👁️</span> AVANT toute alimentation — V1.15 avec D4, D5, C11</div>
+</div>
+
+<h3>Checklist polarités CRITIQUES</h3>
+<table>
+    <tr><th>Réf</th><th>Composant</th><th>Repère</th><th>Orientation correcte</th><th>Si inversé</th><th>☑</th></tr>
+    <tr>
+        <td><strong>D1</strong></td>
+        <td>1N5822 Schottky</td>
+        <td>Bague = cathode</td>
+        <td>Anode vers J1+, Cathode vers +12V_PROT</td>
+        <td class="destroy">⚡ Court-circuit inversé</td>
+        <td>☐</td>
+    </tr>
+    <tr>
+        <td><strong>D2</strong></td>
+        <td>1.5KE18CA TVS entrée</td>
+        <td>Bidirectionnelle</td>
+        <td>Entre +12V_PROT et GND (sens indifférent)</td>
+        <td>N/A (bidirectionnel)</td>
+        <td>☐</td>
+    </tr>
+    <tr>
+        <td><strong>D3</strong></td>
+        <td>1N4733A Zener 5,1V</td>
+        <td>Bague = cathode</td>
+        <td>Cathode vers +12V_PROT, Anode vers GATE_P</td>
+        <td class="destroy">⚡ P-MOS toujours OFF</td>
+        <td>☐</td>
+    </tr>
+    <tr style="background: #1e1530;">
+        <td><strong>D4</strong></td>
+        <td>1N5822 Schottky <span class="new-badge" style="font-size:0.7rem;">V1.15</span></td>
+        <td>Bague = cathode</td>
+        <td>Anode vers OUT_DRAIN, Cathode vers OUT_PROT</td>
+        <td class="destroy">⚡ Backfeed non bloqué</td>
+        <td>☐</td>
+    </tr>
+    <tr style="background: #1e1530;">
+        <td><strong>D5</strong></td>
+        <td>P6KE18CA TVS sortie <span class="new-badge" style="font-size:0.7rem;">V1.15</span></td>
+        <td>Bidirectionnelle</td>
+        <td>Entre OUT_PROT et GND (sens indifférent)</td>
+        <td>N/A (bidirectionnel)</td>
+        <td>☐</td>
+    </tr>
+    <tr>
+        <td><strong>U1</strong></td>
+        <td>NCV2931 LDO</td>
+        <td>Face plate + méplat</td>
+        <td>Pinout SOIC-8: 2,5=GND, 3=IN, 6,7,8=OUT</td>
+        <td class="destroy">🔥 DESTRUCTION</td>
+        <td>☐</td>
+    </tr>
+    <tr>
+        <td><strong>U2</strong></td>
+        <td>ATtiny85-20PU</td>
+        <td>Encoche = pin1</td>
+        <td>Encoche vers C6</td>
+        <td class="destroy">🔥 DESTRUCTION</td>
+        <td>☐</td>
+    </tr>
+    <tr>
+        <td><strong>C4</strong></td>
+        <td>100µF électro</td>
+        <td>Bande − = négatif</td>
+        <td>+ vers +12V_PROT</td>
+        <td class="destroy">⚡ EXPLOSION</td>
+        <td>☐</td>
+    </tr>
+    <tr>
+        <td><strong>C6</strong></td>
+        <td>10µF électro</td>
+        <td>Bande − = négatif</td>
+        <td>+ vers +5V_MCU</td>
+        <td class="destroy">⚡ EXPLOSION</td>
+        <td>☐</td>
+    </tr>
+    <tr style="background: #1e1530;">
+        <td><strong>C11</strong></td>
+        <td>100nF céramique <span class="new-badge" style="font-size:0.7rem;">V1.15</span></td>
+        <td>Non polarisé</td>
+        <td>Entre OUT_PROT et GND (sens indifférent)</td>
+        <td>N/A (non polarisé)</td>
+        <td>☐</td>
+    </tr>
+</table>
+
+<h3>Vérification soudures</h3>
+<div class="checklist">
+    <label><input type="checkbox"> Aucun pont de soudure entre pistes</label>
+    <label><input type="checkbox"> Soudures brillantes et coniques (pas mates)</label>
+    <label><input type="checkbox"> Fusible F1 dans son support</label>
+    <label><input type="checkbox"> <strong>V1.15:</strong> D4, D5, C11 correctement soudés</label>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 1 - TESTS OHMMÈTRE -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase1">Phase 1 — Tests ohmmètre (circuit NON alimenté) 🔴</h2>
+
+<div class="panel warning">
+    <div class="panel-title"><span class="icon">Ω</span> Détection courts-circuits AVANT première alimentation</div>
+</div>
+
+<h3>1.0 — Préparation obligatoire</h3>
+<div class="panel critical">
+    <ol>
+        <li>☐ Alimentation <strong>DÉBRANCHÉE</strong> de J1</li>
+        <li>☐ Potentiomètre <strong>DÉCONNECTÉ</strong> (fils retirés)</li>
+        <li>☐ Charge 120Ω <strong>DÉCONNECTÉE</strong></li>
+        <li>☐ <strong>Décharge condensateurs :</strong> Connecter résistance 1kΩ entre +12V_PROT et GND pendant <strong>10 secondes</strong></li>
+        <li>☐ Multimètre en mode <strong>Ω</strong> (ohmmètre)</li>
+    </ol>
+</div>
+
+<h3>1.1 — Tests courts-circuits rails alimentation</h3>
+
+<div class="ohm-box">
+    <h4>🔧 Multimètre : Mode Ohmmètre (Ω) — Calibre 200kΩ ou auto</h4>
+    <p><strong>Note :</strong> Valeurs EN CIRCUIT, influencées par composants parallèles</p>
+    <table>
+        <tr><th>Test</th><th>Rouge sur</th><th>Noir sur</th><th>Attendu EN CIRCUIT</th><th>Mesuré</th><th>Verdict</th></tr>
+        <tr>
+            <td>+BATT / GND</td>
+            <td>J1 +</td>
+            <td>J1 −</td>
+            <td><strong>50-200 kΩ</strong></td>
+            <td class="record">_____ kΩ</td>
+            <td>☐ OK ☐ &lt;10kΩ = Court!</td>
+        </tr>
+        <tr>
+            <td>+12V_PROT / GND</td>
+            <td>Après D1</td>
+            <td>GND</td>
+            <td><strong>50-200 kΩ</strong></td>
+            <td class="record">_____ kΩ</td>
+            <td>☐ OK ☐ &lt;10kΩ = Court!</td>
+        </tr>
+        <tr>
+            <td>+5V_MCU / GND</td>
+            <td>Sortie U1</td>
+            <td>GND</td>
+            <td><strong>&gt; 100 kΩ</strong></td>
+            <td class="record">_____ kΩ</td>
+            <td>☐ OK ☐ &lt;50kΩ = Fuite</td>
+        </tr>
+        <tr style="background: #1e1530;">
+            <td>OUT_PROT / GND <span class="new-badge" style="font-size:0.7rem;">V1.15</span></td>
+            <td>J3 sortie</td>
+            <td>GND</td>
+            <td><strong>&gt;1 MΩ</strong> ou <strong>OL</strong><br><small>(D4 bloque + Q1 OFF)</small></td>
+            <td class="record">_____ MΩ</td>
+            <td>☐ OK ☐ &lt;100kΩ = Fuite!</td>
+        </tr>
+    </table>
+</div>
+
+<div class="stop-box">
+    <strong>🛑 Si résistance &lt; 10kΩ entre +BATT et GND → COURT-CIRCUIT</strong><br>
+    NE PAS alimenter ! Inspecter soudures, chercher pont.
+</div>
+
+<h3>1.2 — Tests résistances EN CIRCUIT</h3>
+
+<div class="ohm-box">
+    <h4>🔧 Multimètre : Mode Ohmmètre (Ω)</h4>
+    <table>
+        <tr><th>Réf</th><th>Valeur nominale</th><th>Tolérance</th><th>EN CIRCUIT (typique)</th><th>Mesuré</th><th>☑</th></tr>
+        <tr><td><strong>R1</strong></td><td>33 kΩ</td><td>±1%</td><td>~12 kΩ (R1//R2)</td><td class="record">_____ kΩ</td><td>☐</td></tr>
+        <tr><td><strong>R2</strong></td><td>20 kΩ</td><td>±1%</td><td>~12 kΩ (R2//R1)</td><td class="record">_____ kΩ</td><td>☐</td></tr>
+        <tr><td><strong>R3</strong></td><td>470 Ω</td><td>±5%</td><td>~470 Ω</td><td class="record">_____ Ω</td><td>☐</td></tr>
+        <tr><td><strong>R4</strong></td><td>10 kΩ</td><td>±5%</td><td>Variable (C2 charge)</td><td class="record">_____ kΩ</td><td>☐</td></tr>
+        <tr><td><strong>R8</strong></td><td>10 kΩ</td><td>±5%</td><td>~10 kΩ</td><td class="record">_____ kΩ</td><td>☐</td></tr>
+        <tr><td><strong>R9</strong></td><td>100 Ω</td><td>±5%</td><td>~100 Ω</td><td class="record">_____ Ω</td><td>☐</td></tr>
+        <tr><td><strong>R10</strong></td><td>100 kΩ</td><td>±5%</td><td>~100 kΩ</td><td class="record">_____ kΩ</td><td>☐</td></tr>
+        <tr><td><strong>R11</strong></td><td>100 Ω</td><td>±5%</td><td>~100 Ω</td><td class="record">_____ Ω</td><td>☐</td></tr>
+        <tr><td><strong>R13</strong></td><td>10 Ω</td><td>±5%</td><td>~10 Ω</td><td class="record">_____ Ω</td><td>☐</td></tr>
+        <tr><td><strong>R_RST</strong></td><td>10 kΩ</td><td>±5%</td><td>~10 kΩ</td><td class="record">_____ kΩ</td><td>☐</td></tr>
+        <tr><td><strong>F1</strong></td><td>Fusible 500mA</td><td>—</td><td>&lt; 1 Ω</td><td class="record">_____ Ω</td><td>☐</td></tr>
+    </table>
+</div>
+
+<h3>1.3 — Tests diodes EN CIRCUIT (mode diode) 🔴 MAJ V1.15</h3>
+
+<div class="ohm-box">
+    <h4>🔧 Multimètre : Mode Diode (symbole ▶|)</h4>
+    <table>
+        <tr><th>Test</th><th>Rouge</th><th>Noir</th><th>Attendu EN CIRCUIT</th><th>Mesuré</th><th>☑</th></tr>
+        <tr>
+            <td><strong>D1</strong> Schottky direct</td>
+            <td>Anode (J1+)</td>
+            <td>Cathode</td>
+            <td><strong>0,15-0,40V</strong></td>
+            <td class="record">_____ V</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td><strong>D1</strong> inverse</td>
+            <td>Cathode</td>
+            <td>Anode</td>
+            <td><strong>OL</strong> ou &gt;2V</td>
+            <td class="record">_____</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td><strong>D2</strong> TVS entrée sens 1</td>
+            <td>+12V_PROT</td>
+            <td>GND</td>
+            <td><strong>0,5-0,9V</strong> (bidir)</td>
+            <td class="record">_____ V</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td><strong>D2</strong> TVS entrée sens 2</td>
+            <td>GND</td>
+            <td>+12V_PROT</td>
+            <td><strong>0,5-0,9V</strong> (symétrique)</td>
+            <td class="record">_____ V</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td><strong>D3</strong> Zener direct</td>
+            <td>GATE_P (anode)</td>
+            <td>+12V_PROT (cathode)</td>
+            <td><strong>0,5-0,8V</strong></td>
+            <td class="record">_____ V</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td><strong>D3</strong> Zener inverse</td>
+            <td>+12V_PROT</td>
+            <td>GATE_P</td>
+            <td><strong>OL</strong> ou <strong>4,5-5,5V</strong></td>
+            <td class="record">_____</td>
+            <td>☐</td>
+        </tr>
+        <tr style="background: #1e1530;">
+            <td><strong>D4</strong> Schottky direct <span class="new-badge" style="font-size:0.7rem;">V1.15</span></td>
+            <td>OUT_DRAIN (anode)</td>
+            <td>OUT_PROT (cathode)</td>
+            <td><strong>0,15-0,40V</strong></td>
+            <td class="record">_____ V</td>
+            <td>☐</td>
+        </tr>
+        <tr style="background: #1e1530;">
+            <td><strong>D4</strong> Schottky inverse <span class="new-badge" style="font-size:0.7rem;">V1.15</span></td>
+            <td>OUT_PROT</td>
+            <td>OUT_DRAIN</td>
+            <td><strong>OL</strong> ou &gt;2V</td>
+            <td class="record">_____</td>
+            <td>☐</td>
+        </tr>
+        <tr style="background: #1e1530;">
+            <td><strong>D5</strong> TVS sortie sens 1 <span class="new-badge" style="font-size:0.7rem;">V1.15</span></td>
+            <td>OUT_PROT</td>
+            <td>GND</td>
+            <td><strong>0,5-0,9V</strong> (bidir)</td>
+            <td class="record">_____ V</td>
+            <td>☐</td>
+        </tr>
+        <tr style="background: #1e1530;">
+            <td><strong>D5</strong> TVS sortie sens 2 <span class="new-badge" style="font-size:0.7rem;">V1.15</span></td>
+            <td>GND</td>
+            <td>OUT_PROT</td>
+            <td><strong>0,5-0,9V</strong> (symétrique)</td>
+            <td class="record">_____ V</td>
+            <td>☐</td>
+        </tr>
+    </table>
+</div>
+
+<h3>1.4 — Tests transistors EN CIRCUIT</h3>
+
+<div class="ohm-box">
+    <h4>🔧 Multimètre : Mode Diode</h4>
+    <table>
+        <tr><th>Test</th><th>Rouge</th><th>Noir</th><th>Attendu EN CIRCUIT</th><th>Mesuré</th><th>☑</th></tr>
+        <tr>
+            <td><strong>Q2</strong> BS170 body diode</td>
+            <td>Source (pin1)</td>
+            <td>Drain (pin3)</td>
+            <td><strong>0,4-0,7V</strong></td>
+            <td class="record">_____ V</td>
+            <td>☐</td>
+        </tr>
+        <tr>
+            <td><strong>Q1</strong> FQP27P06 body diode</td>
+            <td>Drain (pin2)</td>
+            <td>Source (pin3)</td>
+            <td><strong>0,4-0,7V</strong></td>
+            <td class="record">_____ V</td>
+            <td>☐</td>
+        </tr>
+    </table>
+    <p><strong>⚠️ Pinout BS170 (TO-92) :</strong> pin1=Source, pin2=Gate, pin3=Drain<br>
+    <strong>⚠️ Pinout FQP27P06 (TO-220) :</strong> pin1=Gate, pin2=Drain, pin3=Source</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 2 - ALIMENTATION PROGRESSIVE -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase2">Phase 2 — Alimentation progressive</h2>
+
+<div class="panel info">
+    <div class="panel-title"><span class="icon">⚡</span> Vérifier que les tensions montent correctement</div>
+</div>
+
+<div class="alim-box">
+    <h4>⚡ Configuration alimentation</h4>
+    <table>
+        <tr><th>Paramètre</th><th>Valeur</th></tr>
+        <tr><td>Tension initiale</td><td><strong>0V</strong></td></tr>
+        <tr><td>Limite courant</td><td><strong>100mA</strong></td></tr>
+    </table>
+</div>
+
+<div class="pot-box">
+    <h4>🎛️ Potentiomètre à fond vers GND</h4>
+    <p>PWM_IN = 0V → Hors fenêtre → Sortie OFF</p>
+</div>
+
+<h3>Procédure pas-à-pas</h3>
+<ol>
+    <li>Vérifier tension alim = 0V</li>
+    <li>Connecter circuit à J1</li>
+    <li>Monter <strong>lentement</strong> à 6V</li>
+    <li>Vérifier +5V_MCU ≈ 4,5-5,0V</li>
+    <li>Monter à 12V</li>
+    <li>Vérifier +5V_MCU = 4,90-5,10V</li>
+    <li>Vérifier I < 5mA (ATtiny en veille)</li>
+</ol>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Mesure</th><th>Attendu</th><th class="go">GO</th><th class="nogo">NO-GO</th><th>Mesuré</th></tr>
+        <tr>
+            <td>+5V_MCU @ 6V</td>
+            <td>4,5-5,0V</td>
+            <td class="go">≥4,5V</td>
+            <td class="nogo">&lt;4,0V</td>
+            <td class="record">_______ V</td>
+        </tr>
+        <tr>
+            <td>+5V_MCU @ 12V</td>
+            <td>4,90-5,10V</td>
+            <td class="go">4,85-5,15V</td>
+            <td class="nogo">&lt;4,8V ou &gt;5,2V</td>
+            <td class="record">_______ V</td>
+        </tr>
+        <tr>
+            <td>Courant @ 12V</td>
+            <td>&lt;5mA</td>
+            <td class="go">&lt;10mA</td>
+            <td class="nogo">&gt;50mA</td>
+            <td class="record">_______ mA</td>
+        </tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 2.5 - POWER-ON RESET -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase2_5">Phase 2.5 — Power-On Reset (détection glitch boot)</h2>
+
+<div class="panel info">
+    <div class="panel-title"><span class="icon">🔄</span> Vérifier qu'aucun glitch ne survient au démarrage</div>
+</div>
+
+<div class="scope-box">
+    <h4>📟 Configuration oscilloscope</h4>
+    <table>
+        <tr><th>Paramètre</th><th>Réglage</th></tr>
+        <tr><td>CH1</td><td>OUT_PROT (J3)</td></tr>
+        <tr><td>CH1 V/div</td><td>5V/div</td></tr>
+        <tr><td>Timebase</td><td>100ms/div</td></tr>
+        <tr><td>Trigger</td><td>CH1, Rising, 2V</td></tr>
+        <tr><td>Mode</td><td>Single</td></tr>
+    </table>
+</div>
+
+<ol>
+    <li>Couper alimentation</li>
+    <li>Armer oscilloscope en Single</li>
+    <li>Allumer alimentation (12V direct)</li>
+    <li>Observer si OUT_PROT a fait un pic transitoire</li>
+</ol>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Mesure</th><th class="go">GO</th><th class="nogo">NO-GO</th></tr>
+        <tr>
+            <td>Glitch OUT_PROT au boot</td>
+            <td class="go">Aucun pic visible (&lt;1V)</td>
+            <td class="nogo">Pic &gt;5V → Jauge clignote au démarrage</td>
+        </tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 3 - COLD CRANK -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase3">Phase 3 — Cold-crank 6V</h2>
+
+<div class="panel warning">
+    <div class="panel-title"><span class="icon">🥶</span> Test démarrage moteur (chute batterie)</div>
+</div>
+
+<div class="alim-box">
+    <table>
+        <tr><th>Paramètre</th><th>Valeur</th></tr>
+        <tr><td>Tension</td><td><strong>6,0V</strong></td></tr>
+        <tr><td>Limite courant</td><td>100mA</td></tr>
+    </table>
+</div>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Mesure</th><th>Attendu</th><th class="go">GO</th><th class="nogo">NO-GO</th><th>Mesuré</th></tr>
+        <tr>
+            <td>+5V_MCU @ 6V</td>
+            <td>~4,8V</td>
+            <td class="go">≥4,75V</td>
+            <td class="nogo">&lt;4,5V → Dropout trop élevé</td>
+            <td class="record">_______ V</td>
+        </tr>
+    </table>
+</div>
+
+<div class="note">
+    <strong>NCV2931:</strong> Dropout ~0,4V @ 10mA → À 6V entrée, sortie = 5V stable. BOD ATtiny85 @ 2,7V largement OK.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 4 - TENSIONS RÉGULÉES -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase4">Phase 4 — Tensions régulées</h2>
+
+<div class="alim-box">
+    <table>
+        <tr><th>Paramètre</th><th>Valeur</th></tr>
+        <tr><td>Tension</td><td><strong>12,0V</strong></td></tr>
+        <tr><td>Limite courant</td><td>100mA</td></tr>
+    </table>
+</div>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Point</th><th>Attendu</th><th class="go">GO</th><th class="nogo">NO-GO</th><th>Mesuré</th></tr>
+        <tr>
+            <td>+12V_PROT</td>
+            <td>~11,7V</td>
+            <td class="go">11,4-12,0V</td>
+            <td class="nogo">&lt;10V ou &gt;13V</td>
+            <td class="record">_______ V</td>
+        </tr>
+        <tr>
+            <td>+5V_MCU</td>
+            <td>5,00V</td>
+            <td class="go">4,90-5,10V</td>
+            <td class="nogo">&lt;4,8V ou &gt;5,2V</td>
+            <td class="record">_______ V</td>
+        </tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 5 - COURANT REPOS -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase5">Phase 5 — Courant repos</h2>
+
+<div class="panel info">
+    <div class="panel-title"><span class="icon">💤</span> ATtiny85 en veille — Code V1.7.8 avec ADC OFF sleep</div>
+</div>
+
+<div class="pot-box">
+    <h4>🎛️ Potentiomètre à fond vers GND (0V)</h4>
+    <p>PWM_IN = 0V → Hors fenêtre → ATtiny en sleep</p>
+</div>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Mesure</th><th>Attendu V1.15</th><th class="go">GO</th><th class="nogo">NO-GO</th><th>Mesuré</th></tr>
+        <tr>
+            <td>I_repos (PWM_IN=0V)</td>
+            <td>~0,5-0,7mA</td>
+            <td class="go">&lt;1mA</td>
+            <td class="nogo">&gt;2mA → ATtiny ne dort pas</td>
+            <td class="record">_______ mA</td>
+        </tr>
+    </table>
+</div>
+
+<div class="note">
+    <strong>V1.15:</strong> I_repos légèrement plus haut que V1.14 à cause des fuites D4/D5 (~10-100µA), mais reste &lt;1mA.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 5.1 - FAIL-SAFE DIVISEUR -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase5_1">Phase 5.1 — Fail-safe diviseur</h2>
+
+<div class="panel info">
+    <div class="panel-title"><span class="icon">🛡️</span> Code V1.7.8: Si ADC &lt;50 ou &gt;950 → Force OFF</div>
+</div>
+
+<h3>Test coupure R1</h3>
+<ol>
+    <li>Pot à ~5V (dans fenêtre) → OUT_PROT allumé</li>
+    <li>Déconnecter fil du pot vers PWM_IN</li>
+    <li>Observer OUT_PROT doit passer à 0V en &lt;2s</li>
+</ol>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Test</th><th class="go">GO</th><th class="nogo">NO-GO</th></tr>
+        <tr>
+            <td>Entrée flottante → sortie OFF</td>
+            <td class="go">OUT_PROT = 0V en &lt;2s</td>
+            <td class="nogo">OUT_PROT reste allumé</td>
+        </tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 5.2 - VCC MONITORING -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase5_2">Phase 5.2 — VCC monitoring (auto-recovery cold-crank)</h2>
+
+<div class="panel info">
+    <div class="panel-title"><span class="icon">🔋</span> Code V1.7.8: Recovery automatique après chute VCC</div>
+</div>
+
+<ol>
+    <li>Alimentation 12V, pot ~5V → OUT_PROT allumé</li>
+    <li>Baisser alimentation à 5V rapidement</li>
+    <li>Observer OUT_PROT → doit s'éteindre (VCC &lt; 4,5V)</li>
+    <li>Remonter à 12V</li>
+    <li>Observer OUT_PROT → doit se rallumer automatiquement en &lt;5s</li>
+</ol>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Test</th><th class="go">GO</th><th class="nogo">NO-GO</th></tr>
+        <tr>
+            <td>Recovery après chute VCC</td>
+            <td class="go">OUT_PROT rallume en &lt;5s</td>
+            <td class="nogo">Reste éteint → reflasher V1.7.8</td>
+        </tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 5.3 - TIMEOUT ADC -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase5_3">Phase 5.3 — Timeout ADC (optionnel)</h2>
+
+<div class="panel info">
+    <div class="panel-title"><span class="icon">⏱️</span> Test optionnel — Couvert par autres phases</div>
+    <p>Le timeout ADC (100ms) est une protection interne. Si Phase 5.1 OK, cette protection fonctionne implicitement.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 6 - INJECTION ADC -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase6">Phase 6 — Injection ADC (protection clamp)</h2>
+
+<div class="panel info">
+    <div class="panel-title"><span class="icon">🛡️</span> Vérifier que l'entrée ADC ne dépasse pas 5,5V</div>
+</div>
+
+<div class="alim-box">
+    <table>
+        <tr><th>Paramètre</th><th>Valeur</th></tr>
+        <tr><td>Tension</td><td><strong>14,4V</strong> (pire cas alternateur)</td></tr>
+        <tr><td>Limite courant</td><td>100mA</td></tr>
+    </table>
+</div>
+
+<div class="pot-box">
+    <h4>🎛️ Potentiomètre à FOND vers +12V</h4>
+</div>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Mesure</th><th>Attendu</th><th class="go">GO</th><th class="nogo">NO-GO</th><th>Mesuré</th></tr>
+        <tr>
+            <td>V sur pin 7 ATtiny (ADC_DIV)</td>
+            <td>~5,0-5,3V</td>
+            <td class="go">≤ 5,5V</td>
+            <td class="nogo">&gt; 5,7V → Danger ATtiny!</td>
+            <td class="record">_______ V</td>
+        </tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 7 - SEUILS FONCTIONNELS -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase7">Phase 7 — Seuils fonctionnels 🔴 V_OUT corrigé</h2>
+
+<div class="panel critical">
+    <div class="panel-title"><span class="icon">🎯</span> Phase LA PLUS IMPORTANTE — Validation fenêtre PWM</div>
+</div>
+
+<!-- 🔴 V9.18: Note tension sortie V1.15 -->
+<div class="panel new">
+    <div class="panel-title"><span class="icon">⚠️</span> V9.18 — Tension sortie V1.15 corrigée</div>
+    <div class="formula">
+        <strong>Chaîne de chute V1.15 :</strong><br>
+        V_OUT_PROT = V_BATT - Vf_D1 - Vds_Q1 - V_R13 - Vf_D4<br>
+        V_OUT_PROT = 12V - 0,3V - 0,07V - 1,0V - 0,3V ≈ <strong>10,3-10,6V</strong><br><br>
+        <strong>Attendu sur J3 (OUT_PROT) :</strong> ~10,5-11V (PAS 12V)
+    </div>
+</div>
+
+<h3>Rappel seuils théoriques (Code V1.7.8)</h3>
+<table>
+    <tr><th>Seuil</th><th>ADC</th><th>V_PWM</th><th>Transition</th></tr>
+    <tr><td>SEUIL_BAS_LIMITE</td><td>199</td><td>2,58V</td><td>ON→OFF (sort par le bas)</td></tr>
+    <tr><td>SEUIL_BAS_ON</td><td>239</td><td>3,10V</td><td>OFF→ON (entre par le bas)</td></tr>
+    <tr><td>SEUIL_HAUT_LIMITE</td><td>511</td><td>6,61V</td><td>OFF→ON (entre par le haut)</td></tr>
+    <tr><td>SEUIL_HAUT_ON</td><td>551</td><td>7,15V</td><td>ON→OFF (sort par le haut)</td></tr>
+</table>
+
+<div class="alim-box">
+    <table>
+        <tr><th>Paramètre</th><th>Valeur</th></tr>
+        <tr><td>Tension</td><td>12,0V</td></tr>
+        <tr><td>Limite courant</td><td>200mA</td></tr>
+    </table>
+</div>
+
+<h3>7.1 — Test seuil bas (rampe montante puis descendante)</h3>
+
+<div class="pot-box">
+    <h4>🎛️ Procédure</h4>
+    <p><strong>A) Rampe MONTANTE</strong></p>
+    <ol>
+        <li>Pot à fond GND (0V)</li>
+        <li>Multimètre sur PWM_IN</li>
+        <li>Tourner LENTEMENT vers +12V</li>
+        <li>Noter V_PWM quand OUT_PROT passe de 0V à <strong>~10,5V</strong></li>
+    </ol>
+    <div class="expected">
+        <div class="label">Transition OFF→ON attendue à</div>
+        <div class="value">~3,10V (±5% = 2,95 à 3,25V)</div>
+    </div>
+    
+    <p><strong>B) Rampe DESCENDANTE</strong></p>
+    <ol>
+        <li>Monter jusqu'à ~5V (dans fenêtre)</li>
+        <li>Redescendre LENTEMENT vers GND</li>
+        <li>Noter V_PWM quand OUT_PROT passe de <strong>~10,5V</strong> à 0V</li>
+    </ol>
+    <div class="expected">
+        <div class="label">Transition ON→OFF attendue à</div>
+        <div class="value">~2,58V (±5% = 2,45 à 2,71V)</div>
+    </div>
+</div>
+
+<h3>7.2 — Test seuil haut</h3>
+
+<div class="pot-box">
+    <h4>🎛️ Procédure</h4>
+    <p><strong>A) Rampe MONTANTE (sortir par le haut)</strong></p>
+    <ol>
+        <li>Pot à ~5V → OUT_PROT = <strong>~10,5V</strong></li>
+        <li>Tourner LENTEMENT vers +12V</li>
+        <li>Noter V_PWM quand OUT_PROT passe de <strong>~10,5V</strong> à 0V</li>
+    </ol>
+    <div class="expected">
+        <div class="label">Transition ON→OFF attendue à</div>
+        <div class="value">~7,15V (±5% = 6,79 à 7,51V)</div>
+    </div>
+    
+    <p><strong>B) Rampe DESCENDANTE (rentrer par le haut)</strong></p>
+    <ol>
+        <li>Pot vers +12V → OUT_PROT = 0V</li>
+        <li>Redescendre LENTEMENT</li>
+        <li>Noter V_PWM quand OUT_PROT passe de 0V à <strong>~10,5V</strong></li>
+    </ol>
+    <div class="expected">
+        <div class="label">Transition OFF→ON attendue à</div>
+        <div class="value">~6,61V (±5% = 6,28 à 6,94V)</div>
+    </div>
+</div>
+
+<h3>7.3 — Tableau récapitulatif</h3>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Seuil</th><th>Théorique</th><th class="go">GO (±5%)</th><th>Mesuré</th><th>☑</th></tr>
+        <tr><td>SEUIL_BAS_ON</td><td>3,10V</td><td class="go">2,95-3,25V</td><td class="record">_______ V</td><td>☐</td></tr>
+        <tr><td>SEUIL_BAS_LIMITE</td><td>2,58V</td><td class="go">2,45-2,71V</td><td class="record">_______ V</td><td>☐</td></tr>
+        <tr><td>SEUIL_HAUT_LIMITE</td><td>6,61V</td><td class="go">6,28-6,94V</td><td class="record">_______ V</td><td>☐</td></tr>
+        <tr><td>SEUIL_HAUT_ON</td><td>7,15V</td><td class="go">6,79-7,51V</td><td class="record">_______ V</td><td>☐</td></tr>
+        <tr><td>Hystérésis basse</td><td>~520mV</td><td class="go">400-650mV</td><td class="record">_______ mV</td><td>☐</td></tr>
+        <tr><td>Hystérésis haute</td><td>~540mV</td><td class="go">400-650mV</td><td class="record">_______ mV</td><td>☐</td></tr>
+        <tr style="background: #1e1530;"><td><strong>V_OUT_PROT (dans fenêtre)</strong></td><td><strong>~10,5V</strong></td><td class="go"><strong>10,0-11,0V</strong></td><td class="record">_______ V</td><td>☐</td></tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 8 - CHARGE 47Ω -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase8">Phase 8 — Test surcharge modérée (charge 47Ω) 🔴 V_OUT corrigé</h2>
+
+<div class="panel info">
+    <div class="panel-title"><span class="icon">🔌</span> Test charge plus forte que la jauge</div>
+</div>
+
+<!-- 🔴 V9.18: Calculs mis à jour V1.15 -->
+<div class="panel new">
+    <div class="panel-title"><span class="icon">📊</span> V9.18 — Calculs V1.15 avec chute D4</div>
+    <div class="formula">
+        <strong>Tension disponible:</strong> V_OUT_DRAIN ≈ 10,9V (avant D4)<br>
+        <strong>R_totale:</strong> R13 + R_charge = 10Ω + 47Ω = 57Ω<br>
+        <strong>Courant:</strong> I = 10,9V / 57Ω ≈ <strong>191mA</strong><br>
+        <strong>P_R13:</strong> 0,191² × 10 = <strong>0,36W</strong> &lt;&lt; 2W ✓<br>
+        <strong>V_OUT_PROT:</strong> 10,9V - 0,3V (D4) - 1,9V (R13) ≈ <strong>8,7V</strong>
+    </div>
+</div>
+
+<h3>Câblage</h3>
+<div class="wire-box">
+    <ol>
+        <li><strong>Débrancher</strong> la charge 120Ω de OUT_PROT</li>
+        <li><strong>Connecter</strong> résistance <strong>47Ω / 5W</strong> entre OUT_PROT et GND</li>
+    </ol>
+</div>
+
+<div class="alim-box">
+    <table>
+        <tr><th>Paramètre</th><th>Valeur</th></tr>
+        <tr><td>Tension</td><td>12,0V</td></tr>
+        <tr><td>Limite courant</td><td><strong>500mA</strong></td></tr>
+    </table>
+</div>
+
+<div class="pot-box">
+    <h4>🎛️ Potentiomètre à ~5V (dans fenêtre)</h4>
+</div>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Mesure</th><th>Attendu V1.15</th><th class="go">GO</th><th class="nogo">NO-GO</th><th>Mesuré</th></tr>
+        <tr>
+            <td>Courant alimentation</td>
+            <td>~190mA</td>
+            <td class="go">160-220mA stable</td>
+            <td class="nogo">Fluctuant ou &gt;300mA</td>
+            <td class="record">______ mA</td>
+        </tr>
+        <tr>
+            <td>V_OUT_PROT (charge 47Ω)</td>
+            <td>~8,7V</td>
+            <td class="go">8,0-9,5V</td>
+            <td class="nogo">&lt;7V ou &gt;11V</td>
+            <td class="record">______ V</td>
+        </tr>
+        <tr>
+            <td>Température R13</td>
+            <td>Tiède</td>
+            <td class="go">&lt;50°C</td>
+            <td class="nogo">&gt;70°C</td>
+            <td>☐ Tiède ☐ Chaud</td>
+        </tr>
+    </table>
+</div>
+
+<p><strong>Après test:</strong> Remettre charge 120Ω.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 9 - COURT-CIRCUIT FRANC -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase9">Phase 9 — Court-circuit franc (TEST DESTRUCTIF)</h2>
+
+<div class="panel critical">
+    <div class="panel-title"><span class="icon">⚡</span> Fusible sacrifié — Avoir rechange !</div>
+</div>
+
+<div class="alim-box">
+    <table>
+        <tr><th>Paramètre</th><th>Valeur</th></tr>
+        <tr><td>Tension</td><td>12,0V</td></tr>
+        <tr><td>Limite courant</td><td><strong>1,5A max</strong></td></tr>
+    </table>
+</div>
+
+<div class="pot-box">
+    <h4>🎛️ Potentiomètre à ~5V</h4>
+    <p>OUT_PROT = ~10,5V (dans fenêtre)</p>
+</div>
+
+<ol>
+    <li>Vérifier OUT_PROT ≈ 10,5V</li>
+    <li>Court-circuiter OUT_PROT vers GND avec fil</li>
+    <li>Observer fusion fusible F1 en <strong>&lt;0,5s</strong></li>
+    <li>Couper alimentation</li>
+    <li>Remplacer fusible F1</li>
+</ol>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Mesure</th><th class="go">GO</th><th class="nogo">NO-GO</th></tr>
+        <tr>
+            <td>Temps fusion F1</td>
+            <td class="go">&lt;0,5s (Fast-blow)</td>
+            <td class="nogo">&gt;2s ou pas de fusion</td>
+        </tr>
+        <tr>
+            <td>R13 après test</td>
+            <td class="go">~10Ω (intacte)</td>
+            <td class="nogo">OL ou &lt;5Ω (détruite)</td>
+        </tr>
+    </table>
+</div>
+
+<div class="note">
+    <strong>Maximum 2 répétitions</strong> de ce test. Attendre 5min refroidissement entre tests.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 10 - PROTECTION BACKFEED -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase10">Phase 10 — Protection backfeed 🔴 Test D4 ajouté</h2>
+
+<div class="panel info">
+    <div class="panel-title"><span class="icon">🔙</span> V1.15: D4 est la PREMIÈRE barrière anti-backfeed</div>
+</div>
+
+<!-- 🔴 V9.18: Explication V1.15 -->
+<div class="panel new">
+    <div class="panel-title"><span class="icon">🆕</span> V9.18 — Protection 2 niveaux V1.15</div>
+    <div class="formula">
+        <strong>Niveau 1:</strong> D4 (1N5822) bloque backfeed physiquement<br>
+        <strong>Niveau 2:</strong> Q1 P-MOS body diode (bloque si D4 défaillante)<br><br>
+        <strong>Test:</strong> Injecter 12V sur OUT_PROT, vérifier que OUT_DRAIN reste bas
+    </div>
+</div>
+
+<h3>10.1 — Test anti-backfeed D4 (NOUVEAU V9.18)</h3>
+
+<h4>Étape 1 — État initial (P-MOS OFF)</h4>
+<div class="alim-box">
+    <table>
+        <tr><th>Paramètre</th><th>Valeur</th></tr>
+        <tr><td>Tension sur J1</td><td>12,0V</td></tr>
+        <tr><td>Limite courant</td><td>100mA</td></tr>
+    </table>
+</div>
+<div class="pot-box">
+    <h4>🎛️ Potentiomètre à fond vers GND</h4>
+    <p>PWM_IN = 0V → Hors fenêtre → OUT_PROT = 0V (P-MOS OFF)</p>
+</div>
+<ol>
+    <li>Vérifier OUT_PROT = ~0V</li>
+    <li>Vérifier OUT_DRAIN = ~0V (avant D4)</li>
+</ol>
+
+<h4>Étape 2 — Couper alimentation J1</h4>
+<ol>
+    <li>Couper alimentation</li>
+    <li>Débrancher fils de J1</li>
+    <li>Attendre 5 secondes</li>
+</ol>
+
+<h4>Étape 3 — Injecter sur OUT_PROT</h4>
+<div class="wire-box">
+    <h4>🔌 Nouveau câblage</h4>
+    <table>
+        <tr><th>Alimentation</th><th>→</th><th>Circuit</th></tr>
+        <tr><td>+ alimentation</td><td>→</td><td><strong>OUT_PROT</strong> (J3)</td></tr>
+        <tr><td>− alimentation</td><td>→</td><td><strong>GND</strong></td></tr>
+    </table>
+</div>
+
+<div class="alim-box">
+    <table>
+        <tr><th>Paramètre</th><th>Valeur</th></tr>
+        <tr><td>Tension</td><td><strong>12,0V</strong></td></tr>
+        <tr><td>Limite courant</td><td><strong>50mA MAX</strong></td></tr>
+    </table>
+</div>
+
+<ol>
+    <li>Allumer alimentation sur OUT_PROT</li>
+    <li>Mesurer courant tiré : devrait être <strong>&lt; 5mA</strong></li>
+    <li>Mesurer tension sur <strong>OUT_DRAIN</strong> (avant D4)</li>
+    <li>Mesurer tension sur <strong>+12V_PROT</strong></li>
+</ol>
+
+<h4>Étape 4 — Vérification</h4>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Mesure</th><th>Attendu</th><th class="go">GO (D4 OK)</th><th class="nogo">NO-GO (D4 défaillante)</th><th>Mesuré</th></tr>
+        <tr style="background: #1e1530;">
+            <td><strong>V sur OUT_DRAIN</strong> <span class="new-badge" style="font-size:0.7rem;">V1.15</span></td>
+            <td>&lt; 1V</td>
+            <td class="go">&lt; 1V</td>
+            <td class="nogo">&gt; 10V → D4 passante ou inversée!</td>
+            <td class="record">______ V</td>
+        </tr>
+        <tr>
+            <td>V sur +12V_PROT</td>
+            <td>~0,5-2V (résidu)</td>
+            <td class="go">&lt; 5V</td>
+            <td class="nogo">&gt; 10V → Backfeed!</td>
+            <td class="record">______ V</td>
+        </tr>
+        <tr>
+            <td>Courant injection</td>
+            <td>&lt; 5mA</td>
+            <td class="go">&lt; 10mA</td>
+            <td class="nogo">&gt; 30mA → Fuite!</td>
+            <td class="record">______ mA</td>
+        </tr>
+    </table>
+</div>
+
+<div class="panel success">
+    <strong>Si OUT_DRAIN &lt; 1V :</strong> D4 bloque correctement le backfeed. Protection OK.
+</div>
+
+<div class="stop-box">
+    <strong>Si OUT_DRAIN ≈ 12V :</strong> D4 est passante (inversée ou court-circuitée). Vérifier orientation bague.
+</div>
+
+<h4>Étape 5 — Remise en état</h4>
+<ol>
+    <li>Couper alimentation</li>
+    <li>Débrancher de OUT_PROT</li>
+    <li>Rebrancher normalement sur J1</li>
+    <li>Vérifier fonctionnement (pot ~5V → OUT_PROT ≈ 10,5V)</li>
+</ol>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 11 - TEST TVS -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase11">Phase 11 — Test TVS surtension 🔴 D5 sortie ajouté</h2>
+
+<div class="panel warning">
+    <div class="panel-title"><span class="icon">⚡</span> V1.15: Test D2 (entrée) ET D5 (sortie)</div>
+</div>
+
+<h3>11.1 — Test TVS entrée D2 (1.5KE18CA)</h3>
+
+<div class="alim-box">
+    <table>
+        <tr><th>Palier</th><th>Tension sur J1</th><th>Durée</th></tr>
+        <tr><td>1-4</td><td>12V → 18V par pas de 2V</td><td>10s chacun</td></tr>
+        <tr><td>5</td><td><strong>20V MAX</strong></td><td><strong>5s max</strong></td></tr>
+    </table>
+    <p>Limite courant : 500mA</p>
+</div>
+
+<table>
+    <tr><th>Mesure D2</th><th class="go">GO</th><th class="nogo">NO-GO</th><th>Mesuré</th></tr>
+    <tr><td>Début conduction D2</td><td class="go">17-19V</td><td class="nogo">&lt;15V ou &gt;20V</td><td class="record">______ V</td></tr>
+    <tr><td>+12V_PROT @ 20V</td><td class="go">≤22V</td><td class="nogo">&gt;25V</td><td class="record">______ V</td></tr>
+</table>
+
+<h3>11.2 — Test TVS sortie D5 (P6KE18CA) — NOUVEAU V9.18</h3>
+
+<div class="panel new">
+    <div class="panel-title"><span class="icon">🆕</span> V9.18 — Test protection sortie D5</div>
+</div>
+
+<div class="wire-box">
+    <h4>🔌 Câblage test D5</h4>
+    <ol>
+        <li><strong>Débrancher</strong> alimentation de J1</li>
+        <li><strong>Connecter</strong> alimentation sur OUT_PROT (J3) et GND</li>
+        <li>Charge 120Ω <strong>DÉCONNECTÉE</strong></li>
+    </ol>
+</div>
+
+<div class="alim-box">
+    <table>
+        <tr><th>Palier</th><th>Tension sur OUT_PROT</th><th>Durée</th></tr>
+        <tr><td>1-4</td><td>12V → 18V par pas de 2V</td><td>10s chacun</td></tr>
+        <tr><td>5</td><td><strong>20V MAX</strong></td><td><strong>5s max</strong></td></tr>
+    </table>
+    <p>Limite courant : 500mA</p>
+</div>
+
+<table>
+    <tr><th>Mesure D5</th><th class="go">GO</th><th class="nogo">NO-GO</th><th>Mesuré</th></tr>
+    <tr><td>Début conduction D5</td><td class="go">17-19V</td><td class="nogo">&lt;15V ou &gt;20V</td><td class="record">______ V</td></tr>
+    <tr><td>OUT_PROT @ 20V injecté</td><td class="go">≤22V (clampé)</td><td class="nogo">&gt;25V</td><td class="record">______ V</td></tr>
+    <tr><td>Courant @ 20V</td><td class="go">&gt;10mA (conduit)</td><td class="nogo">&lt;1mA (ne conduit pas)</td><td class="record">______ mA</td></tr>
+</table>
+
+<div class="note">
+    <strong>Note:</strong> Test 18-20V DC suffisant pour valider protection. D5 protège la jauge Innovate contre surtensions induites.
+</div>
+
+<p><strong>Après test:</strong> Rebrancher alimentation sur J1 et charge 120Ω.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 12 - TESTS OSCILLO -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase12">Phase 12 — Tests oscilloscope avancés</h2>
+
+<div class="panel info">
+    <div class="panel-title"><span class="icon">📟</span> Tests supplémentaires si oscilloscope + JDS6600 disponibles</div>
+</div>
+
+<h3>12.1 — Mesure latence activation (OFF→ON)</h3>
+
+<div class="scope-box">
+    <h4>📟 Configuration oscilloscope</h4>
+    <table>
+        <tr><th>Paramètre</th><th>Réglage</th></tr>
+        <tr><td>CH1</td><td>PWM_IN</td></tr>
+        <tr><td>CH2</td><td>OUT_PROT</td></tr>
+        <tr><td>Timebase</td><td>200ms/div</td></tr>
+        <tr><td>Trigger</td><td>CH1, Rising, 3V</td></tr>
+        <tr><td>Mode</td><td>Single</td></tr>
+    </table>
+</div>
+
+<div class="panel measure">
+    <table>
+        <tr><th>Mesure</th><th>Attendu</th><th class="go">GO</th><th class="nogo">NO-GO</th><th>Mesuré</th></tr>
+        <tr>
+            <td>Latence OFF→ON</td>
+            <td>&lt;1015ms</td>
+            <td class="go">&lt;1100ms</td>
+            <td class="nogo">&gt;2000ms</td>
+            <td class="record">______ ms</td>
+        </tr>
+        <tr>
+            <td>Latence ON→OFF</td>
+            <td>&lt;45ms</td>
+            <td class="go">&lt;100ms</td>
+            <td class="nogo">&gt;500ms</td>
+            <td class="record">______ ms</td>
+        </tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- PHASE 13 - ENDURANCE -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="phase13">Phase 13 — Endurance thermique</h2>
+
+<div class="panel info">
+    <div class="panel-title"><span class="icon">🔥</span> Test stabilité 1 heure</div>
+</div>
+
+<div class="alim-box">
+    <table>
+        <tr><th>Paramètre</th><th>Valeur</th></tr>
+        <tr><td>Tension</td><td><strong>14,4V</strong></td></tr>
+        <tr><td>Limite</td><td>500mA</td></tr>
+        <tr><td>Durée</td><td>1 heure</td></tr>
+    </table>
+</div>
+
+<div class="pot-box">
+    <h4>🎛️ Potentiomètre à ~5V + charge 120Ω</h4>
+</div>
+
+<!-- 🔴 V9.18: Calculs V1.15 -->
+<div class="calc-box">
+    <h4>📊 Calculs puissance endurance V1.15</h4>
+    <div class="formula">
+        <strong>Courant charge 120Ω:</strong><br>
+        V_OUT_PROT ≈ 10,6V @ 14,4V entrée<br>
+        I = 10,6V / 120Ω ≈ <strong>88mA</strong><br><br>
+        
+        <strong>Puissance R13:</strong><br>
+        P_R13 = 0,088² × 10 = <strong>0,08W</strong> &lt;&lt; 2W ✓<br><br>
+        
+        <strong>Puissance D4:</strong><br>
+        P_D4 = Vf × I = 0,3V × 0,088A = <strong>0,026W</strong> ✓ négligeable
+    </div>
+</div>
+
+<table>
+    <tr><th>Composant</th><th>P calculée</th><th>Rating</th><th class="go">GO</th><th class="nogo">NO-GO</th></tr>
+    <tr><td>NCV2931 (U1)</td><td>~6mW</td><td>-</td><td class="go">&lt;80°C</td><td class="nogo">&gt;100°C</td></tr>
+    <tr><td>R13</td><td>~0,08W</td><td>2W</td><td class="go">&lt;70°C</td><td class="nogo">&gt;90°C</td></tr>
+    <tr><td>D4</td><td>~0,03W</td><td>-</td><td class="go">&lt;60°C</td><td class="nogo">&gt;80°C</td></tr>
+    <tr><td>Charge 120Ω</td><td>~0,9W</td><td>2W</td><td class="go">&lt;80°C</td><td class="nogo">&gt;100°C</td></tr>
+    <tr><td>Substrat PCB</td><td>-</td><td>105°C</td><td class="go">&lt;85°C</td><td class="nogo">&gt;100°C</td></tr>
+</table>
+
+<div class="panel warning">
+    <strong>Mesures thermiques:</strong> Utiliser thermomètre IR. Mesurer toutes les 15 minutes.
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- SYNTHÈSE -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="synthesis">Synthèse & Checklist GO Terrain</h2>
+
+<div class="panel success">
+    <div class="panel-title"><span class="icon">✅</span> Checklist finale V1.15 avant installation véhicule</div>
+    <div class="checklist">
+        <label><input type="checkbox"> Phase 0 : Visuels OK, polarités D1-D5 correctes</label>
+        <label><input type="checkbox"> Phase 1 : Ohmmètre OK, D4/D5 testées</label>
+        <label><input type="checkbox"> Phase 2 : Alim progressive OK</label>
+        <label><input type="checkbox"> Phase 2.5 : Power-On Reset OK</label>
+        <label><input type="checkbox"> Phase 3 : Cold-crank 6V → +5V_MCU ≥ 4,75V</label>
+        <label><input type="checkbox"> Phase 4 : +5V_MCU stable 4,90-5,10V</label>
+        <label><input type="checkbox"> Phase 5 : I_repos &lt; 1mA</label>
+        <label><input type="checkbox"> Phase 5.1 : Fail-safe diviseur OK</label>
+        <label><input type="checkbox"> Phase 5.2 : VCC monitoring OK</label>
+        <label><input type="checkbox"> Phase 6 : Clamp ADC ≤ 5,5V</label>
+        <label><input type="checkbox"> Phase 7 : Seuils &lt; 5% écart, <strong>V_OUT ~10,5V</strong></label>
+        <label><input type="checkbox"> Phase 8 : Charge 47Ω OK</label>
+        <label><input type="checkbox"> Phase 9 : Fusible protège court-circuit</label>
+        <label><input type="checkbox"> Phase 10 : Backfeed bloqué (D4 OK)</label>
+        <label><input type="checkbox"> Phase 11 : TVS D2 conduit 17-19V</label>
+        <label><input type="checkbox"> Phase 11.1 : TVS D5 conduit 17-19V</label>
+        <label><input type="checkbox"> Phase 12 : Latences OK</label>
+        <label><input type="checkbox"> Phase 13 : Endurance 1h OK</label>
+        <label><input type="checkbox"> <strong>Fusible NEUF installé</strong></label>
+        <label><input type="checkbox"> <strong>Code V1.7.8 flashé</strong></label>
+    </div>
+</div>
+
+<div class="panel measure">
+    <div class="panel-title"><span class="icon">📋</span> Mesures clés à reporter</div>
+    <table>
+        <tr><th>Mesure</th><th>Valeur</th></tr>
+        <tr><td>+5V_MCU @ 12V</td><td class="record" style="font-size:1.1rem">_______ V</td></tr>
+        <tr><td>I_repos</td><td class="record" style="font-size:1.1rem">_______ mA</td></tr>
+        <tr><td>SEUIL_BAS_ON mesuré</td><td class="record" style="font-size:1.1rem">_______ V</td></tr>
+        <tr><td>SEUIL_HAUT_ON mesuré</td><td class="record" style="font-size:1.1rem">_______ V</td></tr>
+        <tr><td>V_OUT_PROT (dans fenêtre)</td><td class="record" style="font-size:1.1rem">_______ V</td></tr>
+        <tr><td>Latence OFF→ON</td><td class="record" style="font-size:1.1rem">_______ ms</td></tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- INSTALLATION VÉHICULE -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="vehicle">Installation véhicule</h2>
+
+<div class="panel warning">
+    <div class="panel-title"><span class="icon">🚗</span> Uniquement si TOUS les tests banc sont OK</div>
+</div>
+
+<h3>Préparation véhicule</h3>
+<div class="checklist">
+    <label><input type="checkbox"> Couper contact véhicule</label>
+    <label><input type="checkbox"> Débrancher batterie (− d'abord, puis +)</label>
+    <label><input type="checkbox"> Identifier fil DIM avec multimètre</label>
+</div>
+
+<h3>Connexions véhicule</h3>
+<table>
+    <tr><th>Circuit</th><th>Véhicule</th></tr>
+    <tr><td>J1 +12V</td><td>+12V après-contact</td></tr>
+    <tr><td>J1 GND</td><td>Châssis (point masse propre)</td></tr>
+    <tr><td>PWM_IN</td><td>Fil DIM variateur éclairage</td></tr>
+    <tr><td>OUT_PROT (J3)</td><td>Fil blanc jauge Innovate</td></tr>
+</table>
+
+<div class="panel new">
+    <div class="panel-title"><span class="icon">💡</span> V1.15 — Tension jauge</div>
+    <p>La jauge Innovate recevra <strong>~10,5V</strong> au lieu de 12V. C'est normal et suffisant pour son fonctionnement (seuil 8V min).</p>
+</div>
+
+<h3>Premier test véhicule</h3>
+<div class="checklist">
+    <label><input type="checkbox"> Rebrancher batterie</label>
+    <label><input type="checkbox"> Contact ON, moteur OFF</label>
+    <label><input type="checkbox"> Tourner variateur éclairage lentement</label>
+    <label><input type="checkbox"> Jauge Innovate s'allume/éteint correctement</label>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- DÉPANNAGE -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="debug">Dépannage</h2>
+
+<table>
+    <tr><th>Symptôme</th><th>Cause probable</th><th>Action</th></tr>
+    <tr><td>+5V_MCU = 0V</td><td>U1 absent/détruit</td><td>Vérifier soudures U1</td></tr>
+    <tr><td>+5V_MCU = 12V</td><td>U1 court-circuit</td><td>Remplacer U1</td></tr>
+    <tr><td>OUT toujours 0V</td><td>ATtiny non programmé</td><td>Reflasher V1.7.8</td></tr>
+    <tr><td>OUT toujours ~10,5V</td><td>BS170 (Q2) défaillant ON</td><td>Vérifier R10, remplacer Q2</td></tr>
+    <tr><td>I_repos &gt; 2mA</td><td>ATtiny ne dort pas</td><td>Reflasher V1.7.8</td></tr>
+    <tr style="background: #1e1530;"><td>OUT_PROT = 12V au lieu de 10,5V</td><td>D4 court-circuitée ou absente</td><td>Vérifier D4 1N5822</td></tr>
+    <tr style="background: #1e1530;"><td>Backfeed malgré D4</td><td>D4 inversée</td><td>Vérifier orientation bague</td></tr>
+    <tr><td>Surchauffe U1</td><td>Court-circuit ou surcharge</td><td>Vérifier connexions</td></tr>
+</table>
+
+<!-- FOOTER -->
+<div class="panel info" style="text-align: center; margin-top: 32px;">
+    <strong>Circuit V1.15 — Code V1.7.8 — NCV2931 — Protection sortie 3 couches</strong><br>
+    Protocole V9.18 — Décembre 2025<br>
+    <span style="opacity: 0.7;">Instructions technicien, valeurs attendues V_OUT ~10,5V, UNE alimentation</span><br>
+    <span style="opacity: 0.5; font-size: 0.8rem;">Protections: D4 anti-backfeed, D5 TVS sortie, C11 EMI</span><br><br>
+    <span class="audit-badge" style="font-size: 0.9rem;">✓ Audité PREMORTEM V3.5 + KB_ANALOG_MASTER V2.6</span>
+</div>
+
+</body>
+</html>
