@@ -1,5 +1,5 @@
-[![Version](https://img.shields.io/badge/version-1.7.5-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
-[![Hardware](https://img.shields.io/badge/hardware-V1.11-green.svg)](hardware/)
+[![Version](https://img.shields.io/badge/version-1.7.8-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
+[![Hardware](https://img.shields.io/badge/hardware-V1.14-green.svg)](hardware/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
 **Conditionneur PWM automobile pour jauge Innovate Motorsports**
@@ -20,7 +20,11 @@ Convertit un signal PWM 12V 108Hz en sortie binaire 0V/12V avec hystérésis, op
 - **Output**: Driver BS170 + P-MOSFET FQP27P06 haut-côté
 - **Protection**: TVS, PTC auto-réarmant, ferrite EMI, clamps ESD
 
-### Firmware V1.7.5
+### Firmware V1.7.8
+- ✅ Timeout ADC (protection hardware bloqué)
+- ✅ Protection overflow VCC (adc < 17)
+- ✅ Détection ADC hors plage (fail-safe diviseur)
+- ✅ Dummy read après réveil (stabilisation ADC)
 - ✅ ADC désactivé pendant sleep (économie 260µA)
 - ✅ volatile outputState (barrière mémoire)
 - ✅ cli() atomique avant SREG restore
@@ -57,7 +61,7 @@ Programmer: USBasp
 ### 3. Programmation
 ```bash
 # 1. Installer ATTinyCore dans Arduino IDE
-# 2. Ouvrir firmware/PWM_Window_ATtiny85_V1_7_5/PWM_Window_ATtiny85_V1_7_5.ino
+# 2. Ouvrir firmware/PWM_Window_ATtiny85_V1_7_8/PWM_Window_ATtiny85_V1_7_8.ino
 # 3. Tools → Burn Bootloader (1× seulement)
 # 4. Sketch → Upload Using Programmer
 ```
@@ -70,7 +74,23 @@ Programmer: USBasp
 
 ## 📊 Versions
 
-### V1.7.5 (2025-12-05) - **FIRMWARE ACTUEL** ⭐
+### V1.7.8 (2025-12-06) - **FIRMWARE ACTUEL** ⭐
+- ✅ Timeout boucle ADC (protection hardware bloqué)
+- ✅ Protection overflow VCC (évite calcul erroné si adc < 17)
+- ✅ Détection ADC hors plage (fail-safe diviseur R1/R2)
+- ✅ Dummy read après réveil (stabilisation ADC datasheet p.146)
+- ✅ Consommation repos: ~0,65mA (NCV2931)
+- ✅ Compatible Hardware V1.14
+- 📁 [firmware/PWM_Window_ATtiny85_V1_7_8/](firmware/PWM_Window_ATtiny85_V1_7_8/)
+
+### V1.14 (2025-12-06) - **HARDWARE ACTUEL** ⭐
+- ✅ Code compatible: V1.7.8 (protections défensives)
+- ✅ Régulateur NCV2931 (Iq=0,4mA)
+- ✅ Consommation repos: ~0,65mA
+- ✅ Hardware physique identique à V1.10-V1.13
+- 📁 Schématique: [hardware/schematic/Circuit_PWM_uC_V1_14.md](hardware/schematic/Circuit_PWM_uC_V1_14.md)
+
+### V1.7.5 (2025-12-05)
 - ✅ ADC désactivé pendant sleep (économie 260µA)
 - ✅ Consommation repos: ~0,65mA (vs ~0,7mA V1.7.4)
 - ✅ Hardening final: volatile, cli() atomique
@@ -78,7 +98,7 @@ Programmer: USBasp
 - ✅ Compatible Hardware V1.11
 - 📁 [firmware/PWM_Window_ATtiny85_V1_7_5/](firmware/PWM_Window_ATtiny85_V1_7_5/)
 
-### V1.11 (2025-12-05) - **HARDWARE ACTUEL** ⭐
+### V1.11 (2025-12-05)
 - ✅ Code compatible: V1.7.5 (ADC désactivé pendant sleep)
 - ✅ Consommation documentée: ~0,65mA (vs ~0,7mA)
 - ✅ Hardware physique identique à V1.10
@@ -117,6 +137,6 @@ Programmer: USBasp
 ### V1.4.0 (2025-11-05)
 - ⚠️ **Ne pas utiliser** (bugs critiques)
 
-**Version firmware**: 1.7.5 (recommandé)  
-**Version hardware**: V1.11  
-**Dernière mise à jour**: 2025-12-05
+**Version firmware**: 1.7.8 (recommandé)  
+**Version hardware**: V1.14  
+**Dernière mise à jour**: 2025-12-06
