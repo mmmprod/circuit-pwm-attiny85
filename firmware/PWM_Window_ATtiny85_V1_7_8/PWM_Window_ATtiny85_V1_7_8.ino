@@ -281,6 +281,7 @@ void setup() {
 }
 
 void loop() {
+  // Dummy read pour stabilisation ADC après réveil (datasheet p.146)
   (void)readADC();
   
   uint8_t samples = outputState ? NB_SAMPLES_ACTIF : NB_SAMPLES_VEILLE;
