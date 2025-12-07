@@ -5,6 +5,71 @@ Toutes les modifications importantes du projet Circuit PWM µC - ATtiny85.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
+## [1.7.8] - 2025-12-06
+
+### 🛡️ FIRMWARE - Protections défensives complètes
+
+#### Ajouté
+- **Timeout boucle ADC** : Protection contre ADC hardware bloqué (ADSC jamais clear)
+- **Protection overflow VCC** : Si adc < 17 → retourne 0 (évite overflow uint32→uint16)
+- **Détection ADC hors plage** : ADC < 50 ou > 950 → fail-safe sortie OFF
+- **Dummy read après réveil** : Stabilisation ADC (datasheet p.146)
+
+#### Protections V1.7.7 incluses
+- Fail-safe diviseur R1/R2 défaillant (ADC hors plage normale)
+- Scénarios détectés : R2 court-circuit GND, R1 court-circuit +5V, diviseur cassé
+
+#### Protections V1.7.6 incluses
+- Première conversion ADC ignorée après sleep (précision améliorée)
+
+#### Notes techniques
+- Compatible hardware: **V1.14** (recommandé), V1.11, V1.10
+- Drop-in replacement de V1.7.5
+- Flash estimé: ~1250 bytes (+50 bytes vs V1.7.5)
+- Consommation inchangée: ~0,65mA repos
+
+#### Tests obligatoires
+1. ADC bloqué (simulation) → timeout doit retourner 0
+2. VCC hors plage (adc < 17) → doit retourner 0
+3. Diviseur défaillant (ADC < 50 ou > 950) → sortie OFF
+4. Cold-crank 6V → safe mode puis auto-recovery
+
+---
+
+## [1.7.7] - 2025-12-06
+
+### 🛡️ FIRMWARE - Détection défaut hardware
+
+#### Ajouté
+- **Détection ADC hors plage** : Fail-safe si diviseur R1/R2 défaillant
+- Seuils de détection : ADC < 50 (~0,65V) ou > 950 (~12,3V)
+- Comportement fail-safe : sortie OFF immédiate
+
+#### Scénarios couverts
+- R2 court-circuit vers GND → ADC ≈ 0 → détecté
+- R1 court-circuit vers +5V → ADC ≈ 1023 → détecté
+- Diviseur cassé/dessoudé → ADC erratique → détecté
+
+#### Notes
+- Auto-recovery : reteste à chaque réveil WDT (~1s)
+- Compatible hardware: V1.14, V1.11, V1.10
+
+---
+
+## [1.7.6] - 2025-12-06
+
+### 🔧 FIRMWARE - Stabilisation ADC
+
+#### Ajouté
+- **Dummy read après réveil** : Première conversion ignorée (stabilisation)
+- Datasheet ATtiny85 p.146 : première conversion peut être imprécise après réactivation ADC
+
+#### Impact
+- Latence : +104µs par cycle (négligeable vs 1040ms total)
+- Bénéfice : Lectures ADC plus stables, moins de jitter
+
+---
+
 ## [1.7.5] - 2025-12-05
 
 ### 🔋 FIRMWARE - Optimisation consommation
