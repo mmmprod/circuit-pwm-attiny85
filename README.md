@@ -1,6 +1,6 @@
 [![Version](https://img.shields.io/badge/version-1.7.8-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
 [![Hardware](https://img.shields.io/badge/hardware-V1.15-green.svg)](hardware/)
-[![Protocol](https://img.shields.io/badge/protocole-V9.20-purple.svg)](docs/Protocole_Test_PWM_V9_20.html)
+[![Protocol](https://img.shields.io/badge/protocole-V9.25-purple.svg)](docs/Protocole_Test_PWM_V9_25.html)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
 **Conditionneur PWM automobile pour jauge Innovate Motorsports**
@@ -49,24 +49,31 @@ Convertit un signal PWM 12V 108Hz en sortie binaire 0V/~10,5V avec hystérésis,
 | Document | Description |
 |----------|-------------|
 | [Circuit_PWM_uC_V1_15.md](hardware/schematic/Circuit_PWM_uC_V1_15.md) | Schématique hardware V1.15 |
-| [Protocole_Test_PWM_V9_20.html](docs/Protocole_Test_PWM_V9_20.html) | **Protocole de test complet** ⭐ |
+| [Protocole_Test_PWM_V9_25.html](docs/Protocole_Test_PWM_V9_25.html) | **Protocole de test complet V9.25** ⭐ |
 | [PROGRAMMING.md](docs/PROGRAMMING.md) | Guide de programmation ATtiny85 |
 | [UPDATE.md](docs/UPDATE.md) | Guide de mise à jour firmware/hardware |
 
-### Protocole de Test V9.20
+### Protocole de Test V9.25 ⭐
 
-Le protocole V9.20 inclut **14 phases de test** :
+Le protocole V9.25 inclut **14 phases de test** avec corrections audit PREMORTEM V3.6 :
 
 | Phase | Description |
 |-------|-------------|
 | 0-1 | Vérifications visuelles + ohmmètre |
 | 2-4 | Alimentation progressive, cold-crank, tensions |
-| 5-6 | Courant repos, fail-safe, ADC clamp |
-| 7 | Seuils fonctionnels (pot DC + PWM 108Hz) |
-| 8-9 | Charge 47Ω, court-circuit |
-| 10-11 | Backfeed D4, TVS D2+D5 |
-| 12-13 | Latences oscillo, endurance 1h |
-| **14** | **Transitoires avancés (OPA541 + RD6006P)** ⭐ |
+| 5-6 | Courant repos, fail-safe diviseur, ADC clamp |
+| 6.1 | **Fail-safe ADC limite haute (injection 13V)** 🆕 |
+| 7 | Seuils fonctionnels (pot DC + PWM 108Hz JDS6600) |
+| 8-9 | Charge 47Ω, court-circuit (critère <3s) |
+| 10-11 | Backfeed D4, TVS D2+D5 avec vérification post-test |
+| 12-13 | Latences oscillo, endurance 1h @ 14,4V |
+
+**Nouveautés V9.25:**
+- 🔴 Phase 6.1: Test fail-safe ADC > 950 (injection 13V sur PWM_IN)
+- 🔴 Phase 9: Critère fusion fusible <3s (réaliste)
+- 🔴 Phase 5.2: Recovery VCC <3s (cohérent WDT)
+- 🟡 JDS6600 obligatoire (Phase 7.4)
+- 🟡 Charge 120Ω / 3W minimum
 
 ---
 
@@ -76,13 +83,13 @@ Le protocole V9.20 inclut **14 phases de test** :
 - Alimentation labo 0-30V / 3A (limite courant)
 - Multimètre précision ±0,5%
 - Potentiomètre 10kΩ linéaire
-- Charge 120Ω / 2W + 47Ω / 5W
+- Charge 120Ω / **3W** + 47Ω / 5W
+- **Générateur JDS6600** (Phase 7.4)
 
-### Recommandé (Phase 14)
+### Recommandé
 - **RIDEN RD6006P** — Alimentation programmable 60V/6A
-- **JDS6600** — Générateur de signaux DDS
 - **FNIRSI 1014D** — Oscilloscope 2 voies
-- **OPA541** — Ampli op de puissance (transitoires)
+- Thermomètre IR ±2°C
 
 ---
 
@@ -129,13 +136,14 @@ Programmer: USBasp
 - ✅ Consommation repos: ~0,65mA
 - 📁 [firmware/PWM_Window_ATtiny85_V1_7_8/](firmware/PWM_Window_ATtiny85_V1_7_8/)
 
-### Protocole V9.20 (2025-12-08) - **TESTS ACTUELS** ⭐
-- 🔴 **Phase 14:** Transitoires avancés (OPA541 + JDS6600 + RD6006P)
-- ✅ Load dump simplifié (40V)
-- ✅ Cold-crank dynamique
-- ✅ Micro-coupures rapides
-- ✅ Export courbes Excel + PNG
-- 📁 [docs/Protocole_Test_PWM_V9_20.html](docs/Protocole_Test_PWM_V9_20.html)
+### Protocole V9.25 (2025-12-08) - **TESTS ACTUELS** ⭐
+- 🔴 **Phase 6.1:** Test fail-safe ADC limite haute (injection 13V)
+- 🔴 **Phase 9:** Critère fusion <3s (corrigé depuis <0,5s)
+- 🔴 **Phase 5.2:** Recovery VCC <3s
+- ✅ JDS6600 obligatoire pour Phase 7.4
+- ✅ Charge 120Ω / 3W minimum
+- ✅ Audité PREMORTEM V3.6
+- 📁 [docs/Protocole_Test_PWM_V9_25.html](docs/Protocole_Test_PWM_V9_25.html)
 
 ---
 
@@ -190,7 +198,7 @@ circuit-pwm-attiny85/
 │   ├── bom/                            # Bill of Materials
 │   └── pcb/                            # Design PCB (à venir)
 ├── docs/
-│   ├── Protocole_Test_PWM_V9_20.html  # Protocole test V9.20 ⭐
+│   ├── Protocole_Test_PWM_V9_25.html  # Protocole test V9.25 ⭐
 │   ├── PROGRAMMING.md                  # Guide programmation
 │   └── UPDATE.md                       # Guide mise à jour
 └── README.md
@@ -200,5 +208,5 @@ circuit-pwm-attiny85/
 
 **Version firmware**: 1.7.8  
 **Version hardware**: V1.15 FINALE  
-**Version protocole**: V9.20  
+**Version protocole**: V9.25  
 **Dernière mise à jour**: 2025-12-08
