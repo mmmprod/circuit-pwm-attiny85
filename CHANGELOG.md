@@ -5,6 +5,36 @@ Toutes les modifications importantes du projet Circuit PWM µC - ATtiny85.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
+## [1.18] - 2025-12-09
+
+### 🔴 HARDWARE - AUDIT CHATGPT WCCA/FMEA
+
+#### Ajouté
+- **D6** (P6KE15CA) TVS 15V 600W bidirectionnelle — Protection ESD entrée PWM
+  - Placée après R3, avant diviseur R1/R2
+  - Capacité ~300pF → fc = 1,13MHz >> 108Hz (aucun impact signal)
+
+#### Modifié SÉCURITÉ
+- **R13** : 10Ω 2W → **10Ω 5W MOX**
+  - Marge sécurité court-circuit ×4 (tient 8s vs 1s)
+  - Protection même si F1 bricolé/shunté
+
+#### Modifié DURABILITÉ
+- **C4** : 100µF 85°C → **100µF 105°C 5000h** (Nichicon UHE)
+- **C6** : 10µF 85°C → **10µF 105°C 5000h** (Nichicon UHE)
+  - Durée de vie estimée: 15+ ans en environnement automotive
+
+#### Tests ajoutés
+- Test température R13 < 60°C après 5min ON
+
+#### Compatible firmware
+- **V1.7.10** (recommandé)
+
+#### Fichiers
+- BOM: hardware/bom/BOM_V1_18.csv
+- Schéma: hardware/schematic/Circuit_PWM_uC_V1_18.md
+
+---
 ## [1.7.10] - 2025-12-09
 
 ### 🛡️ FIRMWARE - Cohérence timeout ADC

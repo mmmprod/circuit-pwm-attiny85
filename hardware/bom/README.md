@@ -1,12 +1,12 @@
 # Bill of Materials (BOM)
 
-Liste complète des composants pour Circuit PWM µC V1.17.
+Liste complète des composants pour Circuit PWM µC V1.18.
 
 ---
 
 ## 📦 Fichiers disponibles
 
-- **BOM_V1_17.csv** : Liste détaillée avec références constructeurs
+- **BOM_V1_18.csv** : Liste détaillée avec références constructeurs
 - Format CSV compatible Excel/LibreOffice/KiCad
 
 ---
@@ -44,7 +44,20 @@ Prix indicatifs pour quantité 1-10 pièces (novembre 2025).
 
 ## 🔧 Composants critiques
 
-### 🔴 COMPOSANT CRITIQUE V1.17 : R9
+### 🔴 COMPOSANTS V1.18 : D6, R13, C4, C6
+
+| Composant | Valeur V1.18 | Valeur V1.17 | Raison |
+|-----------|--------------|--------------|--------|
+| **D6** | **P6KE15CA** | Absent | Protection ESD entrée PWM |
+| **R13** | **10Ω 5W MOX** | 10Ω 2W | Marge sécurité court-circuit ×4 |
+| **C4** | **100µF 105°C 5000h** | 100µF 85°C | Durabilité automotive |
+| **C6** | **10µF 105°C 5000h** | 10µF 85°C | Durabilité automotive |
+
+**Références électrolytiques 105°C recommandées:**
+- C4: Nichicon UHE1H101MPD ou équivalent
+- C6: Nichicon UHE1E100MDD ou équivalent
+
+### 🔴 COMPOSANT CRITIQUE : R9
 
 | Composant | Valeur | Raison |
 |-----------|--------|--------|

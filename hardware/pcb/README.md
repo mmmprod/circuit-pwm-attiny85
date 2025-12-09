@@ -1,4 +1,4 @@
-# PCB Design - Circuit PWM µC V1.17
+# PCB Design - Circuit PWM µC V1.18
 
 Recommandations pour conception PCB.
 
@@ -148,13 +148,14 @@ Pistes alim si nécessaire
 ## 🎨 Sérigraphie recommandée
 
 ### Top silkscreen
-Circuit PWM µC V1.17 github.com/mmmprod/circuit-pwm-attiny85
+Circuit PWM µC V1.18 github.com/mmmprod/circuit-pwm-attiny85
 
 J1: +12V GND J2: PWM GND J3: OUT+ GND
 
 ⚠️ 6-16V DC ONLY
 🔴 CRITIQUE: R9 = 1kΩ (pas 100Ω)
-🟡 V1.17: C12=10nF sur J2, R11=1kΩ
+🔴 V1.18: D6=P6KE15CA, R13=10Ω 5W
+🟢 V1.18: C4/C6=105°C
 
 ### Repères polarité
 - ✅ **+** près pin +12V (J1.1)
@@ -173,10 +174,13 @@ J1: +12V GND J2: PWM GND J3: OUT+ GND
 ☐ Condensateurs découplage ≤10mm des ICs 
 ☐ Trous de montage (M3, 4× coins) 
 ☐ Sérigraphie lisible (texte ≥1mm) 
-☐ Numéro version PCB (ex: "V1.17 - 2025-12")
+☐ Numéro version PCB (ex: "V1.18 - 2025-12")
 ☐ 🔴 Note critique R9=1kΩ sur sérigraphie
 ☐ 🟡 C12 (10nF) placé sur J2 entre pin1 et pin2
 ☐ 🟡 R11 = 1kΩ (pas 100Ω)
+☐ 🔴 D6 (P6KE15CA) placé après R3, avant R1
+☐ 🔴 R13 = 10Ω **5W** MOX (pas 2W)
+☐ 🟢 C4/C6 = électrolytiques **105°C** (pas 85°C)
 
 ---
 

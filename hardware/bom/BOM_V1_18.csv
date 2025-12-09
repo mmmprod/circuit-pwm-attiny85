@@ -1,0 +1,38 @@
+Ref,Qty,Value,Description,Package,Supplier
+F1,1,0.5A,Fusible Fast-blow + porte-fusible,5x20mm,TME
+D1,1,1N5822,Schottky 40V 3A anti-inversion,DO-201AD,TME
+D2,1,1.5KE18CA,TVS 18V 1500W bidirectionnel entree,DO-201AE,TME
+D3,1,1N4733A,Zener 5.1V 1W clamp gate,DO-41,TME
+D4,1,1N5822,Schottky 40V 3A anti-backfeed sortie,DO-201AD,TME
+D5,1,P6KE18CA,TVS 18V 600W bidirectionnel sortie,DO-15,TME
+D6,1,P6KE15CA,TVS 15V 600W ESD entree - V1.18,DO-15,TME
+U1,1,NCV2931D-5.0,LDO 5V 100mA automotive,TO-92,TME
+U2,1,ATtiny85-20PU,MCU 8-bit 8MHz,DIP-8,TME
+Q1,1,FQP27P06,P-MOSFET -60V -27A,TO-220,TME
+Q2,1,BS170,N-MOSFET 60V 500mA driver,TO-92,TME
+R1,1,33k 1%,Diviseur haut,Axial MF 0.25W,TME
+R2,1,20k 1%,Diviseur bas,Axial MF 0.25W,TME
+R3,1,470R,Protection entree,Axial CF 0.25W,TME
+R4,1,10k,Filtre RC,Axial CF 0.25W,TME
+R8,1,10k,Pull-up gate P-MOS,Axial CF 0.25W,TME
+R9,1,1k,Serie Zener D3,Axial CF 0.25W,TME
+R10,1,100k,Pull-down gate BS170,Axial CF 0.25W,TME
+R11,1,1k,Serie gate BS170,Axial CF 0.25W,TME
+R13,1,10R 5W,Limitation courant sortie - V1.18 upgrade,Axial MOX 5W,TME
+R_LDO_IN,1,10R 0.5W,Decouplage LDO,Axial CF 0.5W,TME
+R_RST,1,10k,Pull-up RESET,Axial CF 0.25W,TME
+C_IN,1,100nF,Decouplage LDO entree,X7R 50V,TME
+C2,1,4.7uF,Filtre RC principal,Film 50V (WIMA),TME
+C4,1,100uF 105C,Reserve entree - V1.18 upgrade,Electro 50V 105C 5000h,TME
+C5,1,100nF,Decouplage entree,X7R 50V,TME
+C6,1,10uF 105C,Reserve +5V - V1.18 upgrade,Electro 25V 105C 5000h,TME
+C7,1,100nF,Decouplage +5V,X7R 50V,TME
+C8,1,100nF,Decouplage MCU,X7R 50V,TME
+C9,1,100nF,Filtre ADC 1,X7R 50V,TME
+C10,1,470nF,Filtre ADC 2,Film 50V,TME
+C11,1,100nF,EMI sortie,X7R 50V,TME
+C12,1,10nF,EMI entree J2,X7R 50V,TME
+J1,1,Bornier 2P,Alimentation +12V/GND,5mm 15A,TME
+J2,1,Bornier 2P,Entree PWM,5mm 5A,TME
+J3,1,Bornier 2P,Sortie jauge,5mm 5A,TME
+SOCKET,1,DIP-8,Support ATtiny85,DIP-8,TME
