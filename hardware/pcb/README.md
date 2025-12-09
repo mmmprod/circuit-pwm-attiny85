@@ -1,4 +1,4 @@
-# PCB Design - Circuit PWM µC V1.16
+# PCB Design - Circuit PWM µC V1.17
 
 Recommandations pour conception PCB.
 
@@ -148,12 +148,13 @@ Pistes alim si nécessaire
 ## 🎨 Sérigraphie recommandée
 
 ### Top silkscreen
-Circuit PWM µC V1.16 github.com/mmmprod/circuit-pwm-attiny85
+Circuit PWM µC V1.17 github.com/mmmprod/circuit-pwm-attiny85
 
 J1: +12V GND J2: PWM GND J3: OUT+ GND
 
 ⚠️ 6-16V DC ONLY
 🔴 CRITIQUE: R9 = 1kΩ (pas 100Ω)
+🟡 V1.17: C12=10nF sur J2, R11=1kΩ
 
 ### Repères polarité
 - ✅ **+** près pin +12V (J1.1)
@@ -172,8 +173,10 @@ J1: +12V GND J2: PWM GND J3: OUT+ GND
 ☐ Condensateurs découplage ≤10mm des ICs 
 ☐ Trous de montage (M3, 4× coins) 
 ☐ Sérigraphie lisible (texte ≥1mm) 
-☐ Numéro version PCB (ex: "V1.16 - 2025-12")
+☐ Numéro version PCB (ex: "V1.17 - 2025-12")
 ☐ 🔴 Note critique R9=1kΩ sur sérigraphie
+☐ 🟡 C12 (10nF) placé sur J2 entre pin1 et pin2
+☐ 🟡 R11 = 1kΩ (pas 100Ω)
 
 ---
 
@@ -187,6 +190,6 @@ J1: +12V GND J2: PWM GND J3: OUT+ GND
 
 ---
 
-**Version** : 1.1  
+**Version** : 2.0  
 **Dernière mise à jour** : 2025-12-09  
 **Auteur** : mmmprod
