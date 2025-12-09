@@ -19,10 +19,11 @@ Avant toute mise à jour, identifiez les versions installées :
 - Consultez votre BOM ou schéma de référence
 
 **Versions actuelles recommandées :**
-- **Firmware** : V1.6.3 (2025-11-14) ⭐
-- **Hardware** : V1.9.0 (2025-11-24) ⭐ (voir [CHANGELOG](../CHANGELOG.md) pour détails)
+- **Firmware** : V1.7.10 (2025-12-09) ⭐
+- **Hardware** : V1.16 (2025-12-08) ⭐
+- **Protocole** : V9.26 (2025-12-09) ⭐
 
-> **Note** : V1.7.11 reste une version stable et compatible. V1.9.0 apporte des améliorations pour environnement automotive (régulateur NCV2931).
+> **Note** : V1.7.8 reste compatible. V1.7.10 apporte cohérence timeout readADC() et support HW_REVISION V1.16.
 
 ---
 
@@ -88,14 +89,52 @@ Vérifiez la compatibilité avant toute mise à jour :
 
 | Firmware | Hardware compatible | Notes |
 |----------|---------------------|-------|
-| **V1.6.3** | V1.7.11, V1.9 | ✅ Recommandé |
-| V1.6.2 | V1.7.11, V1.9 | ✅ Compatible |
+| **V1.7.10** | V1.16, V1.15, V1.14 | ✅ Recommandé |
+| V1.7.8 | V1.16, V1.14 | ✅ Compatible |
+| V1.6.3 | V1.7.11, V1.9 | ⚠️ Anciennes versions hardware |
+| V1.6.2 | V1.7.11, V1.9 | ⚠️ Anciennes versions |
 | V1.6.1 | V1.7.10+ | ⚠️ Requiert diviseur ADC correct |
 | V1.5.1 | V1.5+ | ⚠️ Anciennes versions |
 
 ### Mises à jour hardware mineures
 
 Certaines améliorations hardware peuvent être faites sans refaire le PCB :
+
+#### V1.15 → V1.16 (CRITIQUE - OBLIGATOIRE)
+
+**⚠️ CORRECTION CRITIQUE R9** : Bug surchauffe V1.15
+
+**Changements obligatoires :**
+- R9 : 100Ω → **1kΩ** (CRITIQUE)
+- Protocole test : V9.25 → V9.26 (ajout test température R9)
+
+**Problème V1.15 :**
+- R9=100Ω cause surchauffe (0,86W > 0,25W rating)
+- Zener D3 conduit quand BS170 ON → 93mA
+- Risque défaillance R9 par température excessive
+
+**Solution V1.16 :**
+- R9=1kΩ → 9,3mA → 0,086W < 0,25W ✅
+- Température R9 < 50°C en fonctionnement normal
+
+**Procédure migration :**
+1. **Identifier version** : Mesurer R9 à l'ohmmètre (hors tension)
+   - Si R9 ≈ 100Ω → V1.15 → **MIGRATION OBLIGATOIRE**
+   - Si R9 ≈ 1kΩ → V1.16 → OK
+2. **Dessouder R9** (100Ω)
+3. **Souder nouvelle R9** (1kΩ, 1/4W, 1% tolérance)
+4. **Test température** : Alimenter circuit 12V, attendre 5 minutes
+   - Mesurer température R9 avec thermomètre IR ou tactile
+   - Attendu : < 50°C
+   - Si > 50°C : vérifier R9 = 1kΩ et soudure correcte
+5. **Validation protocole V9.26** :
+   - Phase 0 : Vérifier R9=1kΩ visuellement
+   - Phase 1 : Ohmmètre R9 ~1kΩ
+   - Phase 13 : Température R9 < 50°C après 5min
+
+**Firmware compatible :**
+- V1.7.10 (recommandé, HW_REVISION="V1.16")
+- V1.7.8 et toutes versions V1.7.x
 
 #### V1.7.11 → V1.9.0 (recommandé)
 
@@ -147,7 +186,11 @@ V1.5.0 → V1.5.1 (optimisations latence)
   ↓
 V1.6.1 → V1.6.2 (corrections majeures)
   ↓
-V1.6.3 ⭐ (version actuelle recommandée)
+V1.6.3 (hystérésis symétrique)
+  ↓
+V1.7.8 (protections défensives)
+  ↓
+V1.7.10 ⭐ (timeout cohérent, HW V1.16)
 ```
 
 ### Hardware
@@ -159,14 +202,46 @@ V1.7.9 → V1.7.10 (correction diviseur ADC)
   ↓
 V1.7.11 (R3=470Ω, BOD 2.7V)
   ↓
-V1.9.0 ⭐ (NCV2931, résistance LDO_IN)
+V1.9.0 (NCV2931, résistance LDO_IN)
+  ↓
+V1.14 (version intermédiaire)
+  ↓
+V1.15 ⚠️ (BUG R9=100Ω surchauffe)
+  ↓
+V1.16 ⭐ (CORRECTION R9=1kΩ)
 ```
 
 ---
 
 ## 🚀 Scénarios de mise à jour courants
 
-### Scénario 1 : Firmware V1.6.2 → V1.6.3
+### Scénario 1 : Firmware V1.7.8 → V1.7.10
+
+**Raison :** Timeout readADC() cohérent, support HW_REVISION V1.16
+
+**Procédure :**
+1. Retirer ATtiny85 du circuit
+2. Reprogrammer avec `firmware/PWM_Window_ATtiny85_V1_7_10/PWM_Window_ATtiny85_V1_7_10.ino`
+3. **NE PAS** refaire "Burn Bootloader"
+4. Upload Using Programmer
+5. Réinstaller et tester
+
+**Impact :** Aucun changement fonctionnel, amélioration défensive timeout.
+
+### Scénario 2 : Hardware V1.15 → V1.16 (CRITIQUE)
+
+**Raison :** Correction bug surchauffe R9
+
+**Procédure :**
+1. Identifier R9=100Ω avec ohmmètre
+2. Dessouder R9 (100Ω)
+3. Souder R9 (1kΩ, 1/4W, 1%)
+4. Tester température < 50°C après 5min
+5. Valider avec protocole V9.26
+
+**Impact :** Sécurité critique, élimine risque défaillance R9.
+
+### Scénario 3 : Firmware V1.6.2 → V1.6.3
 
 **Raison :** Hystérésis symétrique améliorée (robustesse ×2.6)
 
@@ -179,7 +254,7 @@ V1.9.0 ⭐ (NCV2931, résistance LDO_IN)
 
 **Impact :** Comportement change légèrement dans zone 6.64V-6.88V PWM (voir CHANGELOG).
 
-### Scénario 2 : Hardware V1.7.11 → V1.9.0
+### Scénario 4 : Hardware V1.7.11 → V1.9.0
 
 **Raison :** Régulateur automotive grade (NCV2931)
 
@@ -193,16 +268,16 @@ V1.9.0 ⭐ (NCV2931, résistance LDO_IN)
 
 **Impact :** Meilleure robustesse aux transitoires automotive.
 
-### Scénario 3 : Système complet V1.5.x → V1.9.0 + V1.6.3
+### Scénario 5 : Système complet V1.5.x → V1.16 + V1.7.10
 
 **Raison :** Migration vers version actuelle optimale
 
 **Procédure :**
-1. Vérifier schéma V1.5 vs V1.9 (diviseur ADC, filtrage)
-2. Si différences majeures : Commander nouveau PCB V1.9
-3. Assembler nouveau PCB selon BOM V1.9
-4. Programmer ATtiny85 avec firmware V1.6.3 (Burn Bootloader + Upload)
-5. Tests complets selon protocole
+1. Vérifier schéma V1.5 vs V1.16 (diviseur ADC, filtrage, R9=1kΩ)
+2. Si différences majeures : Commander nouveau PCB V1.16
+3. Assembler nouveau PCB selon BOM V1.16 (**vérifier R9=1kΩ**)
+4. Programmer ATtiny85 avec firmware V1.7.10 (Burn Bootloader + Upload)
+5. Tests complets selon protocole V9.26 (inclut test température R9)
 
 **Durée estimée :** 2-3h (assemblage) + 30min (programmation et tests)
 
@@ -322,6 +397,6 @@ En cas de problème non résolu :
 
 ---
 
-**Version guide** : 1.0  
-**Dernière mise à jour** : 2025-11-26  
+**Version guide** : 2.0  
+**Dernière mise à jour** : 2025-12-09  
 **Auteur** : mmmprod

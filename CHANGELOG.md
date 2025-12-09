@@ -5,6 +5,59 @@ Toutes les modifications importantes du projet Circuit PWM µC - ATtiny85.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
+## [1.7.10] - 2025-12-09
+
+### 🛡️ FIRMWARE - Cohérence timeout ADC
+
+#### Ajouté
+- **Timeout readADC()** : Cohérence avec readVCCmV() (protection hardware bloqué)
+- **HW_REVISION mise à jour** : V1.16 (compatible avec correction critique R9=1kΩ)
+
+#### Notes techniques
+- Compatible hardware: **V1.16** (recommandé), V1.15, V1.14
+- Drop-in replacement de V1.7.8
+- Flash estimé: ~1250 bytes (identique V1.7.8)
+- Consommation inchangée: ~0,65mA repos
+
+#### Tests obligatoires
+1. ADC bloqué (simulation) → timeout doit retourner 0
+2. VCC hors plage (adc < 17) → doit retourner 0
+3. Diviseur défaillant (ADC < 50 ou > 950) → sortie OFF
+4. Cold-crank 6V → safe mode puis auto-recovery
+
+---
+
+## [1.16] - 2025-12-08
+
+### 🔴 HARDWARE - CORRECTION CRITIQUE R9
+
+#### Corrigé CRITIQUE
+- **R9** : 100Ω → **1kΩ** (correction surchauffe)
+- Bug V1.15 : R9=100Ω causait surchauffe (0,86W > 0,25W rating)
+- Zener D3 conduit quand BS170 ON → 93mA avec 100Ω ❌
+- Avec 1kΩ : 9,3mA → 0,086W < 0,25W rating ✅
+
+#### Migration V1.15 → V1.16
+**OBLIGATOIRE** : Remplacer R9 100Ω par 1kΩ immédiatement
+
+**Procédure** :
+1. Dessouder R9 (100Ω)
+2. Souder nouvelle R9 (1kΩ, 1/4W, 1%)
+3. Tester température R9 < 50°C après 5min fonctionnement
+4. Valider avec protocole V9.26 (Phase 13 : test température)
+
+#### Compatible firmware
+- **V1.7.10** (recommandé)
+- V1.7.8
+- Toutes versions V1.7.x
+
+#### Tests validation V9.26
+- Phase 0 : Vérification R9=1kΩ (pas 100Ω)
+- Phase 1 : Ohmmètre R9 ~1kΩ
+- Phase 13 : Température R9 < 50°C après 5min
+
+---
+
 ## [1.7.8] - 2025-12-06
 
 ### 🛡️ FIRMWARE - Protections défensives complètes
