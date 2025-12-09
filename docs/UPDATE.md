@@ -23,7 +23,7 @@ Avant toute mise à jour, identifiez les versions installées :
 - **Hardware** : V1.16 (2025-12-08) ⭐
 - **Protocole** : V9.26 (2025-12-08) ⭐
 
-> **Note** : V1.7.11 reste une version stable et compatible. V1.9.0 apporte des améliorations pour environnement automotive (régulateur NCV2931).
+> **Note** : V1.16 corrige un défaut critique de V1.15 (R9=100Ω → 1kΩ). Migration obligatoire si vous utilisez V1.15.
 
 ---
 
