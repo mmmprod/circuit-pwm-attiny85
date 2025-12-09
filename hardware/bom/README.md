@@ -1,6 +1,6 @@
 # Bill of Materials (BOM)
 
-Liste complète des composants pour Circuit PWM µC V1.5.
+Liste complète des composants pour Circuit PWM µC V1.16.
 
 ---
 
@@ -43,6 +43,21 @@ Prix indicatifs pour quantité 1-10 pièces (novembre 2025).
 ---
 
 ## 🔧 Composants critiques
+
+### 🔴 COMPOSANT CRITIQUE V1.16 : R9
+
+| Composant | Valeur | Raison |
+|-----------|--------|--------|
+| **R9** | **1kΩ** (1/4W, 1%) | **CRITIQUE** : Limitation courant Zener D3 |
+
+**⚠️ ATTENTION V1.15** : Bug R9=100Ω causait surchauffe (0,86W > 0,25W rating)
+
+**V1.16 CORRIGÉ** : R9=1kΩ → 9,3mA → 0,086W < 0,25W ✅
+
+**Vérification obligatoire** :
+- Mesurer R9 à l'ohmmètre : doit être **~1kΩ** (pas 100Ω)
+- Test température : R9 < 50°C après 5min fonctionnement
+- Protocole V9.26 Phase 13 : validation température
 
 ### À acheter neufs obligatoirement
 
@@ -130,6 +145,6 @@ Pour fabrication 5 circuits + prototypage :
 
 ---
 
-**Version** : 1.0  
-**Dernière mise à jour** : 2025-11-13  
+**Version** : 1.1  
+**Dernière mise à jour** : 2025-12-09  
 **Auteur** : mmmprod
