@@ -1,12 +1,12 @@
 # Bill of Materials (BOM)
 
-Liste complète des composants pour Circuit PWM µC V1.16.
+Liste complète des composants pour Circuit PWM µC V1.17.
 
 ---
 
 ## 📦 Fichiers disponibles
 
-- **BOM_V1_5.csv** : Liste détaillée avec références constructeurs
+- **BOM_V1_17.csv** : Liste détaillée avec références constructeurs
 - Format CSV compatible Excel/LibreOffice/KiCad
 
 ---
@@ -44,7 +44,7 @@ Prix indicatifs pour quantité 1-10 pièces (novembre 2025).
 
 ## 🔧 Composants critiques
 
-### 🔴 COMPOSANT CRITIQUE V1.16 : R9
+### 🔴 COMPOSANT CRITIQUE V1.17 : R9
 
 | Composant | Valeur | Raison |
 |-----------|--------|--------|
@@ -57,7 +57,18 @@ Prix indicatifs pour quantité 1-10 pièces (novembre 2025).
 **Vérification obligatoire** :
 - Mesurer R9 à l'ohmmètre : doit être **~1kΩ** (pas 100Ω)
 - Test température : R9 < 50°C après 5min fonctionnement
-- Protocole V9.26 Phase 13 : validation température
+- Protocole V9.28 Phase 13 : validation température
+
+### 🟡 COMPOSANTS V1.17 : C12 et R11
+
+| Composant | Valeur V1.17 | Valeur V1.16 | Raison |
+|-----------|--------------|--------------|--------|
+| **C12** | **10nF X7R 50V** | Absent | Protection EMI entrée J2 |
+| **R11** | **1kΩ** | 100Ω | Défense profondeur gate BS170 |
+
+**Placement C12** : Directement sur bornier J2, entre pin1 (PWM_IN) et pin2 (GND)
+
+**Note R11** : Limite courant si BS170 claque en court-circuit D-G
 
 ### À acheter neufs obligatoirement
 
@@ -145,6 +156,6 @@ Pour fabrication 5 circuits + prototypage :
 
 ---
 
-**Version** : 1.1  
+**Version** : 2.0  
 **Dernière mise à jour** : 2025-12-09  
 **Auteur** : mmmprod
