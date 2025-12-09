@@ -1,6 +1,6 @@
 [![Version](https://img.shields.io/badge/version-1.7.8-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
 [![Hardware](https://img.shields.io/badge/hardware-V1.16-green.svg)](hardware/)
-[![Protocol](https://img.shields.io/badge/protocole-V9.25-purple.svg)](docs/Protocole_Test_PWM_V9_25.html)
+[![Protocol](https://img.shields.io/badge/protocole-V9.26-purple.svg)](docs/Protocole_Test_PWM_V9_26.html)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
 **Conditionneur PWM automobile pour jauge Innovate Motorsports**
@@ -56,7 +56,17 @@ Convertit un signal PWM 12V 108Hz en sortie binaire 0V/~10,5V avec hystérésis,
 | Document | Description |
 |----------|-------------|
 | [Circuit_PWM_uC_V1_16.md](hardware/schematic/Circuit_PWM_uC_V1_16.md) | **Schématique hardware V1.16** ⭐ |
-| [Protocole_Test_PWM_V9_25.html](docs/Protocole_Test_PWM_V9_25.html) | Protocole de test V9.25 |
+| [Protocole_Test_PWM_V9_26.html](docs/Protocole_Test_PWM_V9_26.html) | **Protocole de test V9.26** ⭐ |
+
+### Protocole de Test V9.26
+
+Le protocole V9.26 inclut le **test critique température R9** :
+
+| Phase | Description |
+|-------|-------------|
+| 0 | Vérification R9 = 1kΩ (pas 100Ω) |
+| 1 | Test ohmmètre R9 ~1kΩ |
+| 13 | **Test température R9 < 50°C après 5min** |
 
 ---
 
@@ -72,9 +82,14 @@ Convertit un signal PWM 12V 108Hz en sortie binaire 0V/~10,5V avec hystérésis,
 ### V1.7.8 - **FIRMWARE ACTUEL** ⭐
 - 📁 [firmware/PWM_Window_ATtiny85_V1_7_8/](firmware/PWM_Window_ATtiny85_V1_7_8/)
 
+### Protocole V9.26 (2025-12-08) - **TESTS ACTUELS** ⭐
+- 🔴 Test température R9 ajouté
+- ✅ Vérification R9 = 1kΩ en Phase 0 et 1
+- 📁 [docs/Protocole_Test_PWM_V9_26.html](docs/Protocole_Test_PWM_V9_26.html)
+
 ---
 
 **Version firmware**: 1.7.8  
 **Version hardware**: V1.16 PRODUCTION  
-**Version protocole**: V9.25  
+**Version protocole**: V9.26  
 **Dernière mise à jour**: 2025-12-08

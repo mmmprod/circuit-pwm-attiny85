@@ -19,8 +19,9 @@ Avant toute mise à jour, identifiez les versions installées :
 - Consultez votre BOM ou schéma de référence
 
 **Versions actuelles recommandées :**
-- **Firmware** : V1.6.3 (2025-11-14) ⭐
-- **Hardware** : V1.9.0 (2025-11-24) ⭐ (voir [CHANGELOG](../CHANGELOG.md) pour détails)
+- **Firmware** : V1.7.8 (2025-12-06) ⭐
+- **Hardware** : V1.16 (2025-12-08) ⭐
+- **Protocole** : V9.26 (2025-12-08) ⭐
 
 > **Note** : V1.7.11 reste une version stable et compatible. V1.9.0 apporte des améliorations pour environnement automotive (régulateur NCV2931).
 
@@ -88,10 +89,9 @@ Vérifiez la compatibilité avant toute mise à jour :
 
 | Firmware | Hardware compatible | Notes |
 |----------|---------------------|-------|
-| **V1.6.3** | V1.7.11, V1.9 | ✅ Recommandé |
-| V1.6.2 | V1.7.11, V1.9 | ✅ Compatible |
-| V1.6.1 | V1.7.10+ | ⚠️ Requiert diviseur ADC correct |
-| V1.5.1 | V1.5+ | ⚠️ Anciennes versions |
+| **V1.7.8** | **V1.16**, V1.15, V1.14 | ✅ Recommandé |
+| V1.7.5 | V1.14, V1.11 | ✅ Compatible |
+| V1.6.3 | V1.9, V1.7.11 | ⚠️ Anciennes versions |
 
 ### Mises à jour hardware mineures
 
@@ -111,6 +111,20 @@ Certaines améliorations hardware peuvent être faites sans refaire le PCB :
 5. Tester selon [protocole de test](PROGRAMMING.md#vérification-post-upload)
 
 **Optionnel** : Si budget limité, LD1117V50 reste fonctionnel pour usage non critique.
+
+#### V1.15 → V1.16 (CRITIQUE)
+
+**Changement critique :**
+- R9 : 100Ω → **1kΩ** (correction surchauffe)
+
+**Procédure :**
+1. Identifier R9 sur le PCB (résistance série gate P-MOS)
+2. Dessouder R9 (100Ω)
+3. Souder nouvelle R9 (**1kΩ**)
+4. Tester : Température R9 < 50°C après 5min avec sortie ON
+5. Valider selon protocole V9.26
+
+**⚠️ DANGER V1.15 :** R9 = 100Ω dissipe 0,86W (rating 0,25W) → SURCHAUFFE
 
 #### V1.7.10 → V1.7.11
 
@@ -159,7 +173,11 @@ V1.7.9 → V1.7.10 (correction diviseur ADC)
   ↓
 V1.7.11 (R3=470Ω, BOD 2.7V)
   ↓
-V1.9.0 ⭐ (NCV2931, résistance LDO_IN)
+V1.9.0 (NCV2931, résistance LDO_IN)
+  ↓
+V1.14 → V1.15 (protections sortie D4, D5, C11)
+  ↓
+V1.16 ⭐ (R9=1kΩ, correction critique)
 ```
 
 ---
@@ -322,6 +340,6 @@ En cas de problème non résolu :
 
 ---
 
-**Version guide** : 1.0  
-**Dernière mise à jour** : 2025-11-26  
+**Version guide** : 2.0  
+**Dernière mise à jour** : 2025-12-09  
 **Auteur** : mmmprod

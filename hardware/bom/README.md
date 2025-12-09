@@ -1,6 +1,6 @@
 # Bill of Materials (BOM)
 
-Liste complète des composants pour Circuit PWM µC V1.5.
+Liste complète des composants pour Circuit PWM µC **V1.16**.
 
 ---
 
@@ -43,6 +43,12 @@ Prix indicatifs pour quantité 1-10 pièces (novembre 2025).
 ---
 
 ## 🔧 Composants critiques
+
+### ⚠️ Composant critique V1.16
+
+| Composant | Valeur V1.16 | Valeur V1.15 (BUG) | Risque si incorrect |
+|-----------|--------------|--------------------|--------------------|
+| **R9** | **1kΩ** | 100Ω | SURCHAUFFE |
 
 ### À acheter neufs obligatoirement
 
@@ -130,6 +136,6 @@ Pour fabrication 5 circuits + prototypage :
 
 ---
 
-**Version** : 1.0  
-**Dernière mise à jour** : 2025-11-13  
+**Version** : 2.0  
+**Dernière mise à jour** : 2025-12-09  
 **Auteur** : mmmprod

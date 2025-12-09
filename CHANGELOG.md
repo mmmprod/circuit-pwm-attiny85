@@ -5,6 +5,30 @@ Toutes les modifications importantes du projet Circuit PWM µC - ATtiny85.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
+## [1.16] - 2025-12-08
+
+### 🔴 HARDWARE - CORRECTION CRITIQUE R9
+
+#### Corrigé CRITIQUE
+- **R9** : 100Ω → **1kΩ** (correction surchauffe)
+- Bug V1.15 : Quand BS170 ON, Zener D3 conduit → I = 9,3V/100Ω = 93mA
+- Dissipation V1.15 : P = 0,86W > 0,25W rating → **SURCHAUFFE**
+- Dissipation V1.16 : P = 0,086W < 0,25W rating → **OK**
+
+#### Protections V1.15 conservées
+- D4 (1N5822) anti-backfeed sortie
+- D5 (P6KE18CA) TVS protection sortie  
+- C11 (100nF) filtrage EMI sortie
+
+#### Compatible firmware
+- V1.7.8 (recommandé)
+- V1.7.9 (HW_REVISION mis à jour)
+
+#### Migration V1.15 → V1.16
+- **OBLIGATOIRE** : Remplacer R9 100Ω par **1kΩ**
+- Test : Température R9 < 50°C après 5min ON
+
+---
 ## [1.7.8] - 2025-12-06
 
 ### 🛡️ FIRMWARE - Protections défensives complètes
@@ -23,7 +47,7 @@ Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/)
 - Première conversion ADC ignorée après sleep (précision améliorée)
 
 #### Notes techniques
-- Compatible hardware: **V1.14** (recommandé), V1.11, V1.10
+- Compatible hardware: **V1.16** (recommandé), V1.15, V1.14
 - Drop-in replacement de V1.7.5
 - Flash estimé: ~1250 bytes (+50 bytes vs V1.7.5)
 - Consommation inchangée: ~0,65mA repos
