@@ -1,60 +1,60 @@
 [![Version](https://img.shields.io/badge/version-1.7.10-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
 [![Hardware](https://img.shields.io/badge/hardware-V1.18-green.svg)](hardware/)
-[![Protocol](https://img.shields.io/badge/protocole-V9.28-purple.svg)](docs/Protocole_Test_PWM_V9_28.html)
+[![Protocol](https://img.shields.io/badge/protocol-V9.28-purple.svg)](docs/Protocole_Test_PWM_V9_28.html)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
-**Conditionneur PWM automobile pour jauge Innovate Motorsports**
+**Automotive PWM conditioner for Innovate Motorsports gauges**
 
-Convertit un signal PWM 12V 108Hz en sortie binaire 0V/~10,5V avec hystérésis, optimisé pour environnement automotive.
+Transforms a 12V 108Hz PWM signal into a binary 0V/~10.5V output with hysteresis—ruggedized for automotive abuse.
 
 ![ATtiny85](https://img.shields.io/badge/MCU-ATtiny85-red.svg)
 ![Automotive](https://img.shields.io/badge/automotive-grade-yellow.svg)
 
 ---
 
-## ⚠️ ALERTE — MIGRATION VERS V1.18
+## ⚠️ ALERT — MIGRATE TO V1.18
 
-**Modifications V1.17 → V1.18 :**
+**V1.17 → V1.18 updates:**
 
-| Composant | V1.17 | V1.18 (PRODUCTION) ⭐ |
+| Component | V1.17 | V1.18 (PRODUCTION) ⭐ |
 |-----------|-------|------------------------|
-| **D6** | Absent | **P6KE15CA** (TVS ESD) |
+| **D6** | Absent | **P6KE15CA** (ESD TVS) |
 | **R13** | 10Ω 2W | **10Ω 5W** MOX |
 | **C4** | 100µF 85°C | **100µF 105°C** 5000h |
 | **C6** | 10µF 85°C | **10µF 105°C** 5000h |
 
-**Rappel V1.15/V1.16 → V1.18:**
-- R9 = **1kΩ** (pas 100Ω)
+**Reminder V1.15/V1.16 → V1.18:**
+- R9 = **1kΩ** (not 100Ω)
 - R11 = **1kΩ**
-- C12 = **10nF** sur J2
+- C12 = **10nF** on J2
 
 ---
 
-## 📋 Caractéristiques
+## 📋 Features
 
 ### Hardware V1.18 — PRODUCTION ⭐
-- **MCU**: ATtiny85-20PU (DIP-8, 8MHz interne)
-- **Alimentation**: NCV2931 LDO 5V depuis 12V batterie (6-18V)
-- **Input**: Filtrage RC double étage (-30dB @ 108Hz)
-- **Output**: Driver BS170 + P-MOSFET FQP27P06 haut-côté
-- **Protection entrée**: D1 anti-inversion, D2 TVS 1500W, F1 fusible, C12 EMI, **D6 TVS ESD**
-- **Protection sortie**: D4 anti-backfeed, D5 TVS 600W, C11 EMI
+- **MCU**: ATtiny85-20PU (DIP-8, internal 8MHz)
+- **Power**: NCV2931 5V LDO from 12V battery (6-18V)
+- **Input**: Dual-stage RC filter (-30dB @ 108Hz)
+- **Output**: BS170 driver + FQP27P06 P-MOSFET high-side
+- **Input protection**: D1 reverse, D2 TVS 1500W, F1 fuse, C12 EMI, **D6 ESD TVS**
+- **Output protection**: D4 anti-backfeed, D5 TVS 600W, C11 EMI
 - 🔴 **R9 = 1kΩ**, **R11 = 1kΩ**
-- 🔴 **R13 = 10Ω 5W** (marge sécurité ×4)
-- 🟢 **C4/C6 = 105°C 5000h** (durabilité automotive)
+- 🔴 **R13 = 10Ω 5W** (×4 safety margin)
+- 🟢 **C4/C6 = 105°C 5000h** (automotive longevity)
 
 ### Firmware V1.7.10
-- ✅ Timeout readADC() cohérent avec readVCCmV()
-- ✅ Timeout ADC (protection hardware bloqué)
-- ✅ Protection overflow VCC (adc < 17)
-- ✅ Détection ADC hors plage (fail-safe diviseur)
+- ✅ readADC() timeout aligned with readVCCmV()
+- ✅ ADC timeout (protection against stuck hardware)
+- ✅ VCC overflow protection (adc < 17)
+- ✅ Out-of-range ADC detection (fail-safe divider)
 - ✅ Cold-crank auto-recovery (VCC monitoring)
-- ✅ Hystérésis symétrique: ±520mV
+- ✅ Symmetrical hysteresis: ±520mV
 
-### Environnement automotive
-- ✅ **Cold-crank**: 6V supporté
-- ✅ **Load-dump**: 18V protégé (TVS clamp ~22V)
-- ✅ **Température**: -15°C à +85°C
+### Automotive resilience
+- ✅ **Cold-crank**: survives 6V
+- ✅ **Load-dump**: protected to 18V (TVS clamp ~22V)
+- ✅ **Temperature**: -15°C to +85°C
 
 ---
 
@@ -62,41 +62,41 @@ Convertit un signal PWM 12V 108Hz en sortie binaire 0V/~10,5V avec hystérésis,
 
 | Document | Description |
 |----------|-------------|
-| [Circuit_PWM_uC_V1_18.md](hardware/schematic/Circuit_PWM_uC_V1_18.md) | **Schématique hardware V1.18** ⭐ |
-| [Protocole_Test_PWM_V9_28.html](docs/Protocole_Test_PWM_V9_28.html) | Protocole de test V9.28 |
-| [BOM_V1_18.csv](hardware/bom/BOM_V1_18.csv) | Liste composants V1.18 |
+| [Circuit_PWM_uC_V1_18.md](hardware/schematic/Circuit_PWM_uC_V1_18.md) | **Hardware schematic V1.18** ⭐ |
+| [Protocole_Test_PWM_V9_28.html](docs/Protocole_Test_PWM_V9_28.html) | Test protocol V9.28 |
+| [BOM_V1_18.csv](hardware/bom/BOM_V1_18.csv) | BOM V1.18 |
 
 ---
 
 ## 📊 Versions
 
 ### V1.18 (2025-12-09) - **HARDWARE PRODUCTION** ⭐
-- 🔴 **D6** (P6KE15CA) — Protection ESD entrée PWM
-- 🔴 **R13** : 2W → **5W** — Marge sécurité court-circuit ×4
-- 🟢 **C4/C6** : 85°C → **105°C 5000h** — Durabilité automotive
-- Audit ChatGPT WCCA/FMEA intégré
+- 🔴 **D6** (P6KE15CA) — PWM input ESD protection
+- 🔴 **R13** : 2W → **5W** — Short-circuit safety margin ×4
+- 🟢 **C4/C6** : 85°C → **105°C 5000h** — Automotive durability
+- ChatGPT audit WCCA/FMEA integrated
 - 📁 [hardware/schematic/Circuit_PWM_uC_V1_18.md](hardware/schematic/Circuit_PWM_uC_V1_18.md)
 - 📁 [hardware/bom/BOM_V1_18.csv](hardware/bom/BOM_V1_18.csv)
 
-### V1.17 (2025-12-09) - ⚠️ REMPLACÉ PAR V1.18
+### V1.17 (2025-12-09) - ⚠️ REPLACED BY V1.18
 - C12 (10nF) + R11 = 1kΩ
 
 ### V1.16 (2025-12-08)
-- 🔴 **CORRECTION CRITIQUE:** R9 100Ω → **1kΩ**
+- 🔴 **CRITICAL FIX:** R9 100Ω → **1kΩ**
 - 📁 [hardware/schematic/Circuit_PWM_uC_V1_16.md](hardware/schematic/Circuit_PWM_uC_V1_16.md)
 
-### V1.15 - ⚠️ OBSOLÈTE (bug R9)
-- ⚠️ **BUG R9 = 100Ω → SURCHAUFFE**
+### V1.15 - ⚠️ OBSOLETE (R9 bug)
+- ⚠️ **BUG R9 = 100Ω → OVERHEATING**
 
-### V1.7.10 - **FIRMWARE ACTUEL** ⭐
+### V1.7.10 - **CURRENT FIRMWARE** ⭐
 - 📁 [firmware/PWM_Window_ATtiny85_V1_7_10/](firmware/PWM_Window_ATtiny85_V1_7_10/)
 
-### V1.7.8 - Firmware précédent
+### V1.7.8 - Previous firmware
 - 📁 [firmware/PWM_Window_ATtiny85_V1_7_8/](firmware/PWM_Window_ATtiny85_V1_7_8/)
 
 ---
 
-**Version firmware**: 1.7.10  
-**Version hardware**: V1.18 PRODUCTION  
-**Version protocole**: V9.28  
-**Dernière mise à jour**: 2025-12-09
+**Firmware version**: 1.7.10
+**Hardware version**: V1.18 PRODUCTION
+**Protocol version**: V9.28
+**Last update**: 2025-12-09
