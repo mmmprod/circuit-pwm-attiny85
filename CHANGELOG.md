@@ -5,6 +5,21 @@ Toutes les modifications importantes du projet Circuit PWM µC - ATtiny85.
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
 ---
+## [1.7.11] - 2025-12-19
+
+### Changed
+- **WDT period**: 1000ms → 250ms (latency reduced ×3.6)
+- **Worst-case latency**: 1040ms → 290ms
+
+### Fixed
+- **Documentation**: hfuse comment corrected (EESAVE=1 = EEPROM NOT preserved during chip erase)
+
+### Technical Details
+- WDT configuration: `WDTCR = (1 << WDIE) | (1 << WDP2)` (was `| (1 << WDP1)`)
+- No impact on power consumption (wake cycles shorter, phase active ~40ms)
+- Drop-in replacement for V1.7.10
+
+---
 ## [1.18] - 2025-12-09
 
 ### 🔴 HARDWARE - AUDIT CHATGPT WCCA/FMEA
