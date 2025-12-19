@@ -146,7 +146,7 @@ Transforms a 12V 108Hz PWM signal into a binary 0V/~10.5V output with hysteresis
    - R9 = R11 = **1kΩ** (not 100Ω!)
    - R13 = **10Ω 5W MOX**
    - D6 = **P6KE15CA** (ESD protection)
-3. Follow test protocol V9.28
+3. Follow test protocol V9.29
 
 ---
 
