@@ -1,6 +1,6 @@
 [![Version](https://img.shields.io/badge/version-1.7.11-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
 [![Hardware](https://img.shields.io/badge/hardware-V1.18-green.svg)](hardware)
-[![Protocol](https://img.shields.io/badge/protocol-V9.28-purple.svg)](docs/Protocole_Test_PWM_V9_28.html)
+[![Protocol](https://img.shields.io/badge/protocol-V9.29-purple.svg)](docs/Protocole_Test_PWM_V9_29.html)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
 **Automotive PWM conditioner for Innovate Motorsports gauges**
@@ -158,5 +158,5 @@ MIT License - See [LICENSE](LICENSE)
 
 **Firmware version**: 1.7.11  
 **Hardware version**: V1.18 PRODUCTION  
-**Protocol version**: V9.28  
+**Protocol version**: V9.29  
 **Last update**: 2025-12-19
