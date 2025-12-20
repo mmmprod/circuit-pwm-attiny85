@@ -75,7 +75,7 @@ Transforms a 12V 108Hz PWM signal into a binary 0V/~10.5V output with hysteresis
 | Document | Description |
 |----------|-------------|
 | [Circuit_PWM_uC_V1_18.md](hardware/schematic/Circuit_PWM_uC_V1_18.md) | **Hardware schematic V1.18** ⭐ |
-| [Protocole_Test_PWM_V9_28.html](docs/Protocole_Test_PWM_V9_3.html) | Test protocol V9.3 |
+| [Protocole_Test_PWM_V9_3.html](docs/Protocole_Test_PWM_V9_3.html) | Test protocol V9.3 |
 | [BOM_V1_18.csv](hardware/bom/BOM_V1_18.csv) | BOM V1.18 |
 
 
