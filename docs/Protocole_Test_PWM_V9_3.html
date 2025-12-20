@@ -1,0 +1,1800 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tests Transitoires V1.9 COMPLET</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            margin: 0;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+        h1 { color: #fff; text-align: center; margin-bottom: 10px; }
+        h2 { 
+            color: #ff6b9d; 
+            border-bottom: 3px solid #ff6b9d; 
+            padding-bottom: 8px; 
+            margin-top: 50px;
+            font-size: 1.5rem;
+        }
+        h3 { color: #ffd93d; margin-top: 30px; font-size: 1.2rem; }
+        h4 { color: #74b9ff; margin-top: 20px; }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .version {
+            background: #ff6b6b;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .duration {
+            background: #00b894;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        
+        .danger {
+            background: #ff4757;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff0000;
+        }
+        .danger strong { color: #fff; }
+        
+        .warning {
+            background: #ff9f43;
+            color: #000;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        
+        .info {
+            background: #2d3436;
+            border-left: 5px solid #00cec9;
+            border-radius: 0 10px 10px 0;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        
+        .success {
+            background: #00b894;
+            color: #000;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        
+        .wire-box {
+            background: #2d3436;
+            border: 3px solid #74b9ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .wire {
+            background: #1e272e;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+        .wire-red { border-left: 5px solid #ff4757; }
+        .wire-black { border-left: 5px solid #636e72; }
+        .wire-yellow { border-left: 5px solid #ffd93d; }
+        .wire-blue { border-left: 5px solid #74b9ff; }
+        .wire-green { border-left: 5px solid #00b894; }
+        
+        .step {
+            background: #2d3436;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #a29bfe;
+        }
+        .step-num {
+            background: #a29bfe;
+            color: #000;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 12px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #555;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background: #6c5ce7; color: #fff; }
+        tr:nth-child(even) { background: #2d3436; }
+        
+        .go { color: #00b894; font-weight: bold; }
+        .nogo { color: #ff4757; font-weight: bold; }
+        
+        .test-box {
+            background: #2d3436;
+            border: 2px solid #6c5ce7;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        .test-title {
+            background: #6c5ce7;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .checklist {
+            background: #1e272e;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 15px 0;
+        }
+        .checklist label {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            background: #2d3436;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .checklist input { margin-right: 10px; transform: scale(1.3); }
+        
+        .cool {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: #000;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        code {
+            background: #1e272e;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .equipment-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .equip-item {
+            background: #2d3436;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #636e72;
+        }
+        .equip-item strong { color: #74b9ff; display: block; margin-bottom: 5px; }
+        
+        .result-box {
+            background: #1e272e;
+            border: 2px solid #ffd93d;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .result-box input[type="text"] {
+            background: #2d3436;
+            border: 1px solid #555;
+            color: #ffd93d;
+            padding: 8px 12px;
+            border-radius: 5px;
+            width: 100px;
+            font-size: 1rem;
+        }
+        
+        .toc {
+            background: #2d3436;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .toc a {
+            color: #74b9ff;
+            text-decoration: none;
+            display: block;
+            padding: 8px 0;
+            border-bottom: 1px solid #444;
+        }
+        .toc a:hover { color: #ff6b9d; }
+        .toc a:last-child { border-bottom: none; }
+        
+        .schema-ascii {
+            background: #1e272e;
+            border: 2px solid #6c5ce7;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            line-height: 1.4;
+            color: #74b9ff;
+        }
+        
+        .oscillo-settings {
+            background: #1e272e;
+            border: 2px solid #ffd93d;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        .oscillo-settings strong { color: #ffd93d; }
+        
+        hr { border: none; border-top: 2px dashed #444; margin: 40px 0; }
+        
+        .new-tag {
+            background: #00b894;
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        .fix-tag {
+            background: #ff6b6b;
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        .temp-scale {
+            background: #1e272e;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .temp-ok { color: #00b894; }
+        .temp-warn { color: #ffd93d; }
+        .temp-danger { color: #ff4757; }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                              HEADER                                        -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<div class="header">
+    <h1>⚡ Tests Transitoires ISO-DIY</h1>
+    <div class="version">V1.9 COMPLET</div>
+    <div class="duration">⏱️ Durée : 45-60 min</div>
+    <p style="margin: 10px 0 0 0;">
+        Circuit PWM Fenêtre V1.15 + Code V1.7.8<br>
+        <small>Guide pratique — Décembre 2025 — PREMORTEM V3.6</small>
+    </p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                              CHANGELOG                                     -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<div class="info">
+    <strong>📋 CHANGELOG V1.9 :</strong>
+    <ul>
+        <li>✅ FIX : Seuils fenêtre PWM clarifiés (hystérésis expliquée)</li>
+        <li>✅ FIX : Test 2 limite courant → 1A (était 500mA)</li>
+        <li>✅ FIX : Test 7 inclut vérification D4 anti-backfeed</li>
+        <li>✅ FIX : Test 7b polarité négative COMPLET</li>
+        <li>✅ FIX : Test 8 fail-safe ADC COMPLET</li>
+        <li>✅ FIX : Config B note sur fluctuations +5V_MCU</li>
+        <li>✅ ADD : Vérification WDT explicite (Test 6)</li>
+        <li>✅ ADD : Échelle température TVS détaillée</li>
+        <li>✅ ADD : Réglages oscillo pour CHAQUE test</li>
+        <li>✅ ADD : Plages nominales dans tous les tableaux</li>
+        <li>✅ ADD : Nommage screenshots standardisé</li>
+        <li>✅ ADD : Durée totale estimée</li>
+    </ul>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                              AVERTISSEMENT                                 -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<div class="danger">
+    <strong>🛑 ATTENTION — LIRE AVANT DE COMMENCER !</strong>
+    <ul>
+        <li>Ces tests envoient jusqu'à <strong>30V</strong> dans le circuit</li>
+        <li>Si la TVS (D2) ne fonctionne pas → <strong>le circuit grille</strong></li>
+        <li><strong>OBLIGATOIRE :</strong> Avoir validé le protocole standard (Phase 11) AVANT</li>
+        <li>La TVS peut devenir <strong>très chaude</strong> (jusqu'à 100°C) — ne pas toucher !</li>
+    </ul>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                              SOMMAIRE                                      -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<div class="toc">
+    <strong style="color: #fff; font-size: 1.2rem;">📋 SOMMAIRE (11 sections) :</strong>
+    <a href="#materiel">1. Matériel nécessaire</a>
+    <a href="#limites">2. Limites et seuils du circuit</a>
+    <a href="#preparation">3. Préparation (branchements de base)</a>
+    <a href="#configA">4. Config A — Branchements tests simples</a>
+    <a href="#configB">5. Config B — Branchements avec OPA548</a>
+    <a href="#gain">6. Mesurer le gain de l'OPA548</a>
+    <a href="#tests">7. Les 9 tests à faire (Tests 1 à 9)</a>
+    <a href="#jds6600">8. Récap réglages JDS6600</a>
+    <a href="#export">9. Export des courbes</a>
+    <a href="#problemes">10. Dépannage</a>
+    <a href="#checklist">11. Checklist finale GO/NO-GO</a>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         1. MATÉRIEL NÉCESSAIRE                             -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="materiel">1. MATÉRIEL NÉCESSAIRE</h2>
+
+<div class="equipment-list">
+    <div class="equip-item">
+        <strong>RD6006P</strong>
+        Alimentation 60V 6A
+    </div>
+    <div class="equip-item">
+        <strong>JDS6600</strong>
+        Générateur de signaux
+    </div>
+    <div class="equip-item">
+        <strong>Module OPA548</strong>
+        Amplificateur de puissance
+    </div>
+    <div class="equip-item">
+        <strong>FNIRSI 1014D</strong>
+        Oscilloscope 2 voies
+    </div>
+    <div class="equip-item">
+        <strong>Résistance 120Ω 2W</strong>
+        Simule la jauge
+    </div>
+    <div class="equip-item">
+        <strong>Potentiomètre 10kΩ</strong>
+        Simule le signal PWM
+    </div>
+    <div class="equip-item">
+        <strong>Multimètre</strong>
+        Pour vérifications
+    </div>
+    <div class="equip-item">
+        <strong>Circuit V1.15</strong>
+        Ce qu'on teste
+    </div>
+</div>
+
+<div class="info">
+    <strong>📌 Câbles nécessaires :</strong>
+    <ul>
+        <li>2 fils avec pinces crocodiles (rouge + noir)</li>
+        <li>1 câble coaxial BNC → SMA (JDS6600 → OPA548)</li>
+        <li>2 sondes oscilloscope</li>
+        <li>Fils de liaison courts</li>
+    </ul>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         2. LIMITES ET SEUILS                               -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="limites">2. LIMITES ET SEUILS DU CIRCUIT <span class="fix-tag">CORRIGÉ V1.9</span></h2>
+
+<h3>2.1 Paramètres généraux</h3>
+
+<table>
+    <tr>
+        <th>Paramètre</th>
+        <th>Min</th>
+        <th>Nominal</th>
+        <th>Max</th>
+        <th>Notes</th>
+    </tr>
+    <tr>
+        <td>Tension entrée (J1+)</td>
+        <td>6V</td>
+        <td>12V</td>
+        <td>26V</td>
+        <td>Cold-crank à Load-dump</td>
+    </tr>
+    <tr>
+        <td>+5V_MCU (régulateur U1)</td>
+        <td>4,75V</td>
+        <td>5,00V</td>
+        <td>5,25V</td>
+        <td>Doit rester stable</td>
+    </tr>
+    <tr>
+        <td>VCC_MIN (code V1.7.8)</td>
+        <td colspan="3">4,50V</td>
+        <td>En dessous → OUT = OFF</td>
+    </tr>
+    <tr>
+        <td>VCC_RECOVERY (code)</td>
+        <td colspan="3">4,70V</td>
+        <td>Au dessus → reprise normale</td>
+    </tr>
+    <tr>
+        <td>ADC_MIN_VALID (code)</td>
+        <td colspan="3">50</td>
+        <td>En dessous → OUT = OFF (fail-safe)</td>
+    </tr>
+    <tr>
+        <td>ADC_MAX_VALID (code)</td>
+        <td colspan="3">950</td>
+        <td>Au dessus → OUT = OFF (fail-safe)</td>
+    </tr>
+    <tr>
+        <td>OUT_PROT (sortie)</td>
+        <td>0V</td>
+        <td>10,5V</td>
+        <td>~12V</td>
+        <td>Selon entrée - Vf_D4</td>
+    </tr>
+    <tr>
+        <td>Clamp TVS D2 (entrée)</td>
+        <td>18V</td>
+        <td>20V</td>
+        <td>22V</td>
+        <td>Protection surtension</td>
+    </tr>
+    <tr>
+        <td>Clamp TVS D5 (sortie)</td>
+        <td>18V</td>
+        <td>20V</td>
+        <td>22V</td>
+        <td>Bidirectionnel ±22V</td>
+    </tr>
+</table>
+
+<h3>2.2 Fenêtre PWM — Explication hystérésis <span class="fix-tag">CORRIGÉ</span></h3>
+
+<div class="warning">
+    <strong>⚠️ IMPORTANT — Comprendre l'hystérésis :</strong>
+    <p>La fenêtre a des seuils DIFFÉRENTS pour entrer et sortir, pour éviter les oscillations.</p>
+</div>
+
+<table>
+    <tr>
+        <th>Action</th>
+        <th>Seuil BAS</th>
+        <th>Seuil HAUT</th>
+        <th>ADC correspondant</th>
+    </tr>
+    <tr>
+        <td><strong>ENTRER dans la fenêtre</strong> (OUT passe ON)</td>
+        <td>3,10V</td>
+        <td>6,62V</td>
+        <td>239 à 511</td>
+    </tr>
+    <tr>
+        <td><strong>SORTIR de la fenêtre</strong> (OUT passe OFF)</td>
+        <td>2,58V</td>
+        <td>7,14V</td>
+        <td>&lt;199 ou &gt;551</td>
+    </tr>
+</table>
+
+<div class="info">
+    <strong>📌 En pratique :</strong>
+    <ul>
+        <li>Si OUT est OFF et PWM_IN monte → OUT passe ON à <strong>3,10V</strong></li>
+        <li>Si OUT est ON et PWM_IN descend → OUT passe OFF à <strong>2,58V</strong></li>
+        <li>Hystérésis = 3,10V - 2,58V = <strong>0,52V</strong> (évite les oscillations)</li>
+    </ul>
+</div>
+
+<h3>2.3 Correspondance ADC → Tension (sur PWM_IN)</h3>
+
+<table>
+    <tr><th>ADC</th><th>Tension PWM_IN</th><th>État</th></tr>
+    <tr><td>&lt; 50</td><td>&lt; 0,65V</td><td class="nogo">INVALIDE — Fail-safe → OUT OFF</td></tr>
+    <tr><td>199</td><td>2,58V</td><td>Seuil SORTIE fenêtre (bas)</td></tr>
+    <tr><td>239</td><td>3,10V</td><td>Seuil ENTRÉE fenêtre (bas)</td></tr>
+    <tr><td>~385</td><td>~5,0V</td><td class="go">MILIEU fenêtre — Position idéale pot</td></tr>
+    <tr><td>511</td><td>6,62V</td><td>Seuil ENTRÉE fenêtre (haut)</td></tr>
+    <tr><td>551</td><td>7,14V</td><td>Seuil SORTIE fenêtre (haut)</td></tr>
+    <tr><td>&gt; 950</td><td>&gt; 12,3V</td><td class="nogo">INVALIDE — Fail-safe → OUT OFF</td></tr>
+</table>
+
+<h3>2.4 Échelle température TVS <span class="new-tag">NOUVEAU</span></h3>
+
+<div class="temp-scale">
+    <p><strong>Après tests surtension (2, 6, 7, 7b), vérifier température TVS :</strong></p>
+    <ul>
+        <li class="temp-ok"><strong>&lt; 60°C</strong> — Normal, continuer</li>
+        <li class="temp-warn"><strong>60-100°C</strong> — OK mais attendre 2 min avant prochain test</li>
+        <li class="temp-danger"><strong>&gt; 100°C</strong> — STOP ! Réduire durée des tests, attendre 5 min</li>
+    </ul>
+    <p><small>La 1.5KE18CA supporte jusqu'à 150°C mais au-delà de 100°C, la durée de vie diminue.</small></p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         3. PRÉPARATION                                     -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="preparation">3. PRÉPARATION — À FAIRE EN PREMIER</h2>
+
+<h3>3.1 Vérifier que tout est éteint</h3>
+
+<div class="checklist">
+    <label><input type="checkbox"> RD6006P → Bouton OUTPUT désactivé</label>
+    <label><input type="checkbox"> JDS6600 → CH1 Output OFF</label>
+    <label><input type="checkbox"> Circuit → Pas alimenté (rien sur J1)</label>
+</div>
+
+<h3>3.2 Vérifier la continuité des masses</h3>
+
+<div class="danger">
+    <strong>🛑 VÉRIFICATION OBLIGATOIRE !</strong>
+    <p>Multimètre en mode continuité (bip) ou ohmmètre.</p>
+</div>
+
+<div class="checklist">
+    <label><input type="checkbox"> Toutes les masses du circuit reliées entre elles = <strong>&lt; 1Ω</strong></label>
+</div>
+
+<h3>3.3 Brancher le potentiomètre sur le circuit</h3>
+
+<div class="wire-box">
+    <strong style="color: #ffd93d; font-size: 1.2rem;">🔌 POTENTIOMÈTRE 10kΩ (3 pattes)</strong>
+    
+    <p style="color: #aaa;">En regardant le bouton de face, pattes vers toi :</p>
+    
+    <div class="wire wire-red">
+        <strong>Patte GAUCHE (pin 1)</strong> → Point <code>+5V_MCU</code> (pin 8 ATtiny ou sortie régulateur U1)
+    </div>
+    
+    <div class="wire wire-yellow">
+        <strong>Patte MILIEU (pin 2 = curseur)</strong> → Point <code>PWM_IN</code> (entrée signal PWM)
+    </div>
+    
+    <div class="wire wire-black">
+        <strong>Patte DROITE (pin 3)</strong> → Point <code>GND</code> (masse, J1−)
+    </div>
+</div>
+
+<div class="warning">
+    <strong>⚠️ IMPORTANT :</strong> Le potentiomètre est branché sur <code>+5V_MCU</code> (sortie régulateur stable), <strong>PAS sur +12V_PROT</strong> ! Sinon le signal PWM_IN varierait avec la tension d'entrée.
+</div>
+
+<h3>3.4 Brancher la charge 120Ω</h3>
+
+<div class="wire-box">
+    <strong style="color: #ffd93d; font-size: 1.2rem;">🔌 RÉSISTANCE 120Ω 2W (simule la jauge Innovate)</strong>
+    
+    <div class="wire wire-green">
+        <strong>Une patte</strong> → Borne <code>OUT_PROT</code> (sortie J3, cathode D4)
+    </div>
+    
+    <div class="wire wire-black">
+        <strong>Autre patte</strong> → Point <code>GND</code>
+    </div>
+</div>
+
+<h3>3.5 Brancher l'oscilloscope</h3>
+
+<div class="wire-box">
+    <strong style="color: #ffd93d; font-size: 1.2rem;">📊 OSCILLOSCOPE FNIRSI 1014D</strong>
+    
+    <div class="wire wire-yellow">
+        <strong>Sonde CH1 (jaune)</strong> → Point <code>+12V_PROT</code> (cathode D1)
+    </div>
+    
+    <div class="wire wire-blue">
+        <strong>Sonde CH2 (bleu)</strong> → Point <code>+5V_MCU</code> (pin 8 ATtiny)
+    </div>
+    
+    <div class="wire wire-black">
+        <strong>Pinces crocodiles des 2 sondes</strong> → Point <code>GND</code>
+    </div>
+</div>
+
+<h3>3.6 Régler le potentiomètre <span class="fix-tag">CORRIGÉ</span></h3>
+
+<div class="step">
+    <span class="step-num">1</span> Tourner le potentiomètre à <strong>mi-course</strong> (environ au milieu)
+</div>
+
+<div class="step">
+    <span class="step-num">2</span> Cela donne environ <strong>2,5V</strong> sur le curseur du pot
+</div>
+
+<div class="step">
+    <span class="step-num">3</span> Avec le diviseur R1/R2 du circuit, la tension sur <code>ADC_DIV</code> sera <strong>~5V</strong>
+</div>
+
+<div class="step">
+    <span class="step-num">4</span> <strong>Vérifier avec multimètre</strong> que PWM_IN est entre 3,5V et 6V (dans la fenêtre)
+</div>
+
+<div class="info">
+    <strong>📌 Si OUT_PROT reste à 0V avec pot à mi-course :</strong><br>
+    Ajuster le pot jusqu'à ce que OUT_PROT passe à ~10,5V. Noter la position.
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         4. CONFIG A                                        -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="configA">4. CONFIG A — Tests simples (RD6006P seul)</h2>
+
+<p><strong>Cette configuration sert pour les tests 1, 2, 3, 7, 7b, 8 et 9.</strong></p>
+
+<div class="wire-box">
+    <strong style="color: #ffd93d; font-size: 1.3rem;">🔌 BRANCHEMENTS CONFIG A</strong>
+    
+    <p style="color: #aaa;">L'alimentation RD6006P alimente directement le circuit.</p>
+    
+    <div class="wire wire-red">
+        <strong>RD6006P borne (+) rouge</strong> → Borne <code>J1+</code> du circuit
+    </div>
+    
+    <div class="wire wire-black">
+        <strong>RD6006P borne (−) noire</strong> → Borne <code>J1−</code> du circuit (GND)
+    </div>
+</div>
+
+<div class="schema-ascii">
+┌─────────────┐
+│   RD6006P   │
+│   12V/1A    │
+│  (+)   (−)  │
+└──┬──────┬──┘
+   │      │
+   ▼      ▼
+┌──┴──────┴──┐
+│  J1+    J1−│
+│            │
+│  CIRCUIT   │
+│   V1.15    │
+│            │
+│  OUT_PROT──┼──── Charge 120Ω ──── GND
+└────────────┘
+</div>
+
+<div class="info">
+    <strong>📌 En Config A :</strong> Le JDS6600 et l'OPA548 ne servent PAS. Laisser éteints.
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         5. CONFIG B                                        -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="configB">5. CONFIG B — Tests avec signaux (OPA548 + JDS6600)</h2>
+
+<p><strong>Cette configuration sert pour les tests 4, 5 et 6.</strong></p>
+
+<div class="warning">
+    <strong>⚠️ Config B = plus complexe !</strong> Suivre les étapes dans l'ordre.
+</div>
+
+<h3>5.1 Schéma global Config B</h3>
+
+<div class="schema-ascii">
+┌─────────────┐
+│   RD6006P   │
+│   30V 2A    │
+│  (+)   (−)  │
+└──┬──────┬──┘
+   │      │
+   ▼      ▼
+┌──┴──────┴──────────────────┐
+│  V+    GND    V−           │
+│ (oui)  (oui)  (vide)       │
+│                            │
+│       MODULE OPA548        │
+│                            │
+│   IN (SMA)      OUT (SMA)  │
+└────┬─────────────┬─────────┘
+     │             │
+     ▲             ▼
+┌────┴────┐   ┌────┴────────┐
+│ JDS6600 │   │  J1+    J1− │
+│  CH1    │   │   CIRCUIT   │
+│  BNC    │   │    V1.15    │
+└─────────┘   └─────────────┘
+</div>
+
+<h3>5.2 Étape 1 : Alimenter l'OPA548</h3>
+
+<div class="wire-box">
+    <strong style="color: #ffd93d;">🔌 RD6006P → MODULE OPA548</strong>
+    
+    <p style="color: #aaa;">Bornier bleu en haut du module : V−, GND, V+</p>
+    
+    <div class="wire wire-red">
+        <strong>RD6006P (+)</strong> → Borne <code>V+</code> de l'OPA548 (DROITE du bornier)
+    </div>
+    
+    <div class="wire wire-black">
+        <strong>RD6006P (−)</strong> → Borne <code>GND</code> de l'OPA548 (MILIEU du bornier)
+    </div>
+    
+    <p style="color: #ff6b6b; margin-top: 10px;">⚠️ Borne V− (gauche) = VIDE</p>
+</div>
+
+<h3>5.3 Étape 2 : Brancher le JDS6600</h3>
+
+<div class="wire-box">
+    <strong style="color: #ffd93d;">🔌 JDS6600 → MODULE OPA548</strong>
+    
+    <div class="wire wire-yellow">
+        <strong>JDS6600 sortie CH1 (BNC)</strong> → Connecteur <code>IN</code> de l'OPA548 (SMA)
+    </div>
+    
+    <p style="color: #888;">Utiliser câble coaxial BNC → SMA</p>
+</div>
+
+<h3>5.4 Étape 3 : Brancher la sortie OPA548 vers le circuit</h3>
+
+<div class="wire-box">
+    <strong style="color: #ffd93d;">🔌 MODULE OPA548 → CIRCUIT V1.15</strong>
+    
+    <div class="wire wire-red">
+        <strong>OPA548 connecteur OUT (SMA)</strong> → Borne <code>J1+</code> du circuit
+    </div>
+    
+    <div class="wire wire-black">
+        <strong>OPA548 borne GND</strong> → Borne <code>J1−</code> du circuit
+    </div>
+</div>
+
+<h3>5.5 Étape 4 : Vérifier les masses</h3>
+
+<div class="checklist">
+    <label><input type="checkbox"> GND RD6006P ↔ GND OPA548 = <strong>bip ! (&lt; 1Ω)</strong></label>
+    <label><input type="checkbox"> GND OPA548 ↔ Blindage câble JDS6600 = <strong>bip !</strong></label>
+    <label><input type="checkbox"> GND OPA548 ↔ J1− du circuit = <strong>bip !</strong></label>
+</div>
+
+<div class="warning">
+    <strong>⚠️ NOTE Config B — Fluctuations attendues : <span class="new-tag">NOUVEAU</span></strong>
+    <p>Pendant les tests 4, 5 et 6, le signal OPA548 varie (ex: Test 5 descend à 6,6V).</p>
+    <p>Si le signal descend sous ~7V, le régulateur U1 peut perdre sa régulation et <code>+5V_MCU</code> fluctue.</p>
+    <p><strong>Conséquence :</strong> Le potentiomètre (branché sur +5V_MCU) peut aussi fluctuer → <strong>c'est normal et attendu</strong>.</p>
+    <p>L'important est que le circuit ne fasse pas de reset permanent.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         6. MESURER LE GAIN                                 -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="gain">6. MESURER LE GAIN DE L'OPA548</h2>
+
+<div class="warning">
+    <strong>⚠️ À FAIRE UNE SEULE FOIS !</strong> Le gain varie selon le module. Note-le !
+</div>
+
+<h3>6.1 Montage de test (SANS le circuit V1.15)</h3>
+
+<div class="wire-box">
+    <strong style="color: #ffd93d;">🔌 BRANCHEMENTS MESURE GAIN</strong>
+    
+    <div class="wire wire-red">RD6006P (+) → OPA548 V+</div>
+    <div class="wire wire-black">RD6006P (−) → OPA548 GND</div>
+    <div class="wire wire-yellow">JDS6600 CH1 → OPA548 IN</div>
+    <div class="wire wire-blue">OPA548 OUT → <strong>Oscilloscope CH1</strong> (PAS le circuit !)</div>
+    <div class="wire wire-black">Masse oscillo → OPA548 GND</div>
+</div>
+
+<h3>6.2 Réglages</h3>
+
+<div class="step">
+    <span class="step-num">1</span> <strong>RD6006P :</strong> <code>30V</code>, <code>1A</code>, puis <strong>OUTPUT ON</strong>
+</div>
+
+<div class="step">
+    <span class="step-num">2</span> <strong>JDS6600 :</strong>
+    <ul>
+        <li>Forme : <code>Sine</code></li>
+        <li>Fréquence : <code>100 Hz</code></li>
+        <li>Amplitude : <code>0,5 Vpp</code></li>
+        <li>Offset : <code>+0,5 V</code></li>
+        <li><strong>CH1 Output ON</strong></li>
+    </ul>
+</div>
+
+<div class="step">
+    <span class="step-num">3</span> <strong>Oscilloscope :</strong> Mesurer tension <strong>crête-à-crête (Vpp)</strong> sur CH1
+</div>
+
+<h3>6.3 Calculer le gain</h3>
+
+<div class="result-box">
+    <strong>Tension mesurée :</strong> <input type="text" placeholder="___"> Vpp
+    <br><br>
+    <strong>Gain = Tension mesurée ÷ 0,5 = </strong> <input type="text" placeholder="___"> ×
+</div>
+
+<table>
+    <tr><th>Si tu mesures...</th><th>Alors le gain est...</th></tr>
+    <tr><td>~5,5 Vpp</td><td><strong>11×</strong></td></tr>
+    <tr><td>~10,5 Vpp</td><td><strong>21×</strong></td></tr>
+    <tr><td>~16,5 Vpp</td><td><strong>33×</strong></td></tr>
+    <tr><td>~22 Vpp</td><td><strong>44×</strong></td></tr>
+</table>
+
+<div class="success">
+    <strong>📌 MON GAIN OPA548 : ____×</strong> (noter ici)
+</div>
+
+<h3>6.4 Limites de saturation</h3>
+
+<div class="info">
+    <strong>L'OPA548 alimenté en 30V sature vers ~28V.</strong>
+    <table>
+        <tr><th>Gain</th><th>Offset max JDS6600</th><th>Amplitude max</th></tr>
+        <tr><td>11×</td><td>2,5V</td><td>2,5Vpp</td></tr>
+        <tr><td>33×</td><td>0,8V</td><td>0,8Vpp</td></tr>
+        <tr><td>44×</td><td>0,6V</td><td>0,6Vpp</td></tr>
+    </table>
+    <p>Si le signal est plat en haut sur l'oscillo → réduire amplitude ou offset.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         7. LES 9 TESTS                                     -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="tests">7. LES 9 TESTS À FAIRE</h2>
+
+<p><strong>Ordre recommandé :</strong> 1 → 2 → (pause) → 3 → 8 → 4 → 5 → 6 → (pause) → 7 → 7b → (pause) → 9</p>
+
+<!-- ═══════════════════════════════ TEST 1 ═══════════════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 1 — Cold-Crank (démarrage moteur)</div>
+    
+    <p><strong>But :</strong> Vérifier que le circuit tient quand la batterie chute à 6V.</p>
+    <p><strong>Config :</strong> A (RD6006P seul) | <strong>Durée :</strong> ~2 min</p>
+    
+    <h3>Branchements</h3>
+    <div class="wire-box">
+        <div class="wire wire-red">RD6006P (+) → J1+</div>
+        <div class="wire wire-black">RD6006P (−) → J1−</div>
+        <div class="wire wire-green">Charge 120Ω entre OUT_PROT et GND</div>
+    </div>
+    
+    <div class="oscillo-settings">
+        <strong>📊 Réglages oscillo :</strong><br>
+        CH1 = +12V_PROT | CH2 = +5V_MCU | V/div = 5V | Timebase = 500ms/div | Trigger = CH1 falling
+    </div>
+    
+    <h3>Procédure</h3>
+    
+    <div class="step"><span class="step-num">1</span> RD6006P : <code>12V</code>, <code>500mA</code>, <strong>OUTPUT ON</strong></div>
+    <div class="step"><span class="step-num">2</span> Vérifier OUT_PROT ≈ 10,5V (circuit fonctionne)</div>
+    <div class="step"><span class="step-num">3</span> Tourner RAPIDEMENT : <strong>12V → 6V</strong> (en &lt;1s)</div>
+    <div class="step"><span class="step-num">4</span> Garder à <strong>6V pendant 3 secondes</strong></div>
+    <div class="step"><span class="step-num">5</span> Tourner : <strong>6V → 14,4V</strong></div>
+    <div class="step"><span class="step-num">6</span> Garder à <strong>14,4V pendant 3 secondes</strong></div>
+    <div class="step"><span class="step-num">7</span> 📷 Screenshot : <code>TRANS_T1_coldcrank.png</code></div>
+    
+    <h3>Résultats</h3>
+    <div class="result-box">
+        <table>
+            <tr><th>Mesure</th><th>Ta valeur</th><th>Attendu (nominal ±tolérance)</th></tr>
+            <tr><td>+5V_MCU @ 12V entrée</td><td><input type="text" placeholder="___"> V</td><td>5,00V (4,90 à 5,10V)</td></tr>
+            <tr><td>+5V_MCU @ 6V entrée</td><td><input type="text" placeholder="___"> V</td><td>≥4,75V (4,75 à 5,00V)</td></tr>
+            <tr><td>+5V_MCU @ 14,4V entrée</td><td><input type="text" placeholder="___"> V</td><td>5,00V (4,90 à 5,10V)</td></tr>
+            <tr><td>OUT_PROT @ 6V</td><td><input type="text" placeholder="___"></td><td>Stable (ON ou OFF)</td></tr>
+        </table>
+    </div>
+    
+    <h3>Verdict</h3>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>+5V_MCU @ 6V</td><td class="go">≥ 4,75V stable</td><td class="nogo">&lt; 4,50V ou oscille</td></tr>
+        <tr><td>Comportement OUT</td><td class="go">Stable (ON ou OFF)</td><td class="nogo">Clignote en boucle</td></tr>
+        <tr><td>Après remontée</td><td class="go">Revient normal &lt;3s</td><td class="nogo">Reste bloqué</td></tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════════════ TEST 2 ═══════════════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 2 — Surtension DC (TVS D2) <span class="fix-tag">CORRIGÉ 1A</span></div>
+    
+    <p><strong>But :</strong> Vérifier que la TVS D2 limite la tension à ~20-22V.</p>
+    <p><strong>Config :</strong> A | <strong>Durée :</strong> ~3 min</p>
+    
+    <div class="danger">
+        <strong>🛑 Ce test monte à 30V !</strong> Si TVS HS → circuit grille.
+    </div>
+    
+    <h3>Branchements</h3>
+    <div class="wire-box">
+        <div class="wire wire-red">RD6006P (+) → J1+</div>
+        <div class="wire wire-black">RD6006P (−) → J1−</div>
+    </div>
+    
+    <div class="oscillo-settings">
+        <strong>📊 Réglages oscillo :</strong><br>
+        CH1 = +12V_PROT | V/div = 5V | Timebase = 1s/div | Trigger = CH1 level 15V rising
+    </div>
+    
+    <h3>Procédure</h3>
+    
+    <div class="step"><span class="step-num">1</span> RD6006P : <code>12V</code>, <strong><code>1A</code></strong> (pas 500mA !), <strong>OUTPUT ON</strong></div>
+    <div class="step"><span class="step-num">2</span> Monter par paliers de <strong>3V</strong>, attendre <strong>10s</strong> à chaque palier</div>
+    <div class="step"><span class="step-num">3</span> Noter +12V_PROT et courant à chaque palier</div>
+    <div class="step"><span class="step-num">4</span> <strong>STOP si +12V_PROT dépasse 24V !</strong></div>
+    <div class="step"><span class="step-num">5</span> 📷 Screenshot : <code>TRANS_T2_surtension.png</code></div>
+    
+    <h3>Résultats</h3>
+    <div class="result-box">
+        <table>
+            <tr><th>V entrée</th><th>+12V_PROT</th><th>Courant</th><th>TVS conduit ?</th></tr>
+            <tr><td>12V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Non</td></tr>
+            <tr><td>15V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Non</td></tr>
+            <tr><td>18V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Début</td></tr>
+            <tr><td>21V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Oui</td></tr>
+            <tr><td>24V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Oui</td></tr>
+            <tr><td>27V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Oui</td></tr>
+            <tr><td>30V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Oui</td></tr>
+        </table>
+    </div>
+    
+    <h3>Verdict</h3>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>+12V_PROT @ 30V entrée</td><td class="go">≤ 23V</td><td class="nogo">&gt; 25V → TVS HS !</td></tr>
+        <tr><td>Courant @ 30V</td><td class="go">Augmente (TVS absorbe)</td><td class="nogo">Reste faible</td></tr>
+    </table>
+    
+    <div class="temp-scale">
+        <strong>🌡️ Vérifier température TVS D2 après ce test :</strong>
+        <span class="temp-ok">&lt;60°C OK</span> |
+        <span class="temp-warn">60-100°C attendre 2min</span> |
+        <span class="temp-danger">&gt;100°C STOP 5min</span>
+    </div>
+</div>
+
+<div class="cool">⏱️ PAUSE 2 MINUTES — TVS D2 a chauffé</div>
+
+<!-- ═══════════════════════════════ TEST 3 ═══════════════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 3 — Coupure franche (redémarrage propre)</div>
+    
+    <p><strong>But :</strong> Vérifier que le circuit redémarre sans pic parasite (anti-glitch 2s).</p>
+    <p><strong>Config :</strong> A | <strong>Durée :</strong> ~2 min</p>
+    
+    <h3>Branchements</h3>
+    <div class="wire-box">
+        <div class="wire wire-red">RD6006P (+) → J1+</div>
+        <div class="wire wire-black">RD6006P (−) → J1−</div>
+        <div class="wire wire-green">Charge 120Ω entre OUT_PROT et GND</div>
+    </div>
+    
+    <div class="oscillo-settings">
+        <strong>📊 Réglages oscillo :</strong><br>
+        CH1 = OUT_PROT | V/div = 5V | Timebase = 1s/div | Trigger = CH1 rising, <strong>mode SINGLE</strong>
+    </div>
+    
+    <h3>Procédure</h3>
+    
+    <div class="step"><span class="step-num">1</span> RD6006P : <code>12V</code>, <code>500mA</code>, <strong>OUTPUT ON</strong></div>
+    <div class="step"><span class="step-num">2</span> Vérifier OUT_PROT ≈ 10,5V</div>
+    <div class="step"><span class="step-num">3</span> Oscillo en mode <strong>SINGLE</strong> (capture unique)</div>
+    <div class="step"><span class="step-num">4</span> Appuyer <strong>OUTPUT</strong> pour couper → attendre <strong>500ms</strong></div>
+    <div class="step"><span class="step-num">5</span> Appuyer <strong>OUTPUT</strong> pour rallumer</div>
+    <div class="step"><span class="step-num">6</span> Observer : OUT doit rester à <strong>0V pendant ~2s</strong> puis monter à ~10,5V</div>
+    <div class="step"><span class="step-num">7</span> Répéter avec coupure <strong>100ms</strong> (très rapide)</div>
+    <div class="step"><span class="step-num">8</span> 📷 Screenshot : <code>TRANS_T3_coupure.png</code></div>
+    
+    <h3>Résultats</h3>
+    <div class="result-box">
+        <table>
+            <tr><th>Test</th><th>Comportement OUT_PROT</th><th>Délai avant ON</th><th>Verdict</th></tr>
+            <tr><td>Coupure 500ms</td><td><input type="text" placeholder="Décrire" style="width:150px"></td><td><input type="text" placeholder="___"> s</td><td>☐ OK ☐ Problème</td></tr>
+            <tr><td>Coupure 100ms</td><td><input type="text" placeholder="Décrire" style="width:150px"></td><td><input type="text" placeholder="___"> s</td><td>☐ OK ☐ Problème</td></tr>
+        </table>
+    </div>
+    
+    <h3>Verdict</h3>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>Après rallumage</td><td class="go">OUT = 0V pendant ~2s puis monte</td><td class="nogo">Pic &gt;5V immédiat</td></tr>
+        <tr><td>Stabilité</td><td class="go">Transition propre, pas d'oscillation</td><td class="nogo">Oscillations ou erratique</td></tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════════════ TEST 4 ═══════════════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 4 — Load Dump (pics de surtension)</div>
+    
+    <p><strong>But :</strong> Simuler des pics de tension (déconnexion charge alternateur).</p>
+    <p><strong>Config :</strong> B (OPA548 + JDS6600) | <strong>Durée :</strong> ~2 min</p>
+    
+    <h3>Branchements</h3>
+    <p>Utiliser <strong>Config B</strong> (section 5).</p>
+    
+    <div class="oscillo-settings">
+        <strong>📊 Réglages oscillo :</strong><br>
+        CH1 = +12V_PROT | CH2 = +5V_MCU | V/div = 5V | Timebase = 50ms/div | Trigger = CH1 rising
+    </div>
+    
+    <h3>Réglages selon ton gain</h3>
+    <table>
+        <tr><th>Appareil</th><th>Paramètre</th><th>Gain 11×</th><th>Gain 33×</th></tr>
+        <tr><td rowspan="2">RD6006P</td><td>Tension</td><td colspan="2"><code>30V</code></td></tr>
+        <tr><td>Courant</td><td colspan="2"><code>2A</code></td></tr>
+        <tr><td rowspan="5">JDS6600</td><td>Forme</td><td colspan="2"><code>Pulse</code></td></tr>
+        <tr><td>Fréquence</td><td colspan="2"><code>10 Hz</code></td></tr>
+        <tr><td>Amplitude</td><td><code>1,5 Vpp</code></td><td><code>0,5 Vpp</code></td></tr>
+        <tr><td>Offset</td><td><code>+1,1 V</code></td><td><code>+0,36 V</code></td></tr>
+        <tr><td>Duty</td><td colspan="2"><code>10%</code></td></tr>
+    </table>
+    
+    <div class="info">
+        <strong>📌 Tolérance :</strong> Base ~12V ±1V, pics ~16-20V. Si pics &gt;22V → TVS doit clamper.
+    </div>
+    
+    <h3>Procédure</h3>
+    <div class="step"><span class="step-num">1</span> Branchements Config B</div>
+    <div class="step"><span class="step-num">2</span> RD6006P : <code>30V</code>, <code>2A</code>, <strong>OUTPUT ON</strong></div>
+    <div class="step"><span class="step-num">3</span> JDS6600 : paramètres selon gain, <strong>CH1 ON</strong></div>
+    <div class="step"><span class="step-num">4</span> Observer pendant <strong>30 secondes</strong></div>
+    <div class="step"><span class="step-num">5</span> 📷 Screenshot : <code>TRANS_T4_loaddump.png</code></div>
+    
+    <h3>Résultats</h3>
+    <div class="result-box">
+        <table>
+            <tr><th>Mesure</th><th>Ta valeur</th><th>Attendu</th></tr>
+            <tr><td>Base +12V_PROT</td><td><input type="text" placeholder="___"> V</td><td>12V (11 à 13V)</td></tr>
+            <tr><td>Pics max +12V_PROT</td><td><input type="text" placeholder="___"> V</td><td>≤ 20V</td></tr>
+            <tr><td>+5V_MCU pendant pics</td><td><input type="text" placeholder="___"> V</td><td>5,0V (4,9 à 5,1V)</td></tr>
+            <tr><td>OUT_PROT</td><td><input type="text" placeholder="___"> V</td><td>~10,5V stable</td></tr>
+        </table>
+    </div>
+    
+    <h3>Verdict</h3>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>Pics +12V_PROT</td><td class="go">≤ 20V</td><td class="nogo">&gt; 22V</td></tr>
+        <tr><td>+5V_MCU</td><td class="go">Stable 4,9-5,1V</td><td class="nogo">Fluctue &gt;0,3V</td></tr>
+        <tr><td>OUT_PROT</td><td class="go">Stable ~10,5V</td><td class="nogo">Oscille ou clignote</td></tr>
+    </table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         FIN PARTIE 1                                       -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<div style="text-align: center; margin-top: 50px; padding: 30px; background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); border-radius: 10px;">
+    <strong style="color: #fff; font-size: 1.5rem;">⚠️ PARTIE 1 sur 2</strong><br><br>
+    <span style="color: #fff;">Contient : Sections 1-6 + Tests 1, 2, 3, 4</span><br><br>
+    <span style="color: #ffd93d; font-size: 1.2rem;">→ TÉLÉCHARGER PARTIE 2 POUR LA SUITE ←</span><br>
+    <span style="color: #fff;">(Tests 5, 6, 7, 7b, 8, 9 + Sections 8-11)</span>
+</div>
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--    TESTS TRANSITOIRES V1.9 — PARTIE 2 (Sections 6-11)                      -->
+<!--    À fusionner avec PARTIE1 juste avant </body>                            -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         6. MESURER LE GAIN                                 -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="gain">6. MESURER LE GAIN DE L'OPA548</h2>
+
+<div class="warning">
+    <strong>⚠️ À FAIRE UNE SEULE FOIS !</strong> Le gain varie selon le module (souvent 11× ou 33×). Note-le ! 
+</div>
+
+<h3>6.1 Montage de test (SANS le circuit V1.15)</h3>
+
+<div class="wire-box">
+    <strong style="color: #ffd93d;">🔌 BRANCHEMENTS POUR MESURER LE GAIN</strong>
+    
+    <div class="wire wire-red">
+        <strong>RD6006P (+)</strong> → OPA548 <code>V+</code>
+    </div>
+    <div class="wire wire-black">
+        <strong>RD6006P (−)</strong> → OPA548 <code>GND</code>
+    </div>
+    <div class="wire wire-yellow">
+        <strong>JDS6600 CH1</strong> → OPA548 <code>IN</code>
+    </div>
+    <div class="wire wire-blue">
+        <strong>OPA548 OUT</strong> → <strong>Oscilloscope CH1</strong> (PAS le circuit !)
+    </div>
+    <div class="wire wire-black">
+        <strong>Masse oscillo</strong> → OPA548 <code>GND</code>
+    </div>
+</div>
+
+<h3>6.2 Réglages</h3>
+
+<div class="step">
+    <span class="step-num">1</span> <strong>RD6006P :</strong> <code>30V</code> / <code>1A</code> → OUTPUT ON
+</div>
+
+<div class="step">
+    <span class="step-num">2</span> <strong>JDS6600 :</strong>
+    <ul>
+        <li>Forme : <code>Sine</code></li>
+        <li>Fréquence : <code>100 Hz</code></li>
+        <li>Amplitude : <code>0,5 Vpp</code></li>
+        <li>Offset : <code>+0,5 V</code></li>
+        <li>→ CH1 Output ON</li>
+    </ul>
+</div>
+
+<div class="step">
+    <span class="step-num">3</span> <strong>Oscilloscope :</strong> Mesurer tension <strong>crête-à-crête (Vpp)</strong> sur CH1
+</div>
+
+<h3>6.3 Calculer le gain</h3>
+
+<div class="result-box">
+    <p><strong>Formule :</strong> Gain = V_sortie_pp ÷ 0,5</p>
+    <table>
+        <tr><th>Si tu mesures... </th><th>Alors le gain est... </th></tr>
+        <tr><td>~5,5 Vpp</td><td><strong>11×</strong></td></tr>
+        <tr><td>~10,5 Vpp</td><td><strong>21×</strong></td></tr>
+        <tr><td>~16,5 Vpp</td><td><strong>33×</strong></td></tr>
+    </table>
+    <p style="margin-top: 15px;"><strong>MON GAIN MESURÉ :</strong> <input type="text" placeholder="___"> ×</p>
+</div>
+
+<div class="danger">
+    <strong>🛑 Si gain > 40× :</strong> Risque saturation ! Utiliser la sortie intermédiaire du module ou réduire V+ du RD6006P.
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         7. LES 9 TESTS                                     -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="tests">7. LES 9 TESTS À FAIRE</h2>
+
+<div class="danger">
+    <strong>🛑 RAPPEL AVANT CHAQUE TEST :</strong>
+    <ul>
+        <li>✅ Potentiomètre réglé (~5V sur PWM_IN)</li>
+        <li>✅ Charge 120Ω connectée sur OUT_PROT</li>
+        <li>✅ Sondes oscillo en place (CH1 = +12V_PROT, CH2 = +5V_MCU)</li>
+    </ul>
+</div>
+
+<!-- ═══════════════════════ TEST 1 ═══════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 1 — Cold-Crank (Config A)</div>
+    
+    <p><strong>But :</strong> Vérifier que le circuit tient quand la batterie chute à 6V</p>
+    <p><strong>Durée :</strong> ~1 minute</p>
+    
+    <div class="oscillo-settings">
+        <strong>📊 Oscillo :</strong> CH1 = 5V/div, CH2 = 1V/div, Time = 500ms/div, Trigger = CH1 falling 8V
+    </div>
+    
+    <h4>Procédure</h4>
+    <div class="step"><span class="step-num">1</span> RD6006P : <code>12V / 1A</code> → OUTPUT ON</div>
+    <div class="step"><span class="step-num">2</span> Vérifier OUT_PROT ≈ 10,5V</div>
+    <div class="step"><span class="step-num">3</span> Tourner RAPIDEMENT : <strong>12V → 6V</strong> (en ~1s)</div>
+    <div class="step"><span class="step-num">4</span> Maintenir <strong>6V pendant 5 secondes</strong></div>
+    <div class="step"><span class="step-num">5</span> Tourner : <strong>6V → 14,4V</strong></div>
+    <div class="step"><span class="step-num">6</span> Maintenir <strong>14,4V pendant 3 secondes</strong></div>
+    <div class="step"><span class="step-num">7</span> 📷 Screenshot : <code>T1_ColdCrank.png</code></div>
+    
+    <h4>Résultats</h4>
+    <div class="result-box">
+        <table>
+            <tr><th>Mesure</th><th>Ta valeur</th><th>Attendu</th></tr>
+            <tr><td>+5V_MCU @ 6V entrée</td><td><input type="text" placeholder="___"> V</td><td><strong>≥ 4,75V</strong></td></tr>
+            <tr><td>OUT_PROT @ 6V</td><td><input type="text" placeholder="___"> V</td><td>Stable (ON ou OFF)</td></tr>
+            <tr><td>+5V_MCU @ 14,4V</td><td><input type="text" placeholder="___"> V</td><td>~5,0V</td></tr>
+        </table>
+    </div>
+    
+    <h4>Verdict</h4>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>+5V_MCU @ 6V</td><td class="go">≥ 4,75V stable</td><td class="nogo">&lt; 4,5V ou oscille</td></tr>
+        <tr><td>OUT_PROT @ 6V</td><td class="go">Reste stable</td><td class="nogo">Clignote ON/OFF</td></tr>
+        <tr><td>Recovery @ 14,4V</td><td class="go">Revient normal &lt;2s</td><td class="nogo">Bloqué ou reset</td></tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════ TEST 2 ═══════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 2 — Surtension DC / TVS D2 (Config A)</div>
+    
+    <p><strong>But :</strong> Vérifier que la TVS D2 clampe à ~22V</p>
+    <p><strong>Durée :</strong> ~3 minutes</p>
+    
+    <div class="danger">
+        <strong>🛑 ATTENTION !</strong> Ce test monte jusqu'à 30V.  Si D2 défaillante → circuit détruit !
+    </div>
+    
+    <div class="oscillo-settings">
+        <strong>📊 Oscillo :</strong> CH1 = 10V/div, CH2 = 1V/div, Time = 1s/div
+    </div>
+    
+    <h4>Procédure</h4>
+    <div class="step"><span class="step-num">1</span> RD6006P : <code>12V / 1A</code> → OUTPUT ON</div>
+    <div class="step"><span class="step-num">2</span> Monter par paliers de 3V, <strong>10 secondes par palier</strong></div>
+    <div class="step"><span class="step-num">3</span> Noter V_+12V_PROT (CH1) et courant (RD6006P) à chaque palier</div>
+    <div class="step"><span class="step-num">4</span> <strong>ARRÊTER si V_+12V_PROT > 24V</strong> → D2 défaillante !</div>
+    <div class="step"><span class="step-num">5</span> 📷 Screenshot à 30V : <code>T2_Surtension_30V.png</code></div>
+    
+    <h4>Tableau de mesures</h4>
+    <div class="result-box">
+        <table>
+            <tr><th>V_entrée (RD6006P)</th><th>V_+12V_PROT</th><th>Courant</th><th>TVS conduit ? </th></tr>
+            <tr><td>12V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Non (~50mA)</td></tr>
+            <tr><td>15V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Non</td></tr>
+            <tr><td>18V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Début</td></tr>
+            <tr><td>21V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Oui</td></tr>
+            <tr><td>24V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Oui (I↑)</td></tr>
+            <tr><td>27V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Oui (I↑↑)</td></tr>
+            <tr style="background: #3b1818;"><td><strong>30V MAX</strong></td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td><td>☐ Oui fort</td></tr>
+        </table>
+    </div>
+    
+    <h4>Verdict</h4>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>V_+12V_PROT @ 25V entrée</td><td class="go">≤ 22V</td><td class="nogo">&gt; 24V → STOP !</td></tr>
+        <tr><td>V_+12V_PROT @ 30V entrée</td><td class="go">≤ 23V</td><td class="nogo">&gt; 25V → D2 HS</td></tr>
+        <tr><td>Courant @ 30V</td><td class="go">100-500mA (TVS dissipe)</td><td class="nogo">&lt; 50mA (D2 absente)</td></tr>
+    </table>
+    
+    <div class="cool">⏱️ Après ce test, vérifier température TVS D2.  Si &gt; 60°C, attendre 2 min. </div>
+</div>
+
+<!-- ═══════════════════════ TEST 3 ═══════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 3 — Coupure franche (Config A)</div>
+    
+    <p><strong>But :</strong> Vérifier le boot propre après coupure</p>
+    <p><strong>Durée :</strong> ~1 minute</p>
+    
+    <div class="oscillo-settings">
+        <strong>📊 Oscillo :</strong> CH1 = 5V/div, CH2 = 2V/div, Time = 500ms/div, Trigger = CH1 rising 5V, <strong>Mode SINGLE</strong>
+    </div>
+    
+    <h4>Procédure</h4>
+    <div class="step"><span class="step-num">1</span> RD6006P : <code>12V / 1A</code> → OUTPUT ON</div>
+    <div class="step"><span class="step-num">2</span> Vérifier OUT_PROT ≈ 10,5V</div>
+    <div class="step"><span class="step-num">3</span> Armer oscillo en SINGLE</div>
+    <div class="step"><span class="step-num">4</span> Appuyer <strong>OUTPUT OFF</strong> (coupure)</div>
+    <div class="step"><span class="step-num">5</span> Attendre <strong>500ms</strong></div>
+    <div class="step"><span class="step-num">6</span> Appuyer <strong>OUTPUT ON</strong></div>
+    <div class="step"><span class="step-num">7</span> Observer : OUT_PROT doit rester OFF ~2s (anti-glitch) puis ON</div>
+    <div class="step"><span class="step-num">8</span> 📷 Screenshot : <code>T3_Coupure. png</code></div>
+    <div class="step"><span class="step-num">9</span> Répéter avec coupure <strong>100ms</strong></div>
+    
+    <h4>Verdict</h4>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>Boot après 500ms OFF</td><td class="go">Propre, OUT reste OFF ~2s puis ON</td><td class="nogo">Glitch &gt;5V immédiat</td></tr>
+        <tr><td>Boot après 100ms OFF</td><td class="go">Propre</td><td class="nogo">Comportement erratique</td></tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════ TEST 4 ═══════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 4 — Load Dump simulé (Config B)</div>
+    
+    <p><strong>But :</strong> Envoyer des pics de tension rapides, vérifier clamp TVS</p>
+    <p><strong>Durée :</strong> ~2 minutes</p>
+    
+    <div class="warning">
+        <strong>⚠️ Utilise Config B (OPA548 + JDS6600)</strong>
+    </div>
+    
+    <div class="oscillo-settings">
+        <strong>📊 Oscillo :</strong> CH1 = 10V/div, CH2 = 1V/div, Time = 20ms/div, Trigger = CH1 rising 20V, <strong>Mode SINGLE</strong>
+    </div>
+    
+    <h4>Réglages (Gain 11×)</h4>
+    <table>
+        <tr><th>Appareil</th><th>Paramètre</th><th>Valeur (Gain 11×)</th><th>Valeur (Gain 33×)</th></tr>
+        <tr><td rowspan="2">RD6006P</td><td>Tension</td><td><strong>30V</strong></td><td><strong>30V</strong></td></tr>
+        <tr><td>Courant</td><td><strong>2A</strong></td><td><strong>2A</strong></td></tr>
+        <tr><td rowspan="5">JDS6600</td><td>Forme</td><td colspan="2"><strong>Pulse</strong></td></tr>
+        <tr><td>Fréquence</td><td colspan="2"><strong>10 Hz</strong></td></tr>
+        <tr><td>Amplitude</td><td><strong>1,5 Vpp</strong></td><td><strong>0,5 Vpp</strong></td></tr>
+        <tr><td>Offset</td><td><strong>+1,1V</strong></td><td><strong>+0,36V</strong></td></tr>
+        <tr><td>Duty</td><td colspan="2"><strong>10%</strong></td></tr>
+    </table>
+    
+    <div class="info">
+        <strong>📌 Calcul :</strong><br>
+        • Base = Offset × Gain = 1,1V × 11 = <strong>12,1V</strong><br>
+        • Pic = (Offset + Amplitude/2) × Gain = (1,1 + 0,75) × 11 = <strong>20,4V</strong><br>
+        • Creux = (Offset - Amplitude/2) × Gain = (1,1 - 0,75) × 11 = <strong>3,9V</strong>
+    </div>
+    
+    <h4>Procédure</h4>
+    <div class="step"><span class="step-num">1</span> Config B branchée et vérifiée</div>
+    <div class="step"><span class="step-num">2</span> RD6006P : 30V / 2A → OUTPUT ON</div>
+    <div class="step"><span class="step-num">3</span> JDS6600 : Réglages ci-dessus → CH1 OFF</div>
+    <div class="step"><span class="step-num">4</span> Vérifier sortie OPA548 ≈ 12V (offset seul)</div>
+    <div class="step"><span class="step-num">5</span> Armer oscillo en SINGLE</div>
+    <div class="step"><span class="step-num">6</span> JDS6600 : <strong>CH1 ON</strong></div>
+    <div class="step"><span class="step-num">7</span> Observer les pics sur CH1</div>
+    <div class="step"><span class="step-num">8</span> 📷 Screenshot : <code>T4_LoadDump.png</code></div>
+    
+    <h4>Verdict</h4>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>Pic max sur +12V_PROT</td><td class="go">≤ 23V (clampé par D2)</td><td class="nogo">&gt; 25V</td></tr>
+        <tr><td>+5V_MCU pendant transitoire</td><td class="go">4,8-5,2V stable</td><td class="nogo">Fluctue &gt; 0,3V</td></tr>
+        <tr><td>Circuit après test</td><td class="go">Fonctionne normalement</td><td class="nogo">Reset ou blocage</td></tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════ TEST 5 ═══════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 5 — Micro-coupures (Config B)</div>
+    
+    <p><strong>But :</strong> Simuler mauvais contact / vibrations</p>
+    <p><strong>Durée :</strong> ~2 minutes</p>
+    
+    <div class="oscillo-settings">
+        <strong>📊 Oscillo :</strong> CH1 = 5V/div, CH2 = 2V/div, Time = 50ms/div
+    </div>
+    
+    <h4>Réglages (Gain 11×)</h4>
+    <table>
+        <tr><th>Appareil</th><th>Paramètre</th><th>Valeur (Gain 11×)</th><th>Valeur (Gain 33×)</th></tr>
+        <tr><td rowspan="2">RD6006P</td><td>Tension</td><td colspan="2"><strong>30V</strong></td></tr>
+        <tr><td>Courant</td><td colspan="2"><strong>2A</strong></td></tr>
+        <tr><td rowspan="5">JDS6600</td><td>Forme</td><td colspan="2"><strong>Square</strong></td></tr>
+        <tr><td>Fréquence</td><td colspan="2"><strong>50 Hz</strong></td></tr>
+        <tr><td>Amplitude</td><td><strong>0,5 Vpp</strong></td><td><strong>0,17 Vpp</strong></td></tr>
+        <tr><td>Offset</td><td><strong>+0,85V</strong></td><td><strong>+0,28V</strong></td></tr>
+        <tr><td>Duty</td><td colspan="2"><strong>50%</strong></td></tr>
+    </table>
+    
+    <div class="info">
+        <strong>📌 Calcul (Gain 11×) :</strong><br>
+        • Haut = (0,85 + 0,25) × 11 = <strong>12,1V</strong><br>
+        • Bas = (0,85 - 0,25) × 11 = <strong>6,6V</strong> (simule drop)
+    </div>
+    
+    <h4>Procédure</h4>
+    <div class="step"><span class="step-num">1</span> Réglages JDS6600 → CH1 ON</div>
+    <div class="step"><span class="step-num">2</span> Laisser tourner <strong>30 secondes</strong></div>
+    <div class="step"><span class="step-num">3</span> Observer : OUT_PROT ne doit pas osciller</div>
+    <div class="step"><span class="step-num">4</span> 📷 Screenshot : <code>T5_MicroCoupures.png</code></div>
+    
+    <h4>Verdict</h4>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>OUT_PROT pendant drops</td><td class="go">Reste stable (ON)</td><td class="nogo">Oscille ON/OFF</td></tr>
+        <tr><td>+5V_MCU</td><td class="go">≥ 4,75V</td><td class="nogo">&lt; 4,5V</td></tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════ TEST 6 ═══════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 6 — Rampe surtension (Config B) <span class="new-tag">WDT</span></div>
+    
+    <p><strong>But :</strong> Rampe lente montante, vérifier comportement continu</p>
+    <p><strong>Durée :</strong> ~2 minutes</p>
+    
+    <div class="oscillo-settings">
+        <strong>📊 Oscillo :</strong> CH1 = 5V/div, CH2 = 1V/div, Time = 2s/div
+    </div>
+    
+    <h4>Réglages (Gain 11×)</h4>
+    <table>
+        <tr><th>Appareil</th><th>Paramètre</th><th>Valeur (Gain 11×)</th><th>Valeur (Gain 33×)</th></tr>
+        <tr><td rowspan="2">RD6006P</td><td>Tension</td><td colspan="2"><strong>30V</strong></td></tr>
+        <tr><td>Courant</td><td colspan="2"><strong>2A</strong></td></tr>
+        <tr><td rowspan="4">JDS6600</td><td>Forme</td><td colspan="2"><strong>Ramp (Triangle)</strong></td></tr>
+        <tr><td>Fréquence</td><td colspan="2"><strong>0,1 Hz</strong> (10 secondes/cycle)</td></tr>
+        <tr><td>Amplitude</td><td><strong>1,0 Vpp</strong></td><td><strong>0,33 Vpp</strong></td></tr>
+        <tr><td>Offset</td><td><strong>+1,35V</strong></td><td><strong>+0,45V</strong></td></tr>
+    </table>
+    
+    <div class="info">
+        <strong>📌 Calcul (Gain 11×) :</strong><br>
+        • Min = (1,35 - 0,5) × 11 = <strong>9,4V</strong><br>
+        • Max = (1,35 + 0,5) × 11 = <strong>20,4V</strong><br>
+        • Rampe lente : 9,4V → 20,4V → 9,4V en 10 secondes
+    </div>
+    
+    <h4>Procédure</h4>
+    <div class="step"><span class="step-num">1</span> Réglages JDS6600 → CH1 ON</div>
+    <div class="step"><span class="step-num">2</span> Laisser tourner <strong>3 cycles (30 secondes)</strong></div>
+    <div class="step"><span class="step-num">3</span> Observer +5V_MCU : doit rester stable</div>
+    <div class="step"><span class="step-num">4</span> Vérifier que le WDT ne reset pas (OUT_PROT stable)</div>
+    <div class="step"><span class="step-num">5</span> 📷 Screenshot : <code>T6_Rampe.png</code></div>
+    
+    <h4>Verdict</h4>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>+5V_MCU pendant rampe</td><td class="go">5,0V ±0,1V constant</td><td class="nogo">Oscille ou chute</td></tr>
+        <tr><td>OUT_PROT pendant rampe</td><td class="go">Stable (pas de reset WDT)</td><td class="nogo">Blink périodique (WDT reset)</td></tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════ TEST 7 ═══════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 7 — TVS D5 sortie + D4 anti-backfeed (Config A)</div>
+    
+    <p><strong>But :</strong> Vérifier protection sortie (surtension positive)</p>
+    <p><strong>Durée :</strong> ~2 minutes</p>
+    
+    <div class="danger">
+        <strong>⚠️ IMPORTANT :</strong> Pour ce test, on injecte une tension sur <strong>OUT_PROT (J3)</strong>, pas sur J1 ! 
+    </div>
+    
+    <div class="oscillo-settings">
+        <strong>📊 Oscillo :</strong> CH1 = 10V/div sur <strong>OUT_PROT</strong>, CH2 = 5V/div sur <strong>+12V_PROT</strong>
+    </div>
+    
+    <h4>Branchement spécial</h4>
+    <div class="wire-box">
+        <div class="wire wire-red">
+            <strong>RD6006P (+)</strong> → Borne <code>OUT_PROT (J3)</code> du circuit
+        </div>
+        <div class="wire wire-black">
+            <strong>RD6006P (−)</strong> → <code>GND</code> du circuit
+        </div>
+        <p style="color: #ff6b6b;"><strong>⚠️ J1 NON ALIMENTÉ pour ce test !</strong></p>
+    </div>
+    
+    <h4>Procédure</h4>
+    <div class="step"><span class="step-num">1</span> <strong>Débrancher J1</strong> (circuit non alimenté normalement)</div>
+    <div class="step"><span class="step-num">2</span> Brancher RD6006P sur <strong>OUT_PROT (J3)</strong></div>
+    <div class="step"><span class="step-num">3</span> RD6006P : <code>12V / 500mA</code> → OUTPUT ON</div>
+    <div class="step"><span class="step-num">4</span> Vérifier +12V_PROT (CH2) : doit être <strong>&lt; 1V</strong> (D4 bloque)</div>
+    <div class="step"><span class="step-num">5</span> Monter par paliers : 15V, 18V, 21V, 24V</div>
+    <div class="step"><span class="step-num">6</span> Noter V_OUT_PROT et courant à chaque palier</div>
+    <div class="step"><span class="step-num">7</span> 📷 Screenshot : <code>T7_TVS_D5. png</code></div>
+    
+    <h4>Tableau de mesures</h4>
+    <div class="result-box">
+        <table>
+            <tr><th>V_entrée (sur J3)</th><th>V_OUT_PROT</th><th>V_+12V_PROT</th><th>Courant</th></tr>
+            <tr><td>12V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td></tr>
+            <tr><td>15V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td></tr>
+            <tr><td>18V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td></tr>
+            <tr><td>21V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td></tr>
+            <tr><td>24V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> V</td><td><input type="text" placeholder="___"> mA</td></tr>
+        </table>
+    </div>
+    
+    <h4>Verdict</h4>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>V_+12V_PROT (backfeed D4)</td><td class="go">&lt; 1V (D4 bloque)</td><td class="nogo">&gt; 5V (D4 passante)</td></tr>
+        <tr><td>V_OUT_PROT @ 24V</td><td class="go">≤ 22V (clampé D5)</td><td class="nogo">&gt; 24V (D5 absente)</td></tr>
+        <tr><td>Courant @ 24V</td><td class="go">Augmente (D5 dissipe)</td><td class="nogo">Reste faible</td></tr>
+    </table>
+    
+    <div class="cool">⏱️ Vérifier température D5.  Si &gt; 60°C, attendre 2 min avant Test 7b. </div>
+</div>
+
+<!-- ═══════════════════════ TEST 7b ═══════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 7b — TVS D5 polarité NÉGATIVE (Config A) <span class="new-tag">NOUVEAU</span></div>
+    
+    <p><strong>But :</strong> Vérifier protection sortie (surtension négative / inversion)</p>
+    <p><strong>Durée :</strong> ~1 minute</p>
+    
+    <div class="danger">
+        <strong>⚠️ BRANCHEMENT INVERSÉ !</strong> On inverse volontairement la polarité sur J3. 
+    </div>
+    
+    <h4>Branchement spécial (INVERSÉ)</h4>
+    <div class="wire-box">
+        <div class="wire wire-black">
+            <strong>RD6006P (+)</strong> → <code>GND</code> du circuit
+        </div>
+        <div class="wire wire-red">
+            <strong>RD6006P (−)</strong> → Borne <code>OUT_PROT (J3)</code>
+        </div>
+        <p style="color: #ff6b6b;"><strong>⚠️ J1 toujours NON ALIMENTÉ !</strong></p>
+    </div>
+    
+    <h4>Procédure</h4>
+    <div class="step"><span class="step-num">1</span> Brancher comme ci-dessus (inversé)</div>
+    <div class="step"><span class="step-num">2</span> RD6006P : <code>5V / 500mA</code> → OUTPUT ON</div>
+    <div class="step"><span class="step-num">3</span> Mesurer tension sur OUT_PROT : doit être <strong>≈ -0,7V à -1V</strong> (clamp D5)</div>
+    <div class="step"><span class="step-num">4</span> Monter à <code>10V</code></div>
+    <div class="step"><span class="step-num">5</span> Vérifier : V_OUT_PROT reste <strong>≈ -1V à -1,5V</strong> (D5 clamp négatif)</div>
+    <div class="step"><span class="step-num">6</span> Noter le courant (doit augmenter)</div>
+    <div class="step"><span class="step-num">7</span> 📷 Screenshot : <code>T7b_TVS_D5_Neg.png</code></div>
+    
+    <h4>Verdict</h4>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>V_OUT_PROT @ 10V inversé</td><td class="go">-0,7V à -1,5V (clampé)</td><td class="nogo">&lt; -5V (D5 absente)</td></tr>
+        <tr><td>Courant @ 10V inversé</td><td class="go">&gt; 100mA (D5 conduit)</td><td class="nogo">&lt; 10mA</td></tr>
+    </table>
+    
+    <div class="success">
+        <strong>✅ Si Test 7 + 7b OK :</strong> La TVS D5 bidirectionnelle fonctionne correctement !
+    </div>
+</div>
+
+<!-- ═══════════════════════ TEST 8 ═══════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 8 — Fail-safe ADC (Config A) <span class="new-tag">NOUVEAU</span></div>
+    
+    <p><strong>But :</strong> Vérifier que OUT = OFF si signal ADC hors plage (diviseur défaillant)</p>
+    <p><strong>Durée :</strong> ~2 minutes</p>
+    
+    <div class="info">
+        <strong>📌 Rappel fail-safe :</strong><br>
+        • ADC &lt; 50 (V &lt; 0,65V) → OUT = OFF<br>
+        • ADC &gt; 950 (V &gt; 12,3V) → OUT = OFF
+    </div>
+    
+    <h4>Test 8a : ADC trop BAS</h4>
+    <div class="step"><span class="step-num">1</span> RD6006P : <code>12V / 1A</code> → OUTPUT ON</div>
+    <div class="step"><span class="step-num">2</span> Potentiomètre : Tourner vers GND (0V sur PWM_IN)</div>
+    <div class="step"><span class="step-num">3</span> Vérifier : <strong>OUT_PROT = 0V</strong> (fail-safe actif)</div>
+    <div class="step"><span class="step-num">4</span> Tourner pot vers mi-course : OUT_PROT revient ~10,5V</div>
+    
+    <h4>Test 8b : ADC trop HAUT</h4>
+    <div class="step"><span class="step-num">5</span> Potentiomètre : Tourner vers +5V_MCU (max)</div>
+    <div class="step"><span class="step-num">6</span> Avec pot 10kΩ sur +5V_MCU, PWM_IN max = 5V → ADC ≈ 385 (dans la plage)</div>
+    <div class="step"><span class="step-num">7</span> Pour tester ADC &gt; 950, il faudrait injecter &gt;12,3V sur PWM_IN (non recommandé)</div>
+    <div class="step"><span class="step-num">8</span> <strong>Alternative :</strong> Vérifier dans le code que la protection existe</div>
+    
+    <h4>Verdict</h4>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>OUT avec pot à 0V</td><td class="go">OUT = 0V (OFF)</td><td class="nogo">OUT = 10,5V (pas de fail-safe)</td></tr>
+        <tr><td>OUT avec pot à mi-course</td><td class="go">OUT = 10,5V (ON)</td><td class="nogo">OUT reste OFF</td></tr>
+        <tr><td>Transition</td><td class="go">Nette, pas d'oscillation</td><td class="nogo">Oscille</td></tr>
+    </table>
+</div>
+
+<!-- ═══════════════════════ TEST 9 ═══════════════════════ -->
+
+<div class="test-box">
+    <div class="test-title">TEST 9 — Validation finale avec charge (Config A)</div>
+    
+    <p><strong>But :</strong> Vérifier fonctionnement complet pendant 5 minutes</p>
+    <p><strong>Durée :</strong> ~5 minutes</p>
+    
+    <h4>Procédure</h4>
+    <div class="step"><span class="step-num">1</span> RD6006P : <code>13,8V / 1A</code> (tension alternateur typique)</div>
+    <div class="step"><span class="step-num">2</span> Potentiomètre : mi-course (dans la fenêtre)</div>
+    <div class="step"><span class="step-num">3</span> Charge 120Ω sur OUT_PROT</div>
+    <div class="step"><span class="step-num">4</span> Laisser tourner <strong>5 minutes</strong></div>
+    <div class="step"><span class="step-num">5</span> À la fin, mesurer :</div>
+    
+    <h4>Mesures finales</h4>
+    <div class="result-box">
+        <table>
+            <tr><th>Paramètre</th><th>Mesuré</th><th>Attendu</th></tr>
+            <tr><td>V_entrée (J1+)</td><td><input type="text" placeholder="___"> V</td><td>13,8V</td></tr>
+            <tr><td>+12V_PROT</td><td><input type="text" placeholder="___"> V</td><td>~13,5V</td></tr>
+            <tr><td>+5V_MCU</td><td><input type="text" placeholder="___"> V</td><td>5,0V ±0,1V</td></tr>
+            <tr><td>OUT_PROT</td><td><input type="text" placeholder="___"> V</td><td>~11,5V</td></tr>
+            <tr><td>Courant total</td><td><input type="text" placeholder="___"> mA</td><td>~100mA</td></tr>
+            <tr><td>Température U1</td><td><input type="text" placeholder="___"> °C</td><td>&lt; 60°C</td></tr>
+            <tr><td>Température Q2</td><td><input type="text" placeholder="___"> °C</td><td>&lt; 50°C</td></tr>
+        </table>
+    </div>
+    
+    <h4>Verdict</h4>
+    <table>
+        <tr><th>Critère</th><th class="go">✅ GO</th><th class="nogo">❌ NO-GO</th></tr>
+        <tr><td>Stabilité 5 min</td><td class="go">Aucune variation</td><td class="nogo">Dérive ou oscillation</td></tr>
+        <tr><td>Température</td><td class="go">&lt; 60°C partout</td><td class="nogo">&gt; 80°C (surchauffe)</td></tr>
+    </table>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         8. RÉCAP JDS6600                                   -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="jds6600">8. RÉCAP RÉGLAGES JDS6600</h2>
+
+<h3>Pour GAIN 11×</h3>
+
+<table>
+    <tr><th>Test</th><th>Forme</th><th>Fréq</th><th>Amplitude</th><th>Offset</th><th>Duty</th><th>Résultat</th></tr>
+    <tr><td>4 - Load Dump</td><td>Pulse</td><td>10 Hz</td><td>1,5 Vpp</td><td>+1,1V</td><td>10%</td><td>12V base, pics 20V</td></tr>
+    <tr><td>5 - Micro-coupures</td><td>Square</td><td>50 Hz</td><td>0,5 Vpp</td><td>+0,85V</td><td>50%</td><td>6,6V-12V alternés</td></tr>
+    <tr><td>6 - Rampe</td><td>Triangle</td><td>0,1 Hz</td><td>1,0 Vpp</td><td>+1,35V</td><td>—</td><td>9,4V→20,4V lent</td></tr>
+</table>
+
+<h3>Pour GAIN 33×</h3>
+
+<table>
+    <tr><th>Test</th><th>Forme</th><th>Fréq</th><th>Amplitude</th><th>Offset</th><th>Duty</th><th>Résultat</th></tr>
+    <tr><td>4 - Load Dump</td><td>Pulse</td><td>10 Hz</td><td>0,5 Vpp</td><td>+0,36V</td><td>10%</td><td>12V base, pics 20V</td></tr>
+    <tr><td>5 - Micro-coupures</td><td>Square</td><td>50 Hz</td><td>0,17 Vpp</td><td>+0,28V</td><td>50%</td><td>6,6V-12V alternés</td></tr>
+    <tr><td>6 - Rampe</td><td>Triangle</td><td>0,1 Hz</td><td>0,33 Vpp</td><td>+0,45V</td><td>—</td><td>9,4V→20,4V lent</td></tr>
+</table>
+
+<div class="info">
+    <strong>📌 Formule générique :</strong><br>
+    <code>Offset = V_base_souhaitée ÷ Gain</code><br>
+    <code>Amplitude = (V_max - V_min) ÷ Gain</code>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         9. EXPORT COURBES                                  -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="export">9.  EXPORT DES COURBES</h2>
+
+<h3>9.1 FNIRSI 1014D — Screenshots</h3>
+
+<div class="step"><span class="step-num">1</span> Appuyer sur bouton <strong>SAVE</strong> ou <strong>📷</strong></div>
+<div class="step"><span class="step-num">2</span> Sélectionner <strong>Screenshot</strong> (pas Waveform)</div>
+<div class="step"><span class="step-num">3</span> Fichiers sauvés sur carte SD interne</div>
+<div class="step"><span class="step-num">4</span> Connecter USB pour récupérer les PNG</div>
+
+<h3>9.2 Nommage standardisé</h3>
+
+<table>
+    <tr><th>Test</th><th>Nom fichier</th></tr>
+    <tr><td>Test 1</td><td><code>T1_ColdCrank. png</code></td></tr>
+    <tr><td>Test 2</td><td><code>T2_Surtension_30V.png</code></td></tr>
+    <tr><td>Test 3</td><td><code>T3_Coupure. png</code></td></tr>
+    <tr><td>Test 4</td><td><code>T4_LoadDump.png</code></td></tr>
+    <tr><td>Test 5</td><td><code>T5_MicroCoupures.png</code></td></tr>
+    <tr><td>Test 6</td><td><code>T6_Rampe.png</code></td></tr>
+    <tr><td>Test 7</td><td><code>T7_TVS_D5. png</code></td></tr>
+    <tr><td>Test 7b</td><td><code>T7b_TVS_D5_Neg.png</code></td></tr>
+</table>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         10. DÉPANNAGE                                      -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="problemes">10. DÉPANNAGE</h2>
+
+<table class="troubleshoot">
+    <tr><th>Symptôme</th><th>Cause probable</th><th>Solution</th></tr>
+    <tr>
+        <td>OUT_PROT toujours à 0V</td>
+        <td>Pot hors fenêtre ou fail-safe actif</td>
+        <td>Ajuster pot, vérifier PWM_IN entre 3-6V</td>
+    </tr>
+    <tr>
+        <td>OUT_PROT oscille ON/OFF</td>
+        <td>Signal proche des seuils d'hystérésis</td>
+        <td>Ajuster pot plus vers le centre (5V)</td>
+    </tr>
+    <tr>
+        <td>+5V_MCU &lt; 4,5V</td>
+        <td>Entrée trop basse ou régulateur HS</td>
+        <td>Vérifier entrée ≥ 6V, tester U1</td>
+    </tr>
+    <tr>
+        <td>V_+12V_PROT &gt; 24V à 30V entrée</td>
+        <td>TVS D2 absente ou mal soudée</td>
+        <td><strong>STOP !  Vérifier D2</strong></td>
+    </tr>
+    <tr>
+        <td>Courant très élevé (&gt;1A) à 12V</td>
+        <td>Court-circuit ou composant HS</td>
+        <td>Couper alim, vérifier soudures</td>
+    </tr>
+    <tr>
+        <td>Signal OPA548 saturé</td>
+        <td>Gain trop élevé ou V+ trop bas</td>
+        <td>Réduire amplitude JDS ou augmenter V+</td>
+    </tr>
+    <tr>
+        <td>Oscillo ne trigger pas</td>
+        <td>Niveau trigger mal réglé</td>
+        <td>Ajuster seuil trigger, vérifier canal</td>
+    </tr>
+    <tr>
+        <td>Backfeed sur +12V_PROT (Test 7)</td>
+        <td>D4 absente ou inversée</td>
+        <td>Vérifier D4 (cathode vers OUT_PROT)</td>
+    </tr>
+</table>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!--                         11. CHECKLIST FINALE                               -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+<h2 id="checklist">11.  CHECKLIST FINALE GO/NO-GO</h2>
+
+<div class="success">
+    <strong>🏁 RÉCAPITULATIF — Cocher chaque test réussi :</strong>
+</div>
+
+<div class="checklist">
+    <label><input type="checkbox"> <strong>Test 1</strong> — Cold-Crank : +5V_MCU ≥ 4,75V @ 6V</label>
+    <label><input type="checkbox"> <strong>Test 2</strong> — Surtension : V_+12V_PROT ≤ 23V @ 30V entrée</label>
+    <label><input type="checkbox"> <strong>Test 3</strong> — Coupure : Boot propre sans glitch</label>
+    <label><input type="checkbox"> <strong>Test 4</strong> — Load Dump : Pics clampés ≤ 23V</label>
+    <label><input type="checkbox"> <strong>Test 5</strong> — Micro-coupures : OUT_PROT stable</label>
+    <label><input type="checkbox"> <strong>Test 6</strong> — Rampe : Pas de reset WDT</label>
+    <label><input type="checkbox"> <strong>Test 7</strong> — TVS D5 + D4 : Backfeed bloqué, clamp OK</label>
+    <label><input type="checkbox"> <strong>Test 7b</strong> — TVS D5 négative : Clamp ≈ -1V</label>
+    <label><input type="checkbox"> <strong>Test 8</strong> — Fail-safe ADC : OUT OFF si pot à 0V</label>
+    <label><input type="checkbox"> <strong>Test 9</strong> — Validation 5min : Stable, T° &lt; 60°C</label>
+</div>
+
+<hr>
+
+<div class="success" style="text-align: center; font-size: 1.3rem;">
+    <strong>✅ TOUS LES TESTS PASSÉS ? </strong><br>
+    → Circuit VALIDÉ pour installation véhicule ! <br><br>
+    <span style="font-size: 1rem;">📁 Archiver tous les screenshots dans un dossier daté</span>
+</div>
+
+<div class="danger" style="text-align: center;">
+    <strong>❌ UN OU PLUSIEURS TESTS ÉCHOUÉS ?</strong><br>
+    → NE PAS installer le circuit ! <br>
+    → Identifier le problème avec la section Dépannage<br>
+    → Corriger et recommencer les tests
+</div>
+
+<hr>
+
+<p style="text-align: center; color: #888; margin-top: 40px;">
+    <strong>Tests Transitoires ISO-DIY V1. 9 COMPLET</strong><br>
+    Circuit PWM Fenêtre V1.15 + Code V1.7. 8<br>
+    Décembre 2025 — PREMORTEM V3.6<br><br>
+    <em>Document généré pour mmmprod/circuit-pwm-attiny85</em>
+</p>
+
+</body>
+</html>
+</body>
+</html>
