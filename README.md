@@ -1,6 +1,6 @@
 [![Version](https://img.shields.io/badge/version-1.7.11-blue.svg)](https://github.com/mmmprod/circuit-pwm-attiny85/releases)
 [![Hardware](https://img.shields.io/badge/hardware-V1.18-green.svg)](hardware)
-[![Protocol](https://img.shields.io/badge/protocol-V9.29-purple.svg)](docs/Protocole_Test_PWM_V9_29.html)
+[![Protocol](https://img.shields.io/badge/protocol-V9.3-purple.svg)](docs/Protocole_Test_PWM_V9_29.html)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
 **Automotive PWM conditioner for Innovate Motorsports gauges**
@@ -75,7 +75,7 @@ Transforms a 12V 108Hz PWM signal into a binary 0V/~10.5V output with hysteresis
 | Document | Description |
 |----------|-------------|
 | [Circuit_PWM_uC_V1_18.md](hardware/schematic/Circuit_PWM_uC_V1_18.md) | **Hardware schematic V1.18** ⭐ |
-| [Protocole_Test_PWM_V9_28.html](docs/Protocole_Test_PWM_V9_29.html) | Test protocol V9.29 |
+| [Protocole_Test_PWM_V9_28.html](docs/Protocole_Test_PWM_V9_3.html) | Test protocol V9.3 |
 | [BOM_V1_18.csv](hardware/bom/BOM_V1_18.csv) | BOM V1.18 |
 
 
@@ -146,7 +146,7 @@ Transforms a 12V 108Hz PWM signal into a binary 0V/~10.5V output with hysteresis
    - R9 = R11 = **1kΩ** (not 100Ω!)
    - R13 = **10Ω 5W MOX**
    - D6 = **P6KE15CA** (ESD protection)
-3. Follow test protocol V9.29
+3. Follow test protocol V9.3
 
 ---
 
@@ -158,5 +158,5 @@ MIT License - See [LICENSE](LICENSE)
 
 **Firmware version**: 1.7.11  
 **Hardware version**: V1.18 PRODUCTION  
-**Protocol version**: V9.29  
-**Last update**: 2025-12-19
+**Protocol version**: V9.3  
+**Last update**: 2025-12-20
